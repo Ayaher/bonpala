@@ -3123,7 +3123,7 @@ window.GLOBASA_CURRICULUM = {
         {
           "id": "wc-intransitive-3",
           "type": "mcq",
-          "prompt": "In {{Nini side in kokikamer}}, what is in {{kokikamer}}?",
+          "prompt": "In {{Nini side in kokikamer}}, what is {{in kokikamer}}?",
           "options": [
             "a prepositional phrase",
             "a direct object",
