@@ -139,23 +139,34 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.015
   border-radius: 999px;
 }
 
-.sync-badge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  padding: 3px 9px;
-  border-radius: 999px;
+.sync-indicator {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   border: 1px solid var(--line);
+  background: var(--bg-elevated);
   color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
-.sync-badge.is-synced { color: var(--success); background: var(--success-soft); border-color: transparent; }
-.sync-badge.is-syncing { color: var(--accent-strong); background: var(--accent-soft); border-color: transparent; }
-.sync-badge.is-error { color: var(--danger); background: var(--danger-soft); border-color: transparent; }
-.sync-badge.is-offline { color: var(--muted); background: var(--bg-elevated); }
+.sync-indicator svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sync-indicator.is-synced { color: var(--success); border-color: color-mix(in srgb, var(--success) 45%, var(--line)); background: var(--success-soft); }
+.sync-indicator.is-syncing { color: var(--accent-strong); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+.sync-indicator.is-syncing svg { animation: sync-spin 1.1s linear infinite; }
+.sync-indicator.is-error { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, var(--line)); background: var(--danger-soft); }
+.sync-indicator.is-offline { color: var(--muted); background: var(--bg-elevated); }
+
+@keyframes sync-spin {
+  to { transform: rotate(360deg); }
+}
 
 .icon-button {
   display: grid;

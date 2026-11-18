@@ -172,14 +172,15 @@
   function setSyncBadge(status, message) {
     if (!syncBadge) return;
     var labelByStatus = {
-      synced: "Synced",
-      syncing: "Syncing",
-      error: "Sync error",
-      offline: "Offline"
+      synced: "Cloud sync synced",
+      syncing: "Cloud sync in progress",
+      error: "Cloud sync error",
+      offline: "Cloud sync offline"
     };
-    syncBadge.className = "sync-badge is-" + status;
-    syncBadge.textContent = labelByStatus[status] || "Offline";
-    syncBadge.title = message || "";
+    var label = labelByStatus[status] || labelByStatus.offline;
+    syncBadge.className = "sync-indicator is-" + status;
+    syncBadge.setAttribute("aria-label", label);
+    syncBadge.title = message || label;
   }
 
   function updateChrome() {
@@ -187,6 +188,7 @@
     if (mainNav) mainNav.hidden = !signedIn;
     if (authControls) authControls.hidden = !signedIn;
     if (logoutButton) logoutButton.hidden = !signedIn;
+    if (syncBadge) syncBadge.hidden = !signedIn;
   }
 
   function renderLogin() {
