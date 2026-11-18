@@ -7,11 +7,15 @@
   var Storage = window.GlobasaStorage;
   var Engine = window.GlobasaEngine;
   var Review = window.GlobasaReview;
+  var Firebase = window.FirebaseService;
 
   var State = {
     session: null,
     dict: { query: "", classFilter: "all", categoryFilter: "all", limit: 80 },
     widget: { open: false, query: "" },
+    authReady: false,
+    user: null,
+    login: { loading: false, errorMsg: "", errorCode: "" },
     lastHash: null,
     skipLeaveGuard: false
   };
@@ -25,6 +29,10 @@
   var widgetClose = document.getElementById("dict-widget-close");
   var widgetSearch = document.getElementById("dict-widget-search");
   var widgetResults = document.getElementById("dict-widget-results");
+  var mainNav = document.getElementById("main-nav");
+  var authControls = document.getElementById("auth-controls");
+  var syncBadge = document.getElementById("cloud-sync-status");
+  var logoutButton = document.getElementById("logout-btn");
 
   function toast(message) {
     if (!toastEl) return;
@@ -157,6 +165,107 @@
     document.documentElement.setAttribute("data-theme", next);
   }
 
+  function authEnabled() {
+    return Boolean(Firebase && Firebase.isConfigured && Firebase.isConfigured());
+  }
+
+  function setSyncBadge(status, message) {
+    if (!syncBadge) return;
+    var labelByStatus = {
+      synced: "Synced",
+      syncing: "Syncing",
+      error: "Sync error",
+      offline: "Offline"
+    };
+    syncBadge.className = "sync-badge is-" + status;
+    syncBadge.textContent = labelByStatus[status] || "Offline";
+    syncBadge.title = message || "";
+  }
+
+  function updateChrome() {
+    var signedIn = Boolean(State.user);
+    if (mainNav) mainNav.hidden = !signedIn;
+    if (authControls) authControls.hidden = !signedIn;
+    if (logoutButton) logoutButton.hidden = !signedIn;
+  }
+
+  function renderLogin() {
+    if (widgetToggle) widgetToggle.hidden = true;
+    if (State.widget.open) setWidgetOpen(false);
+    view.innerHTML = Views.login({
+      isLoading: State.login.loading,
+      errorMsg: State.login.errorMsg,
+      errorCode: State.login.errorCode,
+      configMissing: !authEnabled()
+    });
+    document.title = "Sign in · Bonpala";
+    if (State.lastHash !== window.location.hash) {
+      State.lastHash = window.location.hash;
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+    window.setTimeout(function () {
+      var email = document.getElementById("login-email");
+      if (!email) return;
+      try { email.focus({ preventScroll: true }); } catch (error) { email.focus(); }
+    }, 10);
+  }
+
+  function handleAuthState(user) {
+    State.user = user || null;
+    State.authReady = true;
+    State.session = null;
+    State.login.loading = false;
+    State.login.errorMsg = "";
+    State.login.errorCode = "";
+    updateChrome();
+
+    if (!State.user) {
+      setSyncBadge("offline");
+      Storage.clearCloudSession().catch(function () {});
+      renderRoute();
+      return;
+    }
+
+    setSyncBadge("syncing");
+    Storage.initCloudSync(State.user.uid).then(function () {
+      renderRoute();
+    }).catch(function (error) {
+      toast(error && error.message ? error.message : "Could not load cloud progress.");
+      renderRoute();
+    });
+  }
+
+  function submitLogin(form) {
+    if (!authEnabled() || !Firebase || !Firebase.signIn) {
+      State.login.errorMsg = "Firebase is not configured.";
+      State.login.errorCode = "";
+      renderLogin();
+      return;
+    }
+
+    var emailInput = form.querySelector("#login-email");
+    var passwordInput = form.querySelector("#login-password");
+    var email = emailInput ? emailInput.value.trim() : "";
+    var password = passwordInput ? passwordInput.value : "";
+    if (!email || !password) {
+      State.login.errorMsg = "Enter both email and password.";
+      State.login.errorCode = "";
+      renderLogin();
+      return;
+    }
+
+    State.login.loading = true;
+    State.login.errorMsg = "";
+    State.login.errorCode = "";
+    renderLogin();
+    Firebase.signIn(email, password).catch(function (error) {
+      State.login.loading = false;
+      State.login.errorCode = error && error.code ? error.code : "";
+      State.login.errorMsg = error && error.message ? error.message : "Sign-in failed.";
+      renderLogin();
+    });
+  }
+
   /* A review run is a synthetic concept that only exists while the run is live. */
   function conceptFor(conceptId) {
     var session = State.session;
@@ -186,6 +295,15 @@
   }
 
   function renderRoute() {
+    if (!State.authReady) {
+      view.innerHTML = '<div class="empty"><span class="eyebrow">Loading</span><h1 style="margin:8px 0">Checking session…</h1></div>';
+      return;
+    }
+    if (!State.user) {
+      renderLogin();
+      return;
+    }
+
     var route = parseRoute();
     var html = "";
     var title = "Bonpala — Globasa practice";
@@ -269,6 +387,7 @@
 
   /* A run opens at the first exercise of its own order, not at a caller-supplied index. */
   function startLesson(conceptId) {
+    if (!State.user) return;
     var concept = C.byId[conceptId];
     if (!concept) return;
     var session = Engine.createSession(concept, 0);
@@ -282,6 +401,7 @@
 
   /* Build a mixed run from every started lesson and let the normal pipeline ask it. */
   function startReview() {
+    if (!State.user) return;
     var queue = Review.buildQueue(C.concepts);
     if (!queue.length) {
       toast("Start a lesson first — review draws from lessons you have already practised.");
@@ -399,6 +519,9 @@
     if (event.target && event.target.id === "answer-form") {
       event.preventDefault();
       submitAnswer(event.target);
+    } else if (event.target && event.target.id === "login-form") {
+      event.preventDefault();
+      submitLogin(event.target);
     }
   });
 
@@ -486,6 +609,16 @@
     widgetSearch.addEventListener("input", function () {
       State.widget.query = widgetSearch.value;
       renderWidgetResults();
+    });
+  }
+  if (logoutButton) {
+    logoutButton.addEventListener("click", function () {
+      if (!Firebase || !Firebase.signOutUser) return;
+      Storage.flushCloudSave().then(function () {
+        return Firebase.signOutUser();
+      }).catch(function (error) {
+        toast(error && error.message ? error.message : "Sync failed. Sign out blocked.");
+      });
     });
   }
   document.addEventListener("keydown", function (event) {
@@ -616,7 +749,17 @@
   });
 
   applyTheme();
-  renderRoute();
+  updateChrome();
+  Storage.onSyncStatus(function (status, message) {
+    setSyncBadge(status, message);
+  });
+
+  if (Firebase && Firebase.onAuthChange) {
+    Firebase.onAuthChange(handleAuthState);
+  } else {
+    handleAuthState(null);
+  }
+
   if (!Storage.isAvailable()) {
     window.setTimeout(function () { toast("This browser cannot save progress locally."); }, 500);
   }

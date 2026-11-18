@@ -1125,6 +1125,49 @@
     );
   }
 
+  function authErrorMessage(code, fallback) {
+    if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found") {
+      return "Invalid email or password.";
+    }
+    if (code === "auth/too-many-requests") {
+      return "Too many failed attempts. Please wait and try again.";
+    }
+    if (code === "auth/network-request-failed") {
+      return "Network error. Check your connection and try again.";
+    }
+    return fallback || "Sign-in failed. Please try again.";
+  }
+
+  function login(options) {
+    navFor("");
+    var opts = options || {};
+    var error = opts.errorMsg ? authErrorMessage(opts.errorCode, opts.errorMsg) : "";
+    var isLoading = Boolean(opts.isLoading);
+    var configMissing = Boolean(opts.configMissing);
+    var submitLabel = isLoading ? "Signing in..." : "Sign in";
+    var disabled = isLoading || configMissing;
+
+    return (
+      '<section class="login-screen">' +
+        '<div class="login-card">' +
+          '<span class="eyebrow">Private access</span>' +
+          '<h1>Sign in to Bonpala</h1>' +
+          '<p class="lead">Use your Firebase account to load and sync your progress.</p>' +
+          (configMissing ? '<div class="login-error" role="alert">Firebase is not configured yet. Add your project values in <code>js/firebase-config.js</code>.</div>' : "") +
+          (error ? '<div class="login-error" role="alert">' + esc(error) + '</div>' : "") +
+          '<form class="login-form" id="login-form" novalidate>' +
+            '<label for="login-email">Email</label>' +
+            '<input type="email" id="login-email" name="email" autocomplete="username" required>' +
+            '<label for="login-password">Password</label>' +
+            '<input type="password" id="login-password" name="password" autocomplete="current-password" required>' +
+            '<button class="primary" id="login-submit-btn" type="submit"' + (disabled ? " disabled" : "") + '>' + submitLabel + "</button>" +
+          "</form>" +
+          '<p class="small muted">Self-registration is disabled in this app.</p>' +
+        "</div>" +
+      "</section>"
+    );
+  }
+
   function notFound(message) {
     navFor("");
     return '<div class="empty"><span class="eyebrow">404</span><h1 style="margin:8px 0">Page not found</h1><p>' + esc(message || "Check the address or return to the dashboard.") + '</p><div class="button-row" style="justify-content:center;margin-top:16px"><a class="primary" href="#/">Back to dashboard</a></div></div>';
@@ -1149,6 +1192,7 @@
     lessonOrder: lessonOrder,
     sessionOrder: sessionOrder,
     dictionaryWidget: dictionaryWidget,
-    shortcutLabel: shortcutLabel
+    shortcutLabel: shortcutLabel,
+    login: login
   };
 })();

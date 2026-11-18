@@ -2,7 +2,7 @@
 
 *Bonpala* is `bon` (good) + `pala` (speech, speaking) — "good speech". It is a practice companion, not a coursebook: the name is the thing you build by using it.
 
-An offline, no-build web app for learning Globasa through 780 exercises. It runs directly from `index.html` in a browser; no server, bundler, package manager, or network connection is required.
+An offline-first, no-build web app for learning Globasa through 780 exercises. It runs directly from `index.html` in a browser; no server, bundler, or package manager is required. Local practice works without a network connection, and optional Firebase auth/sync enables cloud-backed progress.
 
 ## Run it
 
@@ -15,7 +15,14 @@ python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
-Progress is stored in `localStorage` under `globasa.progress.v1`. Use **Reset all progress** on the dashboard or the Quick reference page to clear it. Clearing site data for the page has the same effect.
+Progress is cached in `localStorage` under `globasa.progress.v1`, then synced to Firestore (`users/{uid}`) after sign-in. Use **Reset all progress** on the dashboard or the Quick reference page to clear local progress. Clearing site data for the page has the same effect for local cache.
+
+### Firebase setup (required for sign-in and cloud sync)
+
+1. Edit `js/firebase-config.js` and replace all `REPLACE_WITH_*` placeholders with your Firebase web app config values.
+2. Enable Email/Password sign-in in Firebase Authentication and create your user account there (the app has no sign-up UI).
+3. Configure Firestore security rules to allow only your intended UID to read/write `users/{uid}`.
+4. Sign in from the app. The first successful sync writes your current local state to Firestore if no remote document exists yet.
 
 ## What is included
 
@@ -126,6 +133,7 @@ globasa-1867x2000.png       Apple touch icon
 css/styles.css              Responsive design system, light/dark themes
 js/normalize.js             Exact normalization contract
 js/diff.js                  Word/character diff for wrong translations
+js/firebase-config.js       Firebase placeholders + auth/firestore service wrapper
 js/storage.js               Versioned localStorage store
 js/exercise-engine.js       Per-type answer checking and session scoring
 js/review.js                Spaced-review scheduler (ladder, queue building, outcomes)

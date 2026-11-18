@@ -23,6 +23,10 @@
         <a href="#/dictionary" data-nav="dictionary">Dictionary</a>
         <a href="#/reference" data-nav="reference">Quick reference</a>
       </nav>
+      <div class="auth-controls" id="auth-controls" hidden>
+        <span class="sync-badge is-offline" id="cloud-sync-status" aria-live="polite">Offline</span>
+        <button class="ghost auth-logout" id="logout-btn" type="button" hidden>Sign out</button>
+      </div>
       <button class="icon-button" id="theme-toggle" type="button" aria-label="Switch colour theme" title="Switch colour theme">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
       </button>
@@ -70,6 +74,10 @@
   <script src="data/curriculum.js"></script>
   <script src="data/grammar.js"></script>
   <script src="data/tenses.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
   <script src="js/normalize.js"></script>
   <script src="js/diff.js"></script>
   <script src="js/storage.js"></script>

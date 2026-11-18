@@ -37,9 +37,9 @@ A static, offline-first learning app for the constructed language Globasa. It co
 - **78 grammar, vocabulary, and reading concepts**, each with **exactly 10 exercises** (780 total).
 - Three exercise mechanics: multiple choice, translation, and fill-in-the-blank.
 - A dashboard, lesson overview, exercise runner, results screen, searchable dictionary, standalone grammar summary, verb-tense study page, vocabulary lessons, and quick reference tables.
-- Progress stored locally in the browser with `localStorage`.
+- Progress cached locally in the browser with `localStorage`, with optional Firebase-authenticated cloud sync.
 
-The important constraint is **no build step at runtime**. The app is a set of classic HTML/CSS/JavaScript files opened directly from `index.html`. There is no bundler, transpiler, framework, package manager, server requirement, or network request.
+The important constraint is **no build step at runtime**. The app is a set of classic HTML/CSS/JavaScript files opened directly from `index.html`. There is no bundler, transpiler, framework, package manager, or server requirement.
 
 ---
 
@@ -78,14 +78,15 @@ index.html
   ├── data/curriculum.js             AUTHORED curriculum, 78 concepts × 10 exercises
   ├── data/grammar.js                AUTHORED standalone grammar summary
   ├── data/tenses.js                 AUTHORED verb-tense reference cards
+  ├── js/firebase-config.js          Firebase placeholders + auth/firestore service wrapper
   │
   ├── js/normalize.js                exact answer normalization contract
   ├── js/diff.js                     word/character diff for wrong translations
-  ├── js/storage.js                  localStorage persistence + fallback
+  ├── js/storage.js                  local cache + Firestore sync layer
   ├── js/exercise-engine.js          answer evaluation + in-memory lesson sessions
   ├── js/review.js                   spaced-repetition scheduler
   ├── js/views.js                    all HTML rendering functions
-  └── js/app.js                      hash router, event wiring, theme, boot
+  └── js/app.js                      hash router, auth gate, event wiring, theme, boot
 ```
 
 All scripts are classic scripts, not ES modules. This is deliberate: `file://` pages can load classic scripts reliably, while ES module imports are subject to browser-specific CORS/file-origin restrictions.
@@ -97,6 +98,10 @@ data/words.js
 data/curriculum.js
 data/grammar.js
 data/tenses.js
+https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js
+https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js
+https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js
+js/firebase-config.js
 js/normalize.js
 js/diff.js
 js/storage.js
@@ -114,9 +119,10 @@ js/app.js
 | `window.GLOBASA_CURRICULUM` | `data/curriculum.js` | Concepts, areas, exercises, `byId`, computed totals |
 | `window.GLOBASA_GRAMMAR` | `data/grammar.js` | Standalone grammar summary sections, core rules, and study path |
 | `window.GLOBASA_TENSES` | `data/tenses.js` | Standalone verb-tense cards, tables, traps, and practice links |
+| `window.FirebaseService` | `js/firebase-config.js` | Firebase auth + Firestore helpers |
 | `window.GlobasaNormalize` | `js/normalize.js` | Lowercase/punctuation/space normalization |
 | `window.GlobasaDiff` | `js/diff.js` | Word/character diff and closest-answer selection |
-| `window.GlobasaStorage` | `js/storage.js` | Progress read/write/reset API |
+| `window.GlobasaStorage` | `js/storage.js` | Progress cache + cloud sync API |
 | `window.GlobasaEngine` | `js/exercise-engine.js` | Per-type evaluation and session scoring |
 | `window.GlobasaReview` | `js/review.js` | Spaced-review states, queue building, ladder updates |
 | `window.GlobasaViews` | `js/views.js` | Screen rendering functions |
@@ -139,7 +145,8 @@ Avoid adding more globals unless necessary. A new module can attach one namespac
 | [data/tenses.js](./data/tenses.js) | Authored verb-tense reference and practice links | **Yes** |
 | [js/normalize.js](./js/normalize.js) | Exact answer normalization | Only with tests updated |
 | [js/diff.js](./js/diff.js) | Diff for wrong translations | Yes, with `tools/test_diff.mjs` updated |
-| [js/storage.js](./js/storage.js) | Progress schema and persistence | Yes, with migration care |
+| [js/firebase-config.js](./js/firebase-config.js) | Firebase placeholders and service wrapper | Yes |
+| [js/storage.js](./js/storage.js) | Progress schema, local cache, and cloud sync | Yes, with migration care |
 | [js/exercise-engine.js](./js/exercise-engine.js) | Evaluation and scoring | Yes |
 | [js/review.js](./js/review.js) | Spaced-review scheduling | Yes, with `tools/test_review.mjs` updated |
 | [js/views.js](./js/views.js) | HTML for every screen | Yes |
@@ -523,7 +530,7 @@ Editing rules:
 
 `index.html` loads the scripts at the end of `<body>`. `js/app.js` then:
 
-1. Reads `GLOBASA_CURRICULUM`, `GlobasaViews`, `GlobasaStorage`, `GlobasaEngine`.
+1. Reads `GLOBASA_CURRICULUM`, `GlobasaViews`, `GlobasaStorage`, `GlobasaEngine`, and `FirebaseService`.
 2. Initializes `State`:
 
    ```js
@@ -535,7 +542,7 @@ Editing rules:
    ```
 
 3. Applies the saved theme (`auto`, `light`, `dark`) to `<html data-theme="...">`.
-4. Renders the current hash route.
+4. Subscribes to Firebase auth state, renders the login screen while signed out, and runs `Storage.initCloudSync(user.uid)` after sign-in.
 5. Registers `hashchange`, form submit, click, input, and change listeners on the `#view` container.
 6. Shows a toast if `localStorage` is unavailable.
 
@@ -814,6 +821,12 @@ Tests live in [tools/test_normalize.mjs](./tools/test_normalize.mjs); the curric
 globasa.progress.v1
 ```
 
+When authenticated, the same state is synced to Firestore at:
+
+```text
+users/{uid} => { payload, schemaVersion, updatedAt }
+```
+
 Shape:
 
 ```json
@@ -859,6 +872,10 @@ API:
 | `getTheme()` / `setTheme(theme)` | `auto`, `light`, `dark` |
 | `reset()` | Clear all progress and reset settings to `auto` |
 | `exportState()` | Deep copy for debugging/export |
+| `initCloudSync(uid)` | Hydrate from Firestore (remote wins) or write first cloud snapshot |
+| `flushCloudSave()` | Immediately push pending dirty local state |
+| `clearCloudSession()` | Flush pending writes and clear authenticated sync context |
+| `onSyncStatus(fn)` | Subscribe to `synced` / `syncing` / `error` / `offline` status updates |
 | `isAvailable()` | False if localStorage access failed |
 
 Fallback behaviour: if `localStorage` throws (private mode, restricted file origin), the module keeps an in-memory state so the app remains usable for the session; the boot code shows a toast that progress cannot be saved.
@@ -1268,7 +1285,7 @@ The dictionary view intentionally renders only 80 rows at a time. Keep the "Show
 
 ## 16. Styling, theming, and responsiveness
 
-All styling is in [css/styles.css](./css/styles.css). There are no external fonts, icon packs, or CDN assets; the app must remain usable offline.
+All styling is in [css/styles.css](./css/styles.css). There are no external fonts or icon packs. Firebase SDK scripts load from `gstatic` CDN when auth/sync is enabled.
 
 - Design tokens are at the top of the file (`--bg`, `--ink`, `--accent`, `--gold`, `--danger`, `--success`, `--radius`, `--shadow`, etc.).
 - Dark mode is implemented with `[data-theme="dark"]` overrides. The theme is set on `<html>` by `applyTheme()` / `toggleTheme()` in `app.js`; `Storage` persists `auto`, `light`, or `dark`.
