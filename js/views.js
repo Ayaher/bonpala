@@ -1146,6 +1146,7 @@
     var configMissing = Boolean(opts.configMissing);
     var submitLabel = isLoading ? "Signing in..." : "Sign in";
     var disabled = isLoading || configMissing;
+    var inputDisabled = isLoading;
 
     return (
       '<section class="login-screen">' +
@@ -1156,9 +1157,9 @@
           (error ? '<div class="login-error" role="alert">' + esc(error) + '</div>' : "") +
           '<form class="login-form" id="login-form" novalidate>' +
             '<label for="login-email">Email</label>' +
-            '<input type="email" id="login-email" name="email" autocomplete="username" required>' +
+            '<input type="email" id="login-email" name="email" autocomplete="username" required' + (inputDisabled ? " disabled" : "") + '>' +
             '<label for="login-password">Password</label>' +
-            '<input type="password" id="login-password" name="password" autocomplete="current-password" required>' +
+            '<input type="password" id="login-password" name="password" autocomplete="current-password" required' + (inputDisabled ? " disabled" : "") + '>' +
             '<button class="primary" id="login-submit-btn" type="submit"' + (disabled ? " disabled" : "") + '>' + submitLabel + "</button>" +
           "</form>" +
         "</div>" +
