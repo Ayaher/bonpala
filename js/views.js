@@ -1152,7 +1152,6 @@
         '<div class="login-card">' +
           '<span class="eyebrow">Private access</span>' +
           '<h1>Sign in to Bonpala</h1>' +
-          '<p class="lead">Use your Firebase account to load and sync your progress.</p>' +
           (configMissing ? '<div class="login-error" role="alert">Firebase is not configured yet. Add your project values in <code>js/firebase-config.js</code>.</div>' : "") +
           (error ? '<div class="login-error" role="alert">' + esc(error) + '</div>' : "") +
           '<form class="login-form" id="login-form" novalidate>' +
@@ -1162,7 +1161,6 @@
             '<input type="password" id="login-password" name="password" autocomplete="current-password" required>' +
             '<button class="primary" id="login-submit-btn" type="submit"' + (disabled ? " disabled" : "") + '>' + submitLabel + "</button>" +
           "</form>" +
-          '<p class="small muted">Self-registration is disabled in this app.</p>' +
         "</div>" +
       "</section>"
     );
