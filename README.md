@@ -2,7 +2,7 @@
 
 *Bonpala* is `bon` (good) + `pala` (speech, speaking) — "good speech". It is a practice companion, not a coursebook: the name is the thing you build by using it.
 
-An offline-first, no-build web app for learning Globasa through 780 exercises. It runs directly from `index.html` in a browser; no server, bundler, or package manager is required. Local practice works without a network connection, and optional Firebase auth/sync enables cloud-backed progress.
+An offline-first, no-build web app for learning Globasa through 860 exercises. It runs directly from `index.html` in a browser; no server, bundler, or package manager is required. Local practice works without a network connection, and optional Firebase auth/sync enables cloud-backed progress.
 
 ## Run it
 
@@ -26,19 +26,20 @@ Progress is cached in `localStorage` under `globasa.progress.v1`, then synced to
 
 ## What is included
 
-- **78 concepts, exactly 10 exercises each (780 total)**, grouped into nine areas:
-  - Foundations & expansion (9 concepts): alphabet, nouns/gender, pronouns, numbers, prepositions, comparatives, derivation, infinitives, imperatives.
-  - Word categorization (6): noun/verb words, adjectives vs. adverbs, transitivity, ambitransitivity, function words.
-  - Rigid syntax (6): strict SVO, adjective placement, mandatory `sen`, copula verbs, tense/aspect order, negation and questions.
-  - Verb tenses (3): past/present/future, habitual/immediate/ongoing forms, and common compound tenses.
-  - Relative clauses (5): `hu` + resumptive `da`, object relatives, `dasu`, adverbial relatives, `feki`.
-  - Correlatives (6): every column and row, including rote table recall and usage rules.
-  - Vocabulary in action (3): everyday actions, everyday objects, and plans/daily routines using words from the supplied 500-word frequency list.
-  - Nuances & style (10): the author's follow-up notes on `-ing` forms, number and `plu`, states versus passives, `-gi`/`-cu` derivation, `ki`/`feki`/`hu` clauses, `hu denloka` versus `denloka hu`, parsing with `ji`, and three lessons built from the 150 canonical sentences (position, time, manner).
+- **86 concepts, exactly 10 exercises each (860 total)**, grouped into nine areas:
+  - Foundations & expansion (10 concepts): alphabet, nouns/gender, pronouns, numbers, prepositions, comparatives, derivation, infinitives, imperatives, plus a **Challenge**.
+  - Word categorization (7): noun/verb words, adjectives vs. adverbs, transitivity, ambitransitivity, function words, plus a **Challenge**.
+  - Rigid syntax (7): strict SVO, adjective placement, mandatory `sen`, copula verbs, tense/aspect order, negation and questions, plus a **Challenge**.
+  - Verb tenses (4): past/present/future, habitual/immediate/ongoing forms, common compound tenses, plus a **Challenge**.
+  - Relative clauses (6): `hu` + resumptive `da`, object relatives, `dasu`, adverbial relatives, `feki`, plus a **Challenge**.
+  - Correlatives (7): every column and row, including rote table recall and usage rules, plus a **Challenge**.
+  - Vocabulary in action (4): everyday actions, everyday objects, plans/daily routines using words from the supplied 500-word frequency list, plus a **Challenge**.
+  - Nuances & style (11): the author's follow-up notes on `-ing` forms, number and `plu`, states versus passives, `-gi`/`-cu` derivation, `ki`/`feki`/`hu` clauses, `hu denloka` versus `denloka hu`, parsing with `ji`, and three lessons built from the 150 canonical sentences (position, time, manner), plus a **Challenge**.
   - Reading real Globasa (30): one close-reading lesson per story in *Thirty Short Stories in Globasa*, ordered from short, simple narratives to long, dialogue-heavy ones. Each lesson uses verbatim story excerpts for four comprehension items, one vocabulary-in-context item, two glossed fill-ins, and three translations drawn from the published sentence pairs.
+- **One Challenge per area**: each non-reading area ends with a 10-question Challenge built from the advanced specification: five passage-based, all-Globasa interpretive questions with Globasa answer options, three complex translations, and two two-blank fills. Challenge passages and options are verified against the local word list.
 - **Three exercise mechanics**: multiple choice (five options in shuffled order, one correct answer), text translation in both directions, and fill-in-the-blank with one or more blanks plus an English meaning line as a prompt. Reading-comprehension items keep five full-sentence interpretations of a short passage; recall items give the answer forms themselves (`imi`, `bax`, `moyto, moyte, moyloka, moywatu`) instead of repeating the question inside every option.
-- **Weighted toward the hard parts**: 230 of the 780 exercises (29%) target word categorization, rigid syntax, relative clauses, and correlatives, and a further 100 drill advanced nuances; every one of the 78 concepts includes at least one interpretative passage. The reading area adds 300 exercises whose passages, fills, and translation answers are checked against the story source.
-- **Vocabulary balance**: the grammar drills reuse a controlled core, while the vocabulary area adds 30 exercises built from high-frequency actions, objects, and daily situations. A broad set of existing prompts also uses varied everyday vocabulary instead of relying on the same few nouns.
+- **Weighted toward the hard parts**: 270 of the 860 exercises (31%) target word categorization, rigid syntax, relative clauses, and correlatives, and a further 110 drill advanced nuances; every one of the 86 concepts includes at least one interpretative passage. The reading area adds 300 exercises whose passages, fills, and translation answers are checked against the story source.
+- **Vocabulary balance**: the grammar drills reuse a controlled core, while the vocabulary area adds 40 exercises built from high-frequency actions, objects, and daily situations. A broad set of existing prompts also uses varied everyday vocabulary instead of relying on the same few nouns.
 - **Globasa set apart from English**: anywhere a Globasa word sits inside English prose — grammar notes, lesson blurbs, question prompts, answer options, explanations, the grammar summary and the tense cards — it is set in a different face (serif italic in sans prose, sans italic inside serif headings). Lines that are entirely Globasa already read as their own thing and keep their normal type.
 - **Immediate feedback** with the correct answer and an explanation. A wrong translation is shown as a **diff against the closest accepted wording**, so a typo appears as a marked character instead of two sentences to compare by eye.
 - **Dynamic questions (optional)**: flip *Dynamic questions* in the Progress panel and 47 items start swapping their numbers, subjects, objects or paradigm rows on every attempt — a retry asks about a different pronoun, a different number, a different correlative. The variant is seeded per attempt, so it stays put across reloads and scoring always checks the same wording the question showed. With the switch off every item renders exactly as authored.
@@ -140,11 +141,13 @@ js/review.js                Spaced-review scheduler (ladder, queue building, out
 js/views.js                 Dashboard, lesson, exercise, results, grammar, tenses, dictionary, quick reference
 js/app.js                   Hash router, theme, event wiring
 data/words.js               Generated compact dictionary (9,527 entries)
-data/curriculum.js          Authored 78-concept, 780-exercise curriculum
+data/curriculum.js          Authored 86-concept, 860-exercise curriculum
 data/grammar.js             Authored standalone grammar summary
 data/tenses.js              Authored verb-tense reference cards and practice links
 tools/build_words.py        Regenerates data/words.js from word-list.csv
 tools/validate_curriculum.mjs  Schema/count/content checks and normalization contract
+tools/check_lexicon.mjs     Token-level Globasa lexicon/derivation check for Challenge content
+tools/lookup_words.mjs      Word-class/gloss lookup against resources/word-list.csv
 tools/test_normalize.mjs    Focused normalization tests
 tools/test_review.mjs       Spaced-review scheduler tests
 tools/test_diff.mjs         Translation diff tests
@@ -167,13 +170,14 @@ Run the content, normalization and scheduler checks:
 
 ```bash
 node tools/validate_curriculum.mjs
+node tools/check_lexicon.mjs
 node tools/test_normalize.mjs
 node tools/test_review.mjs
 node tools/test_diff.mjs
 node tools/test_render.mjs
 ```
 
-The validator enforces exactly 10 exercises per concept, unique IDs and prompts, five unique options per MCQ with one valid index (full sentences whenever the item has a passage), placeholder/blank parity, the normalization contract, the grammar summary schema/study-plan links, and the tense-card schema/practice links. For the reading area it also parses `more-resources-2/Thirty Short Stories in Globasa.md` and verifies that every passage, completed fill, and translation answer is verbatim text from the cited story, with the intended 4 + 1 + 2 + 3 exercise mix.
+The validator enforces exactly 10 exercises per concept, unique IDs and prompts, five unique options per MCQ with one valid index (full sentences whenever the item has a passage), placeholder/blank parity, the normalization contract, the grammar summary schema/study-plan links, and the tense-card schema/practice links. For the reading area it also parses `more-resources-2/Thirty Short Stories in Globasa.md` and verifies that every passage, completed fill, and translation answer is verbatim text from the cited story, with the intended 4 + 1 + 2 + 3 exercise mix. The lexicon check verifies every Globasa token in the Challenge concepts against `resources/word-list.csv`, accepting only exact roots, hyphenated compounds, and official affix derivations. Challenge concept blurbs are written in Globasa because the checker validates each blurb token.
 
 ## Sources & credits
 

@@ -34,7 +34,7 @@ This document explains how the app works, where the data lives, how scoring and 
 
 A static, offline-first learning app for the constructed language Globasa. It contains:
 
-- **78 grammar, vocabulary, and reading concepts**, each with **exactly 10 exercises** (780 total).
+- **86 grammar, vocabulary, challenge, and reading concepts**, each with **exactly 10 exercises** (860 total).
 - Three exercise mechanics: multiple choice, translation, and fill-in-the-blank.
 - A dashboard, lesson overview, exercise runner, results screen, searchable dictionary, standalone grammar summary, verb-tense study page, vocabulary lessons, and quick reference tables.
 - Progress cached locally in the browser with `localStorage`, with optional Firebase-authenticated cloud sync.
@@ -75,7 +75,7 @@ index.html
   ├── css/styles.css                 design system, layout, light/dark themes
   │
   ├── data/words.js                  GENERATED dictionary, 9,527 entries
-  ├── data/curriculum.js             AUTHORED curriculum, 78 concepts × 10 exercises
+  ├── data/curriculum.js             AUTHORED curriculum, 86 concepts × 10 exercises
   ├── data/grammar.js                AUTHORED standalone grammar summary
   ├── data/tenses.js                 AUTHORED verb-tense reference cards
   ├── js/firebase-config.js          Firebase placeholders + auth/firestore service wrapper
@@ -153,6 +153,8 @@ Avoid adding more globals unless necessary. A new module can attach one namespac
 | [js/app.js](./js/app.js) | Router, state, event delegation, theme | Yes |
 | [tools/build_words.py](./tools/build_words.py) | CSV → `data/words.js` | Yes |
 | [tools/validate_curriculum.mjs](./tools/validate_curriculum.mjs) | Content/schema validator | Yes |
+| [tools/check_lexicon.mjs](./tools/check_lexicon.mjs) | Token-level Globasa lexicon/derivation check for Challenge content | Yes |
+| [tools/lookup_words.mjs](./tools/lookup_words.mjs) | Word-class/gloss lookup against `resources/word-list.csv` | Yes |
 | [tools/test_normalize.mjs](./tools/test_normalize.mjs) | Normalization tests | Yes |
 | [tools/test_review.mjs](./tools/test_review.mjs) | Scheduler tests | Yes |
 | [tools/test_diff.mjs](./tools/test_diff.mjs) | Diff tests | Yes |
@@ -382,7 +384,7 @@ The design intent is CSAT/ENEM-style interpretation: ask what a short Globasa te
 - Every translation has a valid direction and a non-empty answer.
 - At least one multi-blank fill exists in the curriculum.
 - The dictionary has 9,527 entries.
-- The created curriculum contains exactly 78 concepts and 780 exercises (the explicit total guard in the validator).
+- The created curriculum contains exactly 86 concepts and 860 exercises (the explicit total guard in the validator).
 - Every area id is unique and every area has at least one concept.
 - Reading lessons satisfy the additional provenance checks in §5.7.
 - The normalization contract still passes its fixed cases.
@@ -1173,7 +1175,7 @@ Fix all errors. Warnings should be reviewed, not blindly ignored. In particular,
 ### Step 7 — Update documentation counts if needed
 
 - `C.totals` is computed, and the dashboard/hero read from it.
-- [README.md](./README.md) contains human-readable counts (78 concepts, 780 exercises). Update that prose if the totals change.
+- [README.md](./README.md) contains human-readable counts (86 concepts, 860 exercises). Update that prose if the totals change.
 - `package`/build files do not exist, so there is no version bump step.
 
 ---
@@ -1379,6 +1381,7 @@ When changing layout, verify:
 node --check data/curriculum.js
 for f in js/*.js data/*.js; do node --check "$f"; done
 node tools/validate_curriculum.mjs
+node tools/check_lexicon.mjs
 node tools/test_normalize.mjs
 node tools/test_review.mjs
 node tools/test_diff.mjs
@@ -1386,6 +1389,8 @@ node tools/test_render.mjs
 ```
 
 `validate_curriculum.mjs` is the gate for content changes. It loads the data with Node's `vm`, checks every curriculum invariant, validates the grammar summary sections/tables/study links, validates the tense cards/tables/practice links, and exits non-zero on failure. Do not merge content changes that skip it.
+
+`check_lexicon.mjs` is the token-level Globasa gate for the Challenge concepts. It reads `resources/word-list.csv` and rejects any passage, option, answer, fill prompt, blank answer, or `{{…}}` span whose tokens are not exact word-list entries, hyphenated compounds of valid parts, or official affix derivations. Run it with no arguments (checks the `chal-*` concepts in `data/curriculum.js`) or with one or more concept JSON files. `lookup_words.mjs <word…>` prints the word class and gloss for vocabulary auditing.
 
 `test_normalize.mjs` protects the exact string-matching contract. If you intentionally change normalization, update this test and the corresponding section of the validator.
 

@@ -402,7 +402,7 @@ for (const area of C.areas) {
   if (!C.concepts.some((concept) => concept.area === area.id)) fail(`area ${area.id} has no concepts`);
 }
 
-const EXPECTED_CONCEPTS = 78;
+const EXPECTED_CONCEPTS = 86;
 const EXPECTED_EXERCISES = EXPECTED_CONCEPTS * 10;
 if (C.concepts.length !== EXPECTED_CONCEPTS) fail(`expected ${EXPECTED_CONCEPTS} concepts, found ${C.concepts.length}`);
 if (exerciseCount !== EXPECTED_EXERCISES) fail(`expected ${EXPECTED_EXERCISES} exercises, found ${exerciseCount}`);

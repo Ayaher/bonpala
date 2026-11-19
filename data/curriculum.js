@@ -2525,6 +2525,169 @@ window.GLOBASA_CURRICULUM = {
       ]
     },
     {
+      "id": "chal-foundations",
+      "area": "foundations",
+      "title": "Challenge",
+      "blurb": "Fe hin darsu, imi xwexi na loga kwanti xey, na fale multi jumle, ji na pala maxmo bon.",
+      "refs": [
+        "Grammar pp. 67–68",
+        "Grammar pp. 20–22, 48–50"
+      ],
+      "notes": [
+        "Numbers are bare roots placed before the noun: {{dua sanduku}} (two boxes), {{caredes kitabu}} (forty books), {{duades kitabu}} (twenty books). There is no plural ending, so the numeral alone carries the count; {{un}} and {{plu}} are used only when number matters.",
+        "Prepositions keep separate jobs: {{cel}} marks a destination, {{tas}} a recipient, {{ton}} company, {{ex}} a source, {{per}} a surface, {{in}} containment, and {{fe}} time or loose location. {{Mi porta to cel eskol}} needs no {{tas}}; {{Mi gibe to tas Ana}} needs no {{cel}}.",
+        "{{Max}} and {{min}} compare nouns and verbs ({{te hare max kitabu kom mi}}), while {{maxmo}} and {{minmo}} compare adjectives and adverbs ({{te lala maxmo bon kom mi}}); {{kom}} introduces the standard. Derivation stays regular: {{bukacu}} (become open) and {{bukagi}} (make open) sit beside the prefixes day- and lil- ({{daybaytu}}, {{lilbaytu}}) and the negating nen- ({{nenmuhim}})."
+      ],
+      "examples": [
+        [
+          "Ana le porta dua sanduku cel darsukamer ton sesu sodar.",
+          "Ana carried two boxes to the classroom with her own sibling."
+        ],
+        [
+          "Dukan de Sam hare min pingo kom dukan de Bela, mas pingo de Sam sen maxmo bon.",
+          "Sam's shop has fewer apples than Bela's shop, but Sam's apples are better."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-foundations-1",
+          "type": "mcq",
+          "passage": "Jaledin Ana le awidi ex dukan ton tiga sanduku. Per dolo, te le gibe un sanduku tas Beni ji te le porta dua sanduku cel eskol. Fe axam, Beni le buka sesu sanduku in ogar ji te le ewreka sol kitabu in to.",
+          "prompt": "Kwanti sanduku Ana le porta cel eskol jaledin, ji kete le ewreka kitabu xafe ki te le buka sanduku?",
+          "options": [
+            "{{Beni le porta dua sanduku cel eskol, ji Ana le ewreka kitabu in sesu sanduku.}}",
+            "{{Ana le gibe dua sanduku tas Beni, ji Beni le ewreka kitabu fe soba in dukan.}}",
+            "{{Ana le porta dua sanduku cel eskol, ji Beni le ewreka kitabu in sesu sanduku.}}",
+            "{{Ana le porta tiga sanduku cel eskol, ji te le ewreka kitabu in un sanduku.}}",
+            "{{Beni le gibe un sanduku tas Ana per dolo, ji te le buka to in darsukamer.}}"
+          ],
+          "correct": 2,
+          "explanation": "{{Porta dua sanduku cel eskol}} keeps the destination with {{cel}}, while {{gibe un sanduku tas Beni}} marks the receiver with {{tas}}. Ana gives one box away and carries the remaining two to school, so the box opened at home and holding only books must be Beni's: {{sesu sanduku}} is his own box, while {{tesu}} would point to someone else's."
+        },
+        {
+          "id": "chal-foundations-2",
+          "type": "mcq",
+          "passage": "Misu darsukamer hare caredes kitabu. Darsukamer de Bela hare max kitabu kom misu to, ji darsukamer de Sam hare min kitabu kom misu to: sol duades. Tim le loga ki te vole na hare sama numer de kitabu kom darsukamer de Bela.",
+          "prompt": "Keto sen sati tem kitabu in darsukamer de Sam?",
+          "options": [
+            "{{Darsukamer de Sam hare max kitabu kom darsukamer de Bela, mas min kom misu to.}}",
+            "{{Moy darsukamer hare sama numer de kitabu, ji den numer sen duades.}}",
+            "{{Darsukamer de Bela hare min kitabu kom darsukamer de Sam, mas max kom misu to.}}",
+            "{{Misu darsukamer hare duades kitabu, ji darsukamer de Sam hare caredes.}}",
+            "{{Darsukamer de Sam hare min kitabu kom misu darsukamer, hu da hare caredes kitabu.}}"
+          ],
+          "correct": 4,
+          "explanation": "{{Min ... kom}} compares two nouns: twenty ({{duades}}) is fewer than forty ({{caredes}}), so Sam's classroom sits below the speaker's. Bela's classroom is the one above forty, which makes the reversed {{max}} and the swapped {{duades}}/{{caredes}} pair in the other options false. A noun head like {{kitabu}} takes {{min}}, not {{minmo}}."
+        },
+        {
+          "id": "chal-foundations-3",
+          "type": "mcq",
+          "passage": "Fe soba, janela de kokikamer le bukacu yon se. Vento bardi le ata in kamer, ji Bela le klosi janela fori koski te le ganjon bardi. Matre de Bela le loga: \"Am buka to dur lima minuto.\" Xafe ki Bela le fale to, janela le sen bukado haji, mas kamer le resta bardi.",
+          "prompt": "Keseba Bela le klosi janela de kokikamer, ji keto le sen sati xafe lima minuto?",
+          "options": [
+            "{{Te le klosi to koski te le ganjon bardi, ji xafe ki te le ribuka to, kamer le resta bardi.}}",
+            "{{Te le klosi to koski termo le sen day in kamer, ji xafe to vento bardi le awidi ex kamer.}}",
+            "{{Janela le bukacu yon se lefe ki Bela le klosi to, ji matre le no loga he ban lexi tem to.}}",
+            "{{Matre de Bela le klosi janela, ji Bela le loga ki te am buka to dur lima minuto.}}",
+            "{{Bela le buka janela koski te le ganjon bardi, ji te le no klosi to xafe to.}}"
+          ],
+          "correct": 0,
+          "explanation": "{{Bukacu yon se}} with the -cu suffix ('become') reports the window opening by itself; {{bebuka}} would name a person who opened it. {{Koski te le ganjon bardi}} supplies Bela's reason for closing it, the mother's {{Am buka to dur lima minuto}} is an imperative plus a duration, and the final {{sen bukado}} is the resulting state rather than a passive event."
+        },
+        {
+          "id": "chal-foundations-4",
+          "type": "mcq",
+          "passage": "Jaxadin sen xencudin de Nini. Te le invita lima doste cel ogar fe satu care, ji te vole na gibe tas ete cay ton roti ji pingo. Mas te hare sol dua pingo in kamer. Fori, te le irsal mesaje tas Beni.",
+          "prompt": "Ke jumle maxim bon duregi hin hikaye tem xencudin de Nini?",
+          "options": [
+            "{{Nini xa fini total cay lefe ki doste ata, ji te no haja pingo.}}",
+            "{{Doste xa ata fe satu lima, fe folo Nini hare multi watu.}}",
+            "{{Nini le no invita doste koski te hare sol dua pingo in kamer.}}",
+            "{{Beni xa porta max pingo kom dua, celki Nini abil na gibe tas moy doste.}}",
+            "{{Beni le koki supa tas Nini fe soba, mas te le no yam to.}}"
+          ],
+          "correct": 3,
+          "explanation": "{{Na gibe tas ete}} is the infinitive ({{na}} + verb) with the recipient in {{tas}}, and it is what Nini plans at {{satu care}}. With only {{dua pingo}} for {{lima}} friends she is short of fruit, so asking Beni for more apples ({{max ... kom dua}}) is the only continuation that follows; {{celki}} adds the purpose 'so that'."
+        },
+        {
+          "id": "chal-foundations-5",
+          "type": "mcq",
+          "passage": "Sam ergo in lil dukan per dolo de misu baytu. Te sen maxmo juni kom Johan, mas te fale day ergo moy din. Paya de Sam sen min kom paya de Johan, fe hataya ki te ergo max satu. Koski to, Sam le karar na xwexi neo profesi in axam.",
+          "prompt": "Keseba Sam le karar na xwexi neo profesi in axam?",
+          "options": [
+            "{{Te sen maxmo lao kom Johan, fe folo te haja na resta in dukan dur total din.}}",
+            "{{Te cudu min pesa kom Johan fe hataya ki te fale max ergo, fe folo te vole neo profesi.}}",
+            "{{Dukan xa klosi, ji Sam no hare ergo xafe axam, fe folo te hare multi watu.}}",
+            "{{Sam le karar na awidi ex dukan koski te le suki na ergo dur axam ton Johan.}}",
+            "{{Paya in dukan de Sam le sen maxmo day kom paya in alo dukan, fe folo te le resta dur lungo watu.}}"
+          ],
+          "correct": 1,
+          "explanation": "{{Fe hataya ki}} concedes ('although') and {{koski to}} draws the conclusion: Sam works more hours ({{max satu}}) for less money ({{min ... kom}}), so he decides to learn a new profession. Note that {{ergo}} changes class by position: {{te ergo}} is the verb 'he works', {{day ergo}} is the noun 'hard work'."
+        },
+        {
+          "id": "chal-foundations-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Bela carried two boxes from the shop to our classroom, and she put three books on the teacher's table.",
+          "answer": "Bela le porta dua sanduku ex dukan cel imisu darsukamer, ji te le plasi tiga kitabu per mesa de alimyen.",
+          "accept": [],
+          "explanation": "{{Ex}} marks the source and {{cel}} the destination, so one clause can travel from {{dukan}} to {{darsukamer}}; {{per mesa}} sets the books on a surface. Repeating {{te}} after {{ji}} keeps the second verb's subject from drifting to the boxes ({{ji le plasi}} would also work)."
+        },
+        {
+          "id": "chal-foundations-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: My sibling is two years younger than I am, but sings better than I do.",
+          "answer": "Misu sodar sen dua nyan maxmo juni kom mi, mas te lala maxmo bon kom mi.",
+          "accept": [],
+          "explanation": "{{Juni}} and {{bon}} are adjectives/adverbs, so the comparison uses {{maxmo ... kom}}; {{dua nyan}} supplies the number and {{sen}} is obligatory before the adjective predicate. A noun comparison would instead take bare {{max}}/{{min}}."
+        },
+        {
+          "id": "chal-foundations-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Lefe ki imi le xoru darsu, alimyen le loga ki imi musi na fale max ergo ton min watu.}}",
+          "answer": "Before we started the lesson, the teacher said that we must do more work with less time.",
+          "accept": [],
+          "explanation": "{{Lefe ki}} places the starting of the lesson before the teacher's statement, {{ki}} opens the reported clause, and {{max ergo}} / {{min watu}} compare the nouns {{ergo}} and {{watu}} inside prepositional phrases."
+        },
+        {
+          "id": "chal-foundations-9",
+          "type": "fill",
+          "prompt": "Misu kamer hare ___ kursi kom yusu kamer, ji yusu kamer hare ___ kursi kom misu to.",
+          "blanks": [
+            {
+              "answer": "min",
+              "accept": []
+            },
+            {
+              "answer": "max",
+              "accept": []
+            }
+          ],
+          "gloss": "My room has fewer chairs than your room, and your room has more chairs than mine.",
+          "explanation": "{{Kursi}} is a noun, so quantity is compared with bare {{min ... kom}} and {{max ... kom}}; {{minmo}} or {{maxmo}} would be required only before an adjective or adverb such as {{day}}."
+        },
+        {
+          "id": "chal-foundations-10",
+          "type": "fill",
+          "prompt": "Am porta dua sanduku ___ darsukamer de Bela, ji am gibe un kitabu ___ moy nini in to.",
+          "blanks": [
+            {
+              "answer": "cel",
+              "accept": []
+            },
+            {
+              "answer": "tas",
+              "accept": []
+            }
+          ],
+          "gloss": "Carry two boxes to Bela's classroom, and give one book to every child in it.",
+          "explanation": "{{Am}} opens each imperative verb, {{cel}} marks where {{porta}} goes, and {{tas}} marks who receives the book from {{gibe}}; the pronoun {{to}} refers back to the classroom."
+        }
+      ]
+    },
+    {
       "id": "wc-noun-verb",
       "area": "word-classes",
       "title": "Noun/verb words",
@@ -3615,6 +3778,175 @@ window.GLOBASA_CURRICULUM = {
       ]
     },
     {
+      "id": "chal-word-classes",
+      "area": "word-classes",
+      "title": "Challenge",
+      "blurb": "Klase de falelexi ji plasi de ojeto sen muhim cel sati mena, fe folo na jixi ete sen bon cel na doxo ji na eskri.",
+      "refs": [
+        "Grammar pp. 16–17",
+        "Grammar pp. 17–19"
+      ],
+      "notes": [
+        "Transitive verbs (class b.oj) take the direct object at once, with no preposition, and the receiver takes {{tas}} — {{Alimyen le gibe harita tas Tim}}.",
+        "Intransitive verbs (class b.nenoj) take no bare object. A destination takes {{cel}} ({{ruata cel baytu}}), while a location takes {{in}}, {{fe}}, {{per}} or {{bax}}.",
+        "Ambitransitive verbs (class b.oro) can carry either role. {{Filme le interes mi}} makes the film the cause, {{Mi interes tem filme}} makes me the experiencer, and a state verb such as {{bardi}} means 'be cold', while {{bukacu}} means 'become open'."
+      ],
+      "examples": [
+        [
+          "Alimyen le gibe neo harita tas estudiyen.",
+          "The teacher gave the new map to the student."
+        ],
+        [
+          "Fe noce, dwer le bukacu koski vento le sen bala.",
+          "At night the door opened because the wind was strong."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-word-classes-1",
+          "type": "mcq",
+          "passage": "Jaledin fe axam, Beni le oko filme tem lama xaher. Filme le interes te godo, fe folo te le idi cel baytu de sesu sodar cel na diskusi tem to. Mas tesu sodar le loga ki filme le no interes te.",
+          "prompt": "In the passage, how did Beni and his brother each respond to the film about the old city?",
+          "options": [
+            "{{Beni le ganjon day interes tem filme, mas tesu sodar le no hare interes tem to.}}",
+            "{{Filme le gibe interes tas tesu sodar, mas Beni le no vole na diskusi tem to.}}",
+            "{{Beni le interes sesu sodar godo, fe folo ete le diskusi filme dur lungo watu.}}",
+            "{{Tesu sodar le ganjon interes tem filme, fe kompara ki Beni le no suki to.}}",
+            "{{Beni le no suki filme, mas te le idi cel baytu de sesu sodar cel na oko to un mara.}}"
+          ],
+          "correct": 0,
+          "explanation": "With {{interes}} the film is the source and the person is the experiencer: {{Filme le interes te}} means the film aroused interest in him, and {{Te ganjon interes tem filme}} describes his own feeling. The passage makes Beni the interested one and his brother the one who said the film did not interest him."
+        },
+        {
+          "id": "chal-word-classes-2",
+          "type": "mcq",
+          "passage": "Fe soba, Nini le idi cel dukan cel na kari roti. Per dolo, te le sonxi sesu harita in day grupo de insan. Te le xerca to dur lungo watu, mas te le no ewreka to. Fe fini, te le ruata cel baytu wal roti.",
+          "prompt": "Keseba Nini le ruata cel baytu wal roti?",
+          "options": [
+            "{{Dukan le sen klosido, fe folo te le resta in dolo dur total soba.}}",
+            "{{Te le sonxi pesa in dolo, fe folo te le no hare pesa cel roti.}}",
+            "{{Te le sonxi harita ji le no abil na ewreka to, fe folo te le ruata cel baytu wal roti.}}",
+            "{{Matre le no vole roti, fe folo Nini le resta in baytu dur total soba.}}",
+            "{{Nini le ewreka harita xafe lungo watu, mas dukan le sen teli of dolo.}}"
+          ],
+          "correct": 2,
+          "explanation": "{{sonxi}} and {{xerca}} are transitive, so {{harita}} and {{to}} follow them directly. Losing the map in the crowd left Nini unable to find the shop: {{no abil na ewreka dukan}}. She then came home with {{ruata cel baytu}}, an intransitive verb that cannot take a bare object."
+        },
+        {
+          "id": "chal-word-classes-3",
+          "type": "mcq",
+          "passage": "Fe noce, kamer le bardi daymo. Ana le klosi janela, mas kamer le haji bardi. Fe folo te le porta day koberi cel bistar ji le somno lungo somno.",
+          "prompt": "Ke jumle hare sama mena kom hin texto tem noce de Ana?",
+          "options": [
+            "{{Ana le buka janela cel na termo kamer, mas kamer le haji bardi.}}",
+            "{{Na klosi janela le no termo kamer, fe folo Ana le somno bax day koberi.}}",
+            "{{Kamer le bardi koski Ana le klosi janela, fe folo te le buka to.}}",
+            "{{Ana le termo kamer yon klosi janela, fe folo te le no haja koberi.}}",
+            "{{Janela le resta bukado, fe folo kamer le sencu termopul fe soba.}}"
+          ],
+          "correct": 1,
+          "explanation": "{{bardi}} here is a state verb, not an action: {{kamer le bardi}} means the room was cold, not that it became cold. Closing the window did nothing, so {{Na klosi janela le no termo kamer}} restates the passage, and the cover is the practical answer to a room that stayed {{bardi}}."
+        },
+        {
+          "id": "chal-word-classes-4",
+          "type": "mcq",
+          "passage": "Jaledin, Johan le gibe sesu lama harita tas Tim. Tim le loga ki te xa hifazi to, mas fe soba te le sonxi to in tren. Te le xerca to dur total din, mas te le no ewreka to.",
+          "prompt": "In the passage, what became of the old map that Johan handed to Tim?",
+          "options": [
+            "{{Johan le sonxi harita in tren xafe ki Tim le gibe to tas te.}}",
+            "{{Tim le gibe harita tas Johan, mas Johan le hifazi to dur lungo watu.}}",
+            "{{Tim le ewreka harita in tren fe soba xafe ki te le xerca to.}}",
+            "{{Harita le no resta ton Tim in tren, ji te le xerca to dur total din wal sukses.}}",
+            "{{Johan le hifazi harita dur lungo watu, ji te le gibe to tas Tim in tren.}}"
+          ],
+          "correct": 3,
+          "explanation": "{{gibe}} takes the thing given as its direct object and the receiver with {{tas}}: {{Johan le gibe harita tas Tim}}. From then on Tim is the one who acts, so {{sonxi to}} and {{xerca to}} describe his loss and his failed search, not Johan's."
+        },
+        {
+          "id": "chal-word-classes-5",
+          "type": "mcq",
+          "passage": "Dur darsu, vento le buka janela bala, ji paper le fley cel geo. Alimyen Bela le klosi janela, mas xafe dua minuto janela le bukacu un mara.",
+          "prompt": "Ke jumle maxim bon duregi hin hikaye tem Bela ji janela?",
+          "options": [
+            "{{Fe folo, Bela le buka janela maxmo day koski kamer le sen termopul.}}",
+            "{{Estudiyen le klosi janela, fe hataya ki Bela le buka to.}}",
+            "{{Janela le no bukacu un mara, fe folo nilte le klosi to.}}",
+            "{{Bela le klosi janela, fe folo nilte le bukacu to dur darsu.}}",
+            "{{Fe folo, Bela le klosi janela maxmo bala ji le loga ki nilte am buka to finki darsu fini.}}"
+          ],
+          "correct": 4,
+          "explanation": "The wind first acts on the window ({{vento le buka janela}}), then the window opens by itself ({{janela le bukacu}}). Since one closing attempt failed, closing it {{maxmo bala}} and forbidding anyone to open it is the only continuation that fits both the story and the {{am}} mandate."
+        },
+        {
+          "id": "chal-word-classes-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Sam gave the new map to the student, but the student lost it in the big city.",
+          "answer": "Sam le gibe neo harita tas estudiyen, mas estudiyen le sonxi to in day xaher.",
+          "accept": [
+            "Sam le gibe neo harita tas estudiyen, mas te le sonxi to in day xaher."
+          ],
+          "explanation": "{{gibe}} is transitive, so {{neo harita}} follows it directly and the receiver takes {{tas}}. {{sonxi}} then takes the pronoun {{to}} as a bare object, while the place of the loss needs {{in}}."
+        },
+        {
+          "id": "chal-word-classes-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Although the room was cold, Ana did not close the window, because she wanted to hear the birds.",
+          "answer": "Fe hataya ki kamer le bardi, Ana le no klosi janela koski te le vole na ore piu.",
+          "accept": [
+            "Ana le no klosi janela fe hataya ki kamer le bardi, koski te le vole na ore piu."
+          ],
+          "explanation": "Concession uses {{fe hataya ki}}; negation follows the tense ({{le no klosi}}), and the object of {{klosi}} stays right after the verb. The state verb {{bardi}} takes no object, and wanting takes {{na}} + verb: {{vole na ore piu}}."
+        },
+        {
+          "id": "chal-word-classes-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Filme le interes Bela godo, fe folo te le xerca neo filme de sama tipo, mas tesu sodar le no interes tem filme.}}",
+          "answer": "The film interested Bela a lot, so she looked for a new film of the same type, but her brother was not interested in films.",
+          "accept": [
+            "The film interested Bela a lot, so she looked for a new film of the same kind, but her brother was not interested in films."
+          ],
+          "explanation": "The same verb carries two roles. {{Filme le interes Bela}} makes the film the cause and Bela the experiencer, while {{le no interes tem filme}} describes the brother's own feeling, with {{tem}} naming what the feeling is about."
+        },
+        {
+          "id": "chal-word-classes-9",
+          "type": "fill",
+          "prompt": "Xafe darsu, Nini ji Beni le idi ___ kitabudom, ji ete le resta ___ doxokamer dur tiga satu.",
+          "blanks": [
+            {
+              "answer": "cel",
+              "accept": []
+            },
+            {
+              "answer": "in",
+              "accept": []
+            }
+          ],
+          "gloss": "After class the students went to the library and stayed in the reading room for three hours.",
+          "explanation": "{{idi}} is intransitive, so its destination needs {{cel}}. {{resta}} is also intransitive and cannot take a bare object, so the place where the students stayed takes {{in}}."
+        },
+        {
+          "id": "chal-word-classes-10",
+          "type": "fill",
+          "prompt": "Beni le xidu na ___ dwer koski kamer le termo daymo, mas dwer le no ___.",
+          "blanks": [
+            {
+              "answer": "buka",
+              "accept": []
+            },
+            {
+              "answer": "bukacu",
+              "accept": []
+            }
+          ],
+          "gloss": "Beni tried to open the door because the room was very hot, but the door did not open.",
+          "explanation": "{{buka}} is ambitransitive. With {{dwer}} as a direct object it means to open something, but the door's own change of state takes {{bukacu}}, where the suffix -cu marks becoming."
+        }
+      ]
+    },
+    {
       "id": "syn-svo",
       "area": "syntax",
       "title": "Strict SVO order",
@@ -4636,6 +4968,177 @@ window.GLOBASA_CURRICULUM = {
       ]
     },
     {
+      "id": "chal-syntax",
+      "area": "syntax",
+      "title": "Challenge",
+      "blurb": "Hin darsu gibe multi misal de bon jumle tas yu, ji yu xa abil na eskri sesu jumle.",
+      "refs": [
+        "Grammar pp. 73–74",
+        "Lessons 4–8"
+      ],
+      "notes": [
+        "Unmarked sentences follow subject, verb, object, and prepositional phrases come after the object: {{Ana le kari dua tiketo in dukan}}.",
+        "Adjectives precede their noun, and every non-verbal predicate needs {{sen}}: a noun ({{Baytu de Ana sen lama}}), an adjective ({{Ana sen hox}}), a prepositional phrase ({{Kitabu sen per mesa}}), or a {{ki}}-clause ({{Problema sen ki nilte le ata}}).",
+        "Tense and aspect precede {{no}} ({{Beni le no ata}}). {{Kam}} opens a yes/no question and {{ku}} marks a content question inside a statement, while after an object noun phrase {{ji}} needs a fresh subject or tense marker: {{Ana le kari dua tiketo ji te le danse}}."
+      ],
+      "examples": [
+        [
+          "Ana le no kari lama syahe baytu.",
+          "Ana did not buy the old black house."
+        ],
+        [
+          "Bela le swal kama Tim xa ata, ji te le lala dua meli lala.",
+          "Bela asked whether Tim would come, and she sang two beautiful songs."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-syntax-1",
+          "type": "mcq",
+          "passage": "Baytu de Bela sen daymo lama ji syahe. Te le no vole na resta in to, fe folo te le xerca neo ogar in xaher. Nundin te ogar in lil neo baytu ner fe parke.",
+          "prompt": "Keto sen sati tem baytu de Bela nundin?",
+          "options": [
+            "{{Bela le awidi ex sesu lama baytu, ji nun te ogar in neo baytu ner fe parke.}}",
+            "{{Bela haji ogar in sesu day lama baytu koski te le suki to daymo multi.}}",
+            "{{Bela nun ogar in day syahe baytu in xaher, no in lil baytu ner fe parke.}}",
+            "{{Bela le xerca neo baytu in xaher, mas te le resta in sesu lama baytu.}}",
+            "{{Bela xa kari neo baytu ner fe parke xafe ki te le awidi ex xaher.}}"
+          ],
+          "correct": 0,
+          "explanation": "{{Baytu de Bela sen daymo lama ji syahe}} and {{te le no vole na resta in to}} explain the move, and {{Nundin te ogar in lil neo baytu ner fe parke}} gives her present home. {{Haji}} in the second option reverses the move, and the size and colour details rule out the other options."
+        },
+        {
+          "id": "chal-syntax-2",
+          "type": "mcq",
+          "passage": "Jaledin, Sam le xa irsal informe tas presidi fe soba. Mas komputer le kasiru, ji te le no abil na fini to. Fe folo, te le loga ki te xa no irsal to nundin.",
+          "prompt": "Keto le fale tem informe de Sam xafe ki komputer le kasiru?",
+          "options": [
+            "{{Presidi le irsal informe tas Sam fe soba, mas Sam le no abil na doxo to.}}",
+            "{{Komputer le kasiru, fe folo Sam le no abil na fini to ji le no irsal.}}",
+            "{{Sam le irsal informe tas presidi fe soba jaledin lefe ki komputer le kasiru.}}",
+            "{{Sam le fini total informe jaledin, mas te le karar na no irsal to nundin.}}",
+            "{{Sam xa irsal informe tas presidi nundin koski komputer de te no haji kasiru.}}"
+          ],
+          "correct": 1,
+          "explanation": "{{Le xa irsal}} states only a past intention, so the report never left; {{komputer le kasiru}} causes {{te le no abil na fini to}}, and the closing {{xa no irsal}} keeps it unsent today. Both negations keep the tense marker first: {{le no abil}} and {{xa no irsal}}."
+        },
+        {
+          "id": "chal-syntax-3",
+          "type": "mcq",
+          "passage": "Nini le koki termopul supa ji te le gibe to tas famil. Xafe ki ete le yam total supa, ete le loga ki supa le sen daymo bon. Nini le haha ji te le loga ki te xa koki to mara dua.",
+          "prompt": "Keseba Nini le haha xafe ki famil le yam supa?",
+          "options": [
+            "{{Famil le suki supa, fe folo Nini le ganjon hox ji te le vole na koki to mara dua.}}",
+            "{{Nini le yam total supa, fe folo te le haha ji te le no vole na koki to mara dua.}}",
+            "{{Famil le loga ki supa le sen bardi, fe folo Nini le hazuni ji te le awidi ex kamer.}}",
+            "{{Nini le no koki supa, mas famil le koki to ji ete le gibe to tas te.}}",
+            "{{Nini le xa koki supa tas famil, mas ete le no yam to koski to le sen bardi.}}"
+          ],
+          "correct": 0,
+          "explanation": "The family ate all of the soup and praised it, so Nini laughed and announced a second cooking: {{Nini le haha ji te le loga ki te xa koki to mara dua}}. After the object {{to}}, the conjunction {{ji}} takes {{te le}} to mark the new verb phrase; a bare {{koki}} there would read as another noun phrase."
+        },
+        {
+          "id": "chal-syntax-4",
+          "type": "mcq",
+          "passage": "Bela le swal tas Tim: “Kam tren cel xaher awidi fe soba?” Tim le gibe jawabu ki te no jixi, mas te le loga ki te le swal ku tren awidi keloka, ji kwanliyen le loga ki to awidi fe satu care fe axam.",
+          "prompt": "Keto Tim le loga tem tren cel xaher?",
+          "options": [
+            "{{Tim jixi ku tren awidi keloka, fe folo te le no swal tas kwanliyen.}}",
+            "{{Tren awidi fe soba, mas to no awidi fe satu care fe axam.}}",
+            "{{Tim le swal tas kwanliyen ku Bela xa awidi keloka, mas te le no jawabu.}}",
+            "{{Tren no awidi fe soba, mas to awidi fe satu care fe axam.}}",
+            "{{Bela le loga ki tren xa awidi fe axam, mas Tim le no aham to.}}"
+          ],
+          "correct": 3,
+          "explanation": "{{Kam tren cel xaher awidi fe soba?}} asks for a yes or no, and {{te no jixi}} refuses it. The reported question {{ku tren awidi keloka}} plus the manager's answer {{fe satu care fe axam}} give the real time, which rules out the morning departure."
+        },
+        {
+          "id": "chal-syntax-5",
+          "type": "mcq",
+          "passage": "Supa de Ana le sen daymo termopul denwatu hu imi le xoru na yam to. Mas xafe ban minuto, to le sencu bardi. Fe folo, Bela le loga ki imi ingay na yam to fori.",
+          "prompt": "Ke jumle hare sama mena kom hin texto tem supa de Ana?",
+          "options": [
+            "{{To le xencu bardi xafe ban minuto, fe folo Bela le no vole na yam to.}}",
+            "{{To le sen termopul fe xoru, mas to le sencu bardi xafe ban minuto.}}",
+            "{{To le sen bardi fe xoru, mas to le sencu termopul xafe ban minuto.}}",
+            "{{To le resta termopul dur total din, fe folo nilte le vole na yam to.}}",
+            "{{Ana le koki bardi supa koski te le vole na yam to fori.}}"
+          ],
+          "correct": 1,
+          "explanation": "{{Sen}} names a quality ({{supa le sen termopul}}), while {{sencu}} marks the change into a new state ({{to le sencu bardi}}). {{Xencu}} means 'be born', so it cannot describe cooling soup, and the order in the passage is hot first, cold after {{ban minuto}}."
+        },
+        {
+          "id": "chal-syntax-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Beni did not buy the old black car because it was too small for his family.",
+          "answer": "Beni le no kari lama syahe mobil koski to le sen godomo lil tas famil de te.",
+          "accept": [
+            "Beni le no kari lama syahe mobil koski to le sen godomo lil tas famil de Beni."
+          ],
+          "explanation": "Keep subject, verb, object: {{Beni le no kari lama syahe mobil}}. The tense marker comes before {{no}}, both adjectives precede {{mobil}}, and {{koski}} introduces a reason clause that still needs {{sen}} before {{godomo lil}}."
+        },
+        {
+          "id": "chal-syntax-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Ana asked whether Sam would come to the small new school, and then she sang two beautiful songs.",
+          "answer": "Ana le swal kama Sam xa ata cel lil neo eskol, ji te le lala dua meli lala.",
+          "accept": [
+            "Ana le swal kama Sam xa ata cel lil neo eskol, ji xafe to te le lala dua meli lala."
+          ],
+          "explanation": "{{Swal kama}} introduces the embedded yes/no question, {{cel lil neo eskol}} marks the destination with its adjectives before the noun, and {{ji te le lala}} adds the second verb phrase with its own subject and tense marker after the object {{dua meli lala}}."
+        },
+        {
+          "id": "chal-syntax-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Tim le no jixi ku kwanliyen xa irsal informe keloka, mas te le jixi ki to xa sen daymo muhim}}.",
+          "answer": "Tim did not know where the manager would send the information, but he knew that it would be very important.",
+          "accept": [
+            "Tim did not know where the manager would send the report, but he knew that it would be very important."
+          ],
+          "explanation": "{{Ku ... keloka}} builds the embedded content question 'where', {{le no jixi}} keeps the past tense before {{no}}, and the {{ki}}-clause after {{jixi}} keeps {{sen}} before the adjective predicate {{daymo muhim}}."
+        },
+        {
+          "id": "chal-syntax-9",
+          "type": "fill",
+          "prompt": "Supa de Bela le ___ termopul, mas to ___ sencu bardi xafe ban minuto.",
+          "blanks": [
+            {
+              "answer": "sen",
+              "accept": []
+            },
+            {
+              "answer": "le",
+              "accept": []
+            }
+          ],
+          "explanation": "{{Sen}} is obligatory before the adjective predicate {{termopul}}, and the second clause keeps its own tense marker before the verb: {{mas to le sencu bardi}}.",
+          "gloss": "Bela's soup was hot, but it became cold after a few minutes."
+        },
+        {
+          "id": "chal-syntax-10",
+          "type": "fill",
+          "prompt": "___ yu jixi ___ Tim xa ata cel randevu fe soba?",
+          "blanks": [
+            {
+              "answer": "kam",
+              "accept": []
+            },
+            {
+              "answer": "kama",
+              "accept": [
+                "ku kam"
+              ]
+            }
+          ],
+          "explanation": "{{Kam}} opens the yes/no question, and the embedded yes/no question takes {{kama}} (or {{ku kam}}): {{Kam yu jixi kama Tim xa ata cel randevu}}?",
+          "gloss": "Do you know whether Tim will come to the appointment in the morning?"
+        }
+      ]
+    },
+    {
       "id": "tense-simple",
       "area": "tenses",
       "title": "Past, present & future",
@@ -5118,6 +5621,174 @@ window.GLOBASA_CURRICULUM = {
           ],
           "explanation": "{{Le nun}} is past progressive: was writing.",
           "gloss": "I was writing a message."
+        }
+      ]
+    },
+    {
+      "id": "chal-tenses",
+      "area": "tenses",
+      "title": "Challenge",
+      "blurb": "Le, nun ji xa no sen sama; ordenu de ete in jumle sen muhim.",
+      "refs": [
+        "Grammar pp. 55–58",
+        "Lessons 8–10"
+      ],
+      "notes": [
+        "Tense markers open the verb phrase and negation follows them: {{Mi le no kari karta}}, never {{Mi no le kari karta}}.",
+        "Two markers stack in a fixed order: {{le nun}} (was doing), {{nun le}} (has done), {{le le}} (had done), {{xa le}} (will have done), {{xa nun}} (will be doing), {{le xa}} (was going to).",
+        "The prefix du- marks habit or duration ({{le dudoxo}} = used to read), and an {{eger}} clause keeps the bare verb while the main clause takes {{ger}} or {{ger le}}."
+      ],
+      "examples": [
+        [
+          "Ana le nun koki supa denwatu hu Beni le preata.",
+          "Ana was cooking soup when Beni arrived."
+        ],
+        [
+          "Lefe ki tren le awidi, Sam le le fini total ergo.",
+          "Before the train left, Sam had finished all the work."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-tenses-1",
+          "type": "mcq",
+          "passage": "Ana le xa irsal karta tas Sam jaledin, mas te le no ewreka adresu de Sam. Fe folo, te le telifon te. Nundin fe soba, Sam nun le gibe jawabu.",
+          "prompt": "What happened to Ana's plan to send Sam a card yesterday?",
+          "options": [
+            "{{Ana le irsal karta tas Sam, ji xafe dento te le telifon te.}}",
+            "{{Sam le no gibe jawabu koski te le no hare telifon.}}",
+            "{{Ana le xa irsal karta, mas te le no abil na ewreka adresu de Sam.}}",
+            "{{Ana le no vole na irsal karta, fe folo te le telifon Sam.}}",
+            "{{Sam le irsal adresu tas Ana, mas karta le preata dyer.}}"
+          ],
+          "correct": 2,
+          "explanation": "{{Le xa irsal}} means she was going to send, an intention that did not happen; {{mas}} introduces the obstacle {{te le no ewreka adresu de Sam}}. The call is the replacement action, and {{nun le gibe jawabu}} shows Sam has now replied, so no card was sent."
+        },
+        {
+          "id": "chal-tenses-2",
+          "type": "mcq",
+          "passage": "Eger Bela le hare yawxe, imi ger le buka dwer de kamer. Mas te le no hare to, fe folo imi le intizar in dolo dur des minuto. Xafe to, manixu hu da le ogar in baytu le ata ji le buka dwer tas imi.",
+          "prompt": "Ke jumle hare sama mena kom hin texto tem Bela ji dwer?",
+          "options": [
+            "{{Bela le buka dwer de kamer, fe hataya ki te le no hare yawxe.}}",
+            "{{Eger Bela le hare yawxe, imi ger le buka dwer de kamer lefe dento.}}",
+            "{{Imi le buka dwer de kamer xafe ki Bela le ewreka yawxe.}}",
+            "{{Bela le xa buka dwer, mas manixu le buka to lefe dento.}}",
+            "{{Imi le intizar dur des minuto koski dolo le sen klosido.}}"
+          ],
+          "correct": 1,
+          "explanation": "The text is a past counterfactual: {{Eger Bela le hare yawxe, imi ger le buka dwer}}. The key was missing, so we waited until the resident opened the door. Only the option with the same unreal condition and {{ger le}} keeps that meaning; {{fe hataya ki}} in the first option wrongly states that the door was opened."
+        },
+        {
+          "id": "chal-tenses-3",
+          "type": "mcq",
+          "passage": "Denwatu hu Nini le preata cel ofisikamer, Johan le nun diskusi neo plani ton kwanliyen. Ete le le xoru to lefe ki Nini le awidi ex baytu, ji nundin ete nun le fini to.",
+          "prompt": "Keto le nun okur denwatu hu Nini le preata cel ofisikamer?",
+          "options": [
+            "{{Johan ji kwanliyen le nun diskusi neo plani denwatu hu Nini le preata.}}",
+            "{{Johan le le fini plani lefe ki Nini le awidi ex baytu.}}",
+            "{{Johan le xoru diskusi plani xafe ki Nini le preata cel ofisikamer.}}",
+            "{{Nini le nun diskusi plani ton Johan dur total soba.}}",
+            "{{Johan nun le fini diskusi plani lefe ki Nini le preata.}}"
+          ],
+          "correct": 0,
+          "explanation": "{{Le nun diskusi}} is past progressive: the discussion was already in progress at the moment of arrival. {{Le le xoru}} puts the start before Nini left home, and {{nun le fini}} says it is complete only now, so at her arrival the talk was still running."
+        },
+        {
+          "id": "chal-tenses-4",
+          "type": "mcq",
+          "passage": "Denwatu hu Johan le sen juni, te le dudoxo gazeta ton sesu patre moy soba. Nundin te no haji doxo to, mas te jale doxo un lungo reporti tem deha de sesu patre. To le sen daymo interesne.",
+          "prompt": "Keto sen sati tem Johan ji dudoxo de gazeta ton patre?",
+          "options": [
+            "{{Te haji doxo gazeta moy soba ton patre, fe hataya ki te le dudoxo to fe juni.}}",
+            "{{Te le nilwatu doxo gazeta, mas jale te le doxo reporti.}}",
+            "{{Patre jale doxo reporti tem deha de sesu atre ton te.}}",
+            "{{Te le dudoxo gazeta ton patre fe juni, mas nun te no haji fale dento.}}",
+            "{{Te xa dudoxo gazeta ton patre xafe ki te fini reporti.}}"
+          ],
+          "correct": 3,
+          "explanation": "{{Le dudoxo}} is habitual past, so the daily reading with his father belongs to childhood. {{No haji doxo}} states that the habit has ended, and {{jale doxo}} only reports one report read just now. The first option reverses the ending, and the last one moves the habit into the future."
+        },
+        {
+          "id": "chal-tenses-5",
+          "type": "mcq",
+          "passage": "Sam le loga ki te xa le fini total reporti lefe ki kwanliyen ruata of xaher fe axam. Mas fe satu lima, te le no haji hare watu. Te jale telifon kwanliyen ji le loga ki te xa le fini to jaxadin fe soba.",
+          "prompt": "Ke jumle maxim bon duregi hin hikaye tem Sam ji reporti?",
+          "options": [
+            "{{Sam le fini reporti fe satu lima, ji te le telifon kwanliyen koski to.}}",
+            "{{Kwanliyen le ruata of xaher fe soba, fe folo Sam le hare total watu.}}",
+            "{{Sam jale fini total reporti, ji te le telifon kwanliyen xafe dento.}}",
+            "{{Sam xa le fini reporti fe axam, lefe ki kwanliyen ruata cel ofisikamer.}}",
+            "{{Nun Sam xa le no fini reporti lefe ki kwanliyen ruata, mas te le loga ki te xa le fini to jaxadin.}}"
+          ],
+          "correct": 4,
+          "explanation": "{{Xa le fini}} is a future perfect promise with a deadline in {{lefe ki kwanliyen ruata}}. At five o'clock {{te le no haji hare watu}}, so the deadline cannot be met; the promise moves to tomorrow morning, which is exactly what the last option reports."
+        },
+        {
+          "id": "chal-tenses-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: When the manager returned, Ana had sent all the messages and was waiting in the street.",
+          "answer": "Denwatu hu kwanliyen le ruata, Ana le le irsal total mesaje ji te le nun intizar in dolo.",
+          "accept": [
+            "Ana le le irsal total mesaje ji te le nun intizar in dolo denwatu hu kwanliyen le ruata."
+          ],
+          "explanation": "{{Le le irsal}} is past perfective, placing the sending before the manager's return in {{denwatu hu kwanliyen le ruata}}, while {{le nun intizar}} is past progressive: the waiting was ongoing at that past moment."
+        },
+        {
+          "id": "chal-tenses-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: If Sam had remembered the address, we would have sent the card before the train left.",
+          "answer": "Eger Sam le memori adresu, imi ger le irsal karta lefe ki tren le awidi.",
+          "accept": [],
+          "explanation": "A past counterfactual keeps {{le}} in the {{eger}} clause and puts {{ger le}} in the result: {{Eger Sam le memori adresu, imi ger le irsal karta}}. {{Lefe ki}} anchors the sending before the departure."
+        },
+        {
+          "id": "chal-tenses-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Lefe ki mi le awidi ex ofisikamer, mi le le irsal total mesaje, ji mi le xa telifon kwanliyen, mas te le no sen in kamer}}.",
+          "answer": "Before I left the office, I had sent all the messages, and I was going to call the manager, but she was not in the room.",
+          "accept": [
+            "Before I left the office, I had sent all the messages, and I was going to call the manager, but he was not in the room.",
+            "Before I left the office, I had sent all the messages, and I was going to call the manager, but they were not in the room."
+          ],
+          "explanation": "{{Le le irsal}} is had sent, {{le xa telifon}} is was going to call (a past intention), and {{le no sen}} keeps the manager's absence inside the same past frame."
+        },
+        {
+          "id": "chal-tenses-9",
+          "type": "fill",
+          "prompt": "Lefe ki tren ___ awidi, imi ___ fini total ergo.",
+          "blanks": [
+            {
+              "answer": "le",
+              "accept": []
+            },
+            {
+              "answer": "le le",
+              "accept": []
+            }
+          ],
+          "gloss": "Before the train left, we had finished all the work.",
+          "explanation": "The departure is the past reference point, so it takes plain {{le}}; the work was already complete before that point, which requires the past perfective {{le le fini}}."
+        },
+        {
+          "id": "chal-tenses-10",
+          "type": "fill",
+          "prompt": "Mi ___ glu cay, ji mi ___ awidi cel ergo.",
+          "blanks": [
+            {
+              "answer": "jale",
+              "accept": []
+            },
+            {
+              "answer": "jaxa",
+              "accept": []
+            }
+          ],
+          "gloss": "I have just drunk tea, and I am about to leave for work.",
+          "explanation": "{{Jale}} marks the immediate past, so the tea was drunk moments ago, and {{jaxa}} marks the immediate future for leaving. A general {{le}} or {{xa}} would lose that closeness to the present."
         }
       ]
     },
@@ -5961,6 +6632,172 @@ window.GLOBASA_CURRICULUM = {
           ],
           "explanation": "{{Vole}} is the verb 'want' inside the relative clause.",
           "gloss": "Give me what I want."
+        }
+      ]
+    },
+    {
+      "id": "chal-relatives",
+      "area": "relatives",
+      "title": "Challenge",
+      "blurb": "Fe hin darsu, yu xa doxo jumle de Globasa hu da hare multi mon, ji yu xa jawabu swal tem person, xey, watu ji loka.",
+      "refs": [
+        "Grammar pp. 68–69",
+        "Lesson 20"
+      ],
+      "notes": [
+        "Subject relatives put resumptive {{da}} directly after {{hu}} ({{femixu hu da lubi mi}}); object relatives keep SVO order and place {{da}} after the verb ({{femixu hu mi lubi da}}).",
+        "Possession inside a relative clause uses {{dasu}} ({{manixu hu dasu sodar kone mi}}), never {{tesu}}; {{sesu}} stays outside relatives for the subject's own possession.",
+        "{{Hu denloka}} modifies the noun in front of it ({{kafedom hu denloka Sam ergo}}), while {{denloka hu}} opens a movable adverbial clause ({{Denloka hu Sam ergo, hay kafedom}}). Short place clauses can also use {{feki}} ({{kafedom feki Sam ergo}})."
+      ],
+      "examples": [
+        [
+          "Kafedom hu denloka imi le randevu jaledin nun sen klosido.",
+          "The café where we met yesterday is now closed."
+        ],
+        [
+          "Misu sodar, hu da nun ogar in alo xaher, xerca neo ergo.",
+          "My sibling, who now lives in another city, is looking for a new job."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-relatives-1",
+          "type": "mcq",
+          "passage": "Sam ergo in kafedom hu denloka ren abil na ewreka multi kafe tipo. Denloka hu te ergo, hay day parke ji lil hosu. Moy soba, te pawbu cel ergo pas parke, ji te pimpan preata dyer.",
+          "prompt": "Keto Sam fale denwatu hu te idi cel ergo moy soba?",
+          "options": [
+            "{{Te pawbu in parke xafe ki te fini ergo, lefe ki te idi cel baytu.}}",
+            "{{Kafedom de Sam hare min kafe tipo kom alo kafedom, ji te pimpan preata fori.}}",
+            "{{Te pawbu pas day parke cel kafedom hu denloka te ergo.}}",
+            "{{Parke day ji lil hosu sen in kafedom hu denloka Sam ergo.}}",
+            "{{Denloka hu Sam ergo, nil hosu no sen, ji te pimpan preata fori.}}"
+          ],
+          "correct": 2,
+          "explanation": "The passage states {{Moy soba, te pawbu cel ergo pas parke}}. The {{denloka hu}} clause only says that a park and a lake are in the place where he works; the distractor with {{in kafedom hu denloka Sam ergo}} wrongly puts the park inside the café, and the {{min kafe tipo}} / {{fori}} options invert the passage facts."
+        },
+        {
+          "id": "chal-relatives-2",
+          "type": "mcq",
+          "passage": "Ana le xa idi cel kitabudom jaledin, mas te le no awidi ex baytu koski te le nun xerca harita hu da le sen in kaxa. Denwatu hu te le fini xerca, kitabudom le le klosi. Fe folo, te le resta in ogar ji te le doxo kitabu hu te le kari da lefe ki to.",
+          "prompt": "Keseba Ana le resta in ogar jaledin?",
+          "options": [
+            "{{Te le fini xerca harita xafe ki kitabudom le klosi, fe folo te le doxo in ogar.}}",
+            "{{Te le awidi ex baytu ji te le preata cel kitabudom fe soba.}}",
+            "{{Kitabudom le klosi lefe ki te le xoru na xerca harita, fe folo te le no hare watu.}}",
+            "{{Te le ewreka harita fori, fe folo te le hare watu na idi cel kitabudom.}}",
+            "{{Harita hu te le xerca da le sen in kitabudom, fe folo te le musi na idi denloka.}}"
+          ],
+          "correct": 0,
+          "explanation": "{{Le xa idi}} marks an unfulfilled plan, and {{mas}} plus {{koski}} explain why it failed: she was searching ({{le nun xerca}}) for a map that was in a box, so {{denwatu hu te le fini xerca, kitabudom le le klosi}} (past perfect {{le le}}). The {{lefe ki}} option reverses that order, and {{harita hu te le xerca da}} is wrongly placed in the library."
+        },
+        {
+          "id": "chal-relatives-3",
+          "type": "mcq",
+          "passage": "Bela, hu dasu bete xwexi in misu klase, le visita imi jaledin. Bela ergo in day medisdom, ji te le loga tem neo medis hu da abil na sahay bimaryen velosi. Estudiyen hu da le resta finfe fini le diskusi hin xey dur lungo watu.",
+          "prompt": "Keto sen sati tem Bela ji neo medis in hin texto?",
+          "options": [
+            "{{Bela ergo in misu klase, ji tesu bete xwexi in day medisdom.}}",
+            "{{Bela le loga ki neo medis no abil na sahay bimaryen.}}",
+            "{{Estudiyen le awidi lefe ki to le fini, fe folo ete le no diskusi neo medis.}}",
+            "{{Bela no ergo in misu klase, mas tesu bete xwexi in denloka.}}",
+            "{{Bela le visita imi koski tesu bete le no xwexi in misu klase.}}"
+          ],
+          "correct": 3,
+          "explanation": "{{Hu dasu bete xwexi in misu klase}} is a non-restrictive possessive relative that identifies Bela, and the main clause places her in a clinic, so her own child studies at the school while she does not work there. {{Tesu}} is correct here because the possessor is named outside the relative clause, not the relative antecedent."
+        },
+        {
+          "id": "chal-relatives-4",
+          "type": "mcq",
+          "passage": "Tim le xoru na ergo in neo dukan lefe dua safta. Te pimpan preata fori, ji te nun le xwexi name de moy kliente. Mas nundin, te le ewreka ki dukan hu denloka te ergo xa klosi xafe un mesi.",
+          "prompt": "Ke jumle maxim bon duregi hin hikaye tem Tim?",
+          "options": [
+            "{{Te xa resta in hin dukan dur multi nyan koski te le xwexi name de kliente.}}",
+            "{{Nun te musi na xerca alo ergo lefe ki dukan le klosi.}}",
+            "{{Te le karar na klosi dukan koski te le sen pilodo dur lungo watu.}}",
+            "{{Dukan le klosi lefe ki Tim le xoru na ergo denloka.}}",
+            "{{Tim le no xwexi he name, mas te pimpan preata dyer.}}"
+          ],
+          "correct": 1,
+          "explanation": "{{Xa klosi xafe un mesi}} means the shop will close in one month, so a new job must be found before that date; {{nun le xwexi}} and {{pimpan preata fori}} show Tim doing well there. The {{lefe ki Tim le xoru}} option reverses the sequence, and the {{karar na klosi dukan}} option invents a decision that the passage never reports."
+        },
+        {
+          "id": "chal-relatives-5",
+          "type": "mcq",
+          "passage": "Ana le ewreka ki sesu kitabu no sen in kaxa. Ana: \"Kam yu kone manixu hu dasu bete le cudu misu kitabu jaledin?\" — Beni: \"Mi no kone te, mas misu sodar le loga ki bete hu da le cudu to xwexi in sama eskol kom misu bete.\"",
+          "prompt": "Ke jawabu de Ana sen maxim bon duregi hin intrepala tem kitabu?",
+          "options": [
+            "{{Fe folo, mi xa swal tas manixu hu dasu bete le cudu misu kitabu, koski Beni kone te.}}",
+            "{{Mi no haja na xerca kitabu, koski misu bete le cudu to jaledin.}}",
+            "{{Beni le cudu misu kitabu, fe folo mi musi na swal tas te.}}",
+            "{{Fe folo, mi xa irsal mesaje tas matre de bete hu da le cudu misu kitabu.}}",
+            "{{Fe folo, mi xa idi cel eskol cel na swal tem bete hu da le cudu misu kitabu.}}"
+          ],
+          "correct": 4,
+          "explanation": "Beni says {{Mi no kone te}}, so Ana cannot question the man and does not yet know whose mother to contact; the only step her information supports is going to the school, because {{bete hu da le cudu to xwexi}} there. The {{koski Beni kone te}} option contradicts {{Mi no kone te}}."
+        },
+        {
+          "id": "chal-relatives-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: The café where my brother works has a big table near the window.",
+          "answer": "Kafedom hu denloka misu sodar ergo hare day mesa ner fe janela.",
+          "accept": [],
+          "explanation": "{{Hu denloka}} modifies {{kafedom}} because the clause describes the café itself; {{ner fe janela}} places the table, and {{hare}} takes {{day mesa}} as a direct object without a preposition."
+        },
+        {
+          "id": "chal-relatives-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Bela, whose child studies in my class, told me that the shop where she works will close in June.",
+          "answer": "Bela, hu dasu bete xwexi in misu klase, le loga tas mi ki dukan hu denloka te ergo xa klosi fe mesi juni.",
+          "accept": [],
+          "explanation": "The non-restrictive relative takes {{hu dasu bete}}, because {{dasu}} resumes Bela as possessor inside the clause; the complement clause uses {{ki}}, and {{hu denloka}} keeps the shop as the modified noun."
+        },
+        {
+          "id": "chal-relatives-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Femixu hu mi le gibe harita tas da, hu da ergo in kitabudom hu denloka misu sodar xwexi, le loga ki te xa visita imi fe mesi juni}}.",
+          "answer": "The woman I gave the map to, who works in the library where my brother studies, said that she will visit us in June.",
+          "accept": [
+            "The woman to whom I gave the map, who works in the library where my brother studies, said that she will visit us in June.",
+            "The woman whom I gave the map to, who works in the library where my brother studies, said she will visit us in June."
+          ],
+          "explanation": "{{Hu mi le gibe harita tas da}} is an oblique relative with {{tas da}} resuming {{femixu}}; the second {{hu da}} clause is non-restrictive and adds her workplace, while {{hu denloka}} locates the library."
+        },
+        {
+          "id": "chal-relatives-9",
+          "type": "fill",
+          "prompt": "Manixu hu ___ sodar xwexi in misu eskol le gibe tas mi harita hu da le resta in ___ kaxa.",
+          "blanks": [
+            {
+              "answer": "dasu",
+              "accept": []
+            },
+            {
+              "answer": "tesu",
+              "accept": []
+            }
+          ],
+          "explanation": "{{Dasu}} resumes the antecedent {{manixu}} as possessor inside the relative clause, while {{tesu}} marks the box of the man in the following relative clause; {{sesu}} would wrongly make the box belong to the map.",
+          "gloss": "The man whose brother studies at my school gave me the map that had stayed in his box."
+        },
+        {
+          "id": "chal-relatives-10",
+          "type": "fill",
+          "prompt": "Ana pimpan yam in restoran ___ imi le randevu, mas te no suki kafedom hu ___ te ergo.",
+          "blanks": [
+            {
+              "answer": "feki",
+              "accept": []
+            },
+            {
+              "answer": "denloka",
+              "accept": []
+            }
+          ],
+          "explanation": "{{Feki}} introduces the compact place clause after {{restoran}}, and {{hu denloka}} is the full relative form used after {{kafedom}}.",
+          "gloss": "Ana usually eats in the restaurant where we met, but she does not like the café where she works."
         }
       ]
     },
@@ -7197,6 +8034,169 @@ window.GLOBASA_CURRICULUM = {
       ]
     },
     {
+      "id": "chal-correlatives",
+      "area": "correlatives",
+      "title": "Challenge",
+      "blurb": "Fe diskusi, keto, kete, keloka, kewatu, ji keseba sahay imi na aham moy jumle.",
+      "refs": [
+        "Grammar pp. 42–50",
+        "Lesson 17"
+      ],
+      "notes": [
+        "The stems {{ke, hin, den, ban, moy, nil, alo, sama}} carry the reference and the suffix picks the row: {{-to}} thing, {{-te}} person, {{-su}} possession, {{-loka}} place, {{-watu}} time, {{-seba}} reason, {{-maner}} manner, {{-kwanti}} amount, {{-numer}} count.",
+        "Determiners keep their noun ({{den mesa}}, {{moy nini}}), while pronoun forms stand alone ({{dento}}, {{moyte}}). {{Hin-}} points to what is near the speaker or writer, while {{den-}} points to what is farther away in space, in time, or in the text just read.",
+        "Inside a longer text, {{ku}} opens a reported content question ({{Mi le swal ku te le idi keloka.}}) and {{kam}} opens a reported yes/no question ({{Te le swal kam dukan xa buka.}}); {{denseba}}, {{denwatu}}, and {{samawatu}} tie a new sentence to the one before it without repeating the whole event."
+      ],
+      "examples": [
+        [
+          "Mi le swal ku Beni le kari keto in bazar, mas te le jawabu sol ki te le kari banto.",
+          "I asked what Beni bought at the market, but he answered only that he bought something."
+        ],
+        [
+          "Denwatu hu imi le preata, nilte le sen denloka, denseba imi le resta in kafe ner fe trendom.",
+          "When we arrived, nobody was there, so we stayed in the café near the station."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-correlatives-1",
+          "type": "mcq",
+          "passage": "Ana ji Beni le plani na randevu in parke fe satu nue. Denwatu hu Ana le preata, nilte le sen in parke. Te le intizar dur un satu, xafe to te le irsal mesaje cel Beni ji le swal ku te sen keloka. Beni le jawabu ki tesu matre le haja sahay, denseba te le musi na idi cel baytu de tesu matre.",
+          "prompt": "Keseba randevu de Ana ji Beni le no okur in parke?",
+          "options": [
+            "{{Ana le intizar Beni dur dua satu, mas te le no irsal he ban mesaje.}}",
+            "{{Beni le irsal mesaje cel Ana lefe ki te le xoru intizar in parke.}}",
+            "{{Beni le no abil na preata koski te le musi na sahay tesu matre.}}",
+            "{{Ana le preata cel parke fe satu oco ji te le intizar Beni dur un satu.}}",
+            "{{Beni le no haja na idi cel baytu de tesu matre koski te le sen in parke.}}"
+          ],
+          "correct": 2,
+          "explanation": "Beni answers with {{tesu matre le haja sahay}} and {{te le musi na idi cel baytu de tesu matre}}; {{denseba}} marks that consequence, and only that reason cancels the meeting. {{Satu oco}} belongs to the call from his mother, while Ana reached the park at {{satu nue}} and waited {{dur un satu}}."
+        },
+        {
+          "id": "chal-correlatives-2",
+          "type": "mcq",
+          "passage": "In bazar fe soba, Sam le swal tas maydoyen: 'Kete le krea hin basketo?' Maydoyen le jawabu ki femyen of deha krea ete, ji ki moyun sen alopul. Sam le kari dua basketo ji le swal ku kima de ete sen kekwanti. Maydoyen le loga: 'Un kima lima pesa, mas aloto kima oco, koski to sen maxmo day.'",
+          "prompt": "Keseba maydoyen le loga ki aloto basketo kima max pesa?",
+          "options": [
+            "{{Koski aloto sen maxmo day kom un basketo, denseba kima de to sen max pesa.}}",
+            "{{Koski aloto le sen lama, denseba maydoyen le vole max pesa tas to.}}",
+            "{{Koski Sam le preata cel bazar fe soba, denseba kima de basketo le sen max pesa.}}",
+            "{{Koski femyen of deha le krea aloto yon maxmo meli materyal, denseba to kima max pesa.}}",
+            "{{Koski Sam le swal tem kima, denseba maydoyen le loga ki aloto kima max pesa.}}"
+          ],
+          "correct": 0,
+          "explanation": "The seller gives the reason directly: {{koski to sen maxmo day}}, so the bigger basket ({{aloto}}) costs {{oco}} instead of {{lima pesa}}. {{Moyun sen alopul}} says only that the baskets differ in kind, never that one is old or made of finer material, and neither Sam's morning arrival nor his question about the price ({{swal tem kima}}) causes the difference."
+        },
+        {
+          "id": "chal-correlatives-3",
+          "type": "mcq",
+          "passage": "Bela ergo in lil kitabudom ner fe centro. Moy soba, te buka dwer fe satu sabe ji te ordenu neo kitabu per den mesa ner fe janela. Fe dyernuru, multi estudiyen ata denloka cel na doxo, ji kamer sen pimpan pul. Bela loga ki te suki hin loka koski hinloka te abil na sahay multi insan.",
+          "prompt": "Ke jumle sen sati tem kitabudom de Bela?",
+          "options": [
+            "{{Bela buka dwer fe satu sabe ji te klosi to fe dyernuru, koski te vole na resta solo.}}",
+            "{{Bela ordenu neo kitabu per mesa ner fe dwer, lefe ki te buka kitabudom fe soba.}}",
+            "{{Bela no suki hin loka koski estudiyen pimpan ata denloka cel na diskusi ton te.}}",
+            "{{Fe dyernuru, kitabudom sen pul de estudiyen hu da preata denloka cel na doxo.}}",
+            "{{Kitabudom sen day ji to sen ner fe day bazar, denloka hu multi insan ergo.}}"
+          ],
+          "correct": 3,
+          "explanation": "{{Denloka}} (there) points back to the library, and {{fe dyernuru}} fixes the hour when {{multi estudiyen ata denloka cel na doxo}} and {{kamer sen pimpan pul}}. {{Hinloka}} gives Bela's own reason, {{te abil na sahay multi insan}}, so neither the students' conversation nor the size of the town explains how she feels about her work."
+        },
+        {
+          "id": "chal-correlatives-4",
+          "type": "mcq",
+          "passage": "Johan ji Tim le idi yon sama tren cel bahari, mas ete le esto in aloloka trendom. Johan le nilwatu oko bahari, denseba te le resta denloka dur lungo watu denwatu hu te le oko sui. Tim pimpan idi cel bahari moy nyan, ji te jixi hin loka maxmo bon kom Johan.",
+          "prompt": "Ke jumle hare sama mena kom hin texto tem Johan ji Tim?",
+          "options": [
+            "{{Johan le idi yon un tren ji Tim yon alo tren, mas ete le esto in sama trendom.}}",
+            "{{Johan le nilwatu idi yon tren cel bahari, fe hataya ki Tim le idi denloka moy nyan.}}",
+            "{{Tim le oko bahari lefe ki Johan, denseba te le resta denloka dur lungo watu.}}",
+            "{{Johan le preata cel bahari moy nyan, mas Tim le nilwatu oko sui de bahari.}}",
+            "{{Ete le idi yon un tren, mas ete le esto in trendom hu da no sen sama.}}"
+          ],
+          "correct": 4,
+          "explanation": "Both men used the same train ({{sama tren}}) yet stopped at {{aloloka}} stations, so the last option keeps both facts without copying the passage. Options A and C move the shared train and the first sight of the sea onto the wrong men, and {{moy nyan}} belongs to Tim, not to Johan."
+        },
+        {
+          "id": "chal-correlatives-5",
+          "type": "mcq",
+          "passage": "Nini le xwexi dur total din lefe eksame. Fe din de eksame, te le preata fori ji le doxo moy swal dua mara. Fe hataya ki te le fale hinto, te le no abil na jawabu multi swal. Xafe ki te le fini eksame, te le loga tas sesu doste: 'Mi le no jixi nilto tem swal hu da le sen fe fini.'",
+          "prompt": "Ke jumle maxim bon duregi hin hikaye tem Nini?",
+          "options": [
+            "{{Fe folo, te le karar na no haji doxo koski kitabu le no sahay te.}}",
+            "{{Denseba, te le karar na xwexi maxmo haji lefe ki alo eksame.}}",
+            "{{Denseba, te le gibe tas alimyen total kitabu hu da te le doxo.}}",
+            "{{Fe folo, te le loga ki eksame le sen asan ji ki te le jixi moyto.}}",
+            "{{Denwatu, te le xerca neo doste in kamer de eksame lefe ki te le idi cel baytu.}}"
+          ],
+          "correct": 1,
+          "explanation": "She studied every day and still {{te le no abil na jawabu multi swal}}, and her own words are {{Mi le no jixi nilto}}. {{Fe hataya ki}} concedes the effort but not the result, so the only coherent next sentence is a decision about {{alo eksame}}, while the other options contradict her effort or her admission."
+        },
+        {
+          "id": "chal-correlatives-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Ana asked me when the shop would close and how much the price of the blue basket is.",
+          "answer": "Ana le swal tas mi ku dukan xa klosi kewatu ji ku kima de blue basketo sen kekwanti.",
+          "accept": [],
+          "explanation": "Reported content questions take {{ku}} and keep the correlative where it belongs: {{kewatu}} after {{klosi}} and {{kekwanti}} after {{sen}}. {{Kam}} would be wrong because both questions ask for information, and {{xa}} carries the future into the reported clause."
+        },
+        {
+          "id": "chal-correlatives-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Everyone who came to the discussion said that nobody knew the reason.",
+          "answer": "Moyte hu da le ata cel diskusi le loga ki nilte le jixi seba de to.",
+          "accept": [],
+          "explanation": "{{Moyte}} is the universal pronoun and keeps resumptive {{da}} as subject of {{le ata}}. The reported statement uses {{ki}} with {{nilte}} as its own subject, and {{seba de to}} means 'the reason for it'."
+        },
+        {
+          "id": "chal-correlatives-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Mi le swal ku Beni xa preata kewatu, ji te le jawabu ki te xa ata denloka samawatu kom mi.}}",
+          "answer": "I asked when Beni would arrive, and he answered that he would come there at the same time as me.",
+          "accept": [],
+          "explanation": "{{Ku ... kewatu}} reports the content question about time, {{denloka}} points back to the meeting place already known to both speakers, and {{samawatu kom mi}} adds the comparison 'at the same time as me'."
+        },
+        {
+          "id": "chal-correlatives-9",
+          "type": "fill",
+          "prompt": "Imi le no jixi ___ imi xa randevu, ji imi le no jixi ___ imi xa preata.",
+          "blanks": [
+            {
+              "answer": "keloka",
+              "accept": []
+            },
+            {
+              "answer": "kewatu",
+              "accept": []
+            }
+          ],
+          "gloss": "We did not know where we would meet, and we did not know when we would arrive.",
+          "explanation": "{{Keloka}} fills the {{-loka}} row and {{kewatu}} the {{-watu}} row of the {{ke-}} stem; reported questions with {{ku}} keep these forms after the verb instead of moving them to the front."
+        },
+        {
+          "id": "chal-correlatives-10",
+          "type": "fill",
+          "prompt": "Ana le kari ___ kitabu in dukan fe soba, no ___ kitabu hu Beni le rekomenda da, koski te le vole na gibe to tas sesu sodar.",
+          "blanks": [
+            {
+              "answer": "alo",
+              "accept": []
+            },
+            {
+              "answer": "sama",
+              "accept": []
+            }
+          ],
+          "gloss": "Ana bought another book in the shop in the morning, not the same book that Beni recommended, because she wanted to give it to her brother.",
+          "explanation": "{{Alo}} marks a different item and {{sama}} the identical one, and both are determiners that keep their noun {{kitabu}}. In the object relative, {{da}} resumes the book as the object of {{rekomenda}}."
+        }
+      ]
+    },
+    {
       "id": "vocab-actions",
       "area": "vocabulary",
       "title": "Everyday actions",
@@ -7796,6 +8796,171 @@ window.GLOBASA_CURRICULUM = {
               ]
             }
           }
+        }
+      ]
+    },
+    {
+      "id": "chal-vocabulary",
+      "area": "vocabulary",
+      "title": "Challenge",
+      "blurb": "Fe hin darsu, imi xerca tiketo in dukan, ji hifazi pasadoku in jebu, ji imi ruata cel ogar xafe lungo daoxey.",
+      "refs": [
+        "Top 500 word list",
+        "Grammar pp. 73–81"
+      ],
+      "notes": [
+        "{{Xerca}} means 'look for' and {{ewreka}} means 'find'; a search can fail: {{Mi le xerca tiketo dur dua satu, mas mi le no ewreka to}}.",
+        "{{Hifazi}} means 'keep, hold on to' and takes an object, while {{resta}} means 'stay, remain' in a place: {{Te le hifazi tiketo in kaxa, mas te le no resta in trendom}}.",
+        "{{Wanji}} is 'forget' (a fact or place), {{sonxi}} is 'lose or misplace' an object, and the travel trio is {{preata}} 'arrive', {{awidi}} 'leave', {{ruata}} 'come back': {{Te le wanji ki te le sonxi tiketo ji le ruata cel trendom}}."
+      ],
+      "examples": [
+        [
+          "Fe hataya ki Ana le hifazi tiketo in jebu, te le wanji ku te le plasi to keloka.",
+          "Although Ana kept the ticket in her pocket, she forgot where she had put it."
+        ],
+        [
+          "Xafe ki te le ruata ex daoxey, Tim le ewreka ki te le sonxi pasadoku in hotel.",
+          "After returning from the trip, Tim discovered that he had lost his passport in the hotel."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-vocabulary-1",
+          "type": "mcq",
+          "passage": "Lefe ki tren le awidi, Ana le xerca sesu tiketo in total dudaokaxa, mas te le no ewreka to. Te le karar ki te le le sonxi to in hotel, fe folo te le kari neo tiketo in dukan ner fe trendom. Xafe to, te le resta in trendom dur dua satu ji le ruata cel ogar ton alo tren.",
+          "prompt": "Keseba Ana le kari neo tiketo lefe ki te le ruata cel ogar ton alo tren?",
+          "options": [
+            "{{Te le ewreka to in hotel, mas te le kari alo tiketo koski te le vole na hare neo un.}}",
+            "{{Tren le awidi lefe ki Ana le preata cel trendom, fe folo te le kari tiketo in hotel.}}",
+            "{{Te le xerca to in total dudaokaxa wal na ewreka to, fe folo te le kari alo tiketo in dukan.}}",
+            "{{Te le no ewreka sesu tiketo koski te le resta in dukan dur total dua satu.}}",
+            "{{Te le hifazi sesu tiketo in dudaokaxa, fe hataya ki te le kari alo tiketo in trendom.}}"
+          ],
+          "correct": 2,
+          "explanation": "The passage says Ana searched ({{xerca}}) the whole suitcase but {{le no ewreka to}}, then decided she had lost it ({{sonxi}}) in the hotel and bought ({{kari}}) a new ticket at the shop near the station ({{dukan ner fe trendom}}). Any option claiming she found the ticket ({{ewreka}}) reverses a fact, and the fourth option inverts cause and effect by making the two hours in the shop the reason for the loss."
+        },
+        {
+          "id": "chal-vocabulary-2",
+          "type": "mcq",
+          "passage": "Sam le hifazi moy mesaje de sesu matre in un kaxa de metal, fe hataya ki te le idi na ogar in alo xaher. Jaledin, tesu doste le swal kama te abil na resta dur dua din in xaher, mas Sam le loga ki te musi na ruata cel ergo fe soba.",
+          "prompt": "Keto sen sati tem Sam ji mesaje de tesu matre?",
+          "options": [
+            "{{Te le resta in xaher dur dua din koski te le hifazi mesaje de matre.}}",
+            "{{Te le sonxi mesaje de matre denwatu hu te le idi na ogar in alo xaher.}}",
+            "{{Te le irsal mesaje de matre tas tesu doste lefe ki te le ruata cel ergo.}}",
+            "{{Te le swal tesu doste kama te abil na hifazi mesaje in kaxa de metal.}}",
+            "{{Te le hifazi mesaje de matre in kaxa, mas te le no resta in xaher dur dua din.}}"
+          ],
+          "correct": 4,
+          "explanation": "{{Hifazi}} means 'keep, hold on to' and takes an object ({{lexi}}); {{resta}} means 'stay, remain' in a place. Sam kept ({{le hifazi}}) every letter in a metal box, but when his friend asked whether he could stay ({{kama te abil na resta}}), he said he had to go back to work ({{musi na ruata cel ergo}}). The first option makes staying ({{resta}}) the result of keeping ({{hifazi}}), the second replaces keeping with losing ({{sonxi}}), and the third invents a parcel of letters."
+        },
+        {
+          "id": "chal-vocabulary-3",
+          "type": "mcq",
+          "passage": "Un turiyen le loga tas Beni ki te vole na oko harita de xaher. Beni le wanji ki te le plasi sesu harita in sanduku de dudaokaxa, fe folo te le xerca to in total kamer mas le no ewreka to. Te le karar ki te le le sonxi to fe dolo, mas xafe dua satu te le ewreka to in sanduku ji le gibe to tas turiyen.",
+          "prompt": "Keto le okur ton harita de xaher hu turiyen le vole na oko?",
+          "options": [
+            "{{Beni le no memori ku te le plasi to keloka, mas te le ewreka to in sanduku xafe dua satu.}}",
+            "{{Beni le sonxi to fe dolo, fe folo te le kari neo harita tas turiyen.}}",
+            "{{Beni le hifazi to in sanduku, mas te le no abil na gibe to tas turiyen.}}",
+            "{{Turiyen le ewreka to in kamer de Beni ji le ruata cel dolo ton to.}}",
+            "{{Beni le xerca to in total kamer, mas te le ewreka to in dukan ner fe trendom.}}"
+          ],
+          "correct": 0,
+          "explanation": "{{Wanji}} means 'forget' (a fact or a place) and {{sonxi}} means 'lose or misplace' an object. Beni had not lost the map: {{te le wanji ki te le plasi sesu harita in sanduku}} (he forgot that he had put it in the suitcase), and he did find it there ({{xafe dua satu te le ewreka to in sanduku}}). The second option takes his passing guess ({{te le karar ki te le le sonxi to}}) as the truth."
+        },
+        {
+          "id": "chal-vocabulary-4",
+          "type": "mcq",
+          "passage": "Bela: \"Mi le xerca tiketo de tren cel xaher de matre in total dukan, mas nilte le hare to. Kam yu jixi ku mi abil na ewreka to keloka?\" — Tim: \"___\"",
+          "prompt": "Ke jawabu de Tim sen maxim bon in hin pala tem tiketo de tren?",
+          "options": [
+            "{{Mi le kari tiketo jaledin in hotel, mas mi no haji hifazi to.}}",
+            "{{Trendom hare kaxa de tiketo hu da resta bukado finfe satu 8 fe axam.}}",
+            "{{Tren cel xaher de matre le awidi fe soba, fe folo yu no abil na preata.}}",
+            "{{Dukan de karta le klosi, mas yu abil na kari karta denloka.}}",
+            "{{Mi no jixi ku yu suki na fley, mas tren sen maxmo velosi kom bus.}}"
+          ],
+          "correct": 1,
+          "explanation": "Bela asks for a place ({{denloka hu mi abil na ewreka to}}), so the useful reply names one and gives a time: the ticket box at the station that stays open ({{resta bukado}}) until eight. The third reply answers an unasked question about departure, the first and fourth are about hotels and cards rather than train tickets, and the fifth drifts to planes."
+        },
+        {
+          "id": "chal-vocabulary-5",
+          "type": "mcq",
+          "passage": "Dur total safta, Tim le xerca neo ergo in xaher teli. Fe axam fe jaxadin, te le preata cel un ofisikamer ji le loga ton kwanliyen dur dua satu. Kwanliyen le loga ki te xa jawabu xafe un safta.",
+          "prompt": "Ke jumle maxim bon duregi hin hikaye tem Tim ji tesu ergo in ofisikamer?",
+          "options": [
+            "{{Fe folo, Tim le karar na resta in ofisikamer dur total nyan.}}",
+            "{{Fe folo, Tim xa xerca alo ofisikamer koski te le no preata cel hin un.}}",
+            "{{Fe folo, Tim le sonxi adresu de ofisikamer ji le ruata cel ogar.}}",
+            "{{Fe folo, Tim musi na intizar jawabu de kwanliyen lefe ki te xoru ergo.}}",
+            "{{Fe folo, Tim le wanji ki te le loga ton kwanliyen dur dua satu.}}"
+          ],
+          "correct": 3,
+          "explanation": "The manager promised an answer after a week ({{xa jawabu xafe un safta}}), so the only coherent next step is to wait for that answer ({{intizar jawabu}}) before starting the job. The second and fifth replies contradict what the passage already states (he arrived at the office and talked for two hours), and the first turns a single visit into a whole year."
+        },
+        {
+          "id": "chal-vocabulary-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Although Sam kept the map in his bag, he forgot where he had put it, so he bought another one at the station.",
+          "answer": "Fe hataya ki Sam le hifazi harita in sesu bao, te le wanji ku te le plasi to keloka, fe folo te le kari alo harita in trendom.",
+          "accept": [],
+          "explanation": "{{Hifazi}} 'keep' contrasts with {{wanji}} 'forget', and the indirect question {{ku ... keloka}} supplies 'where'; {{fe hataya ki}} introduces the concession."
+        },
+        {
+          "id": "chal-vocabulary-7",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Nini searched for her passport for half an hour, but since she did not find it, she left home without it.",
+          "answer": "Nini le xerca sesu pasadoku dur ofdua satu, mas koski te le no ewreka to, te le awidi ex ogar wal to.",
+          "accept": [],
+          "explanation": "{{Xerca}} is the search and {{ewreka}} the result; the negation follows the tense ({{le no ewreka}}), and {{wal to}} means 'without it'."
+        },
+        {
+          "id": "chal-vocabulary-8",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Xafe ki Tim le ruata ex lungo daoxey, te le ewreka ki te le sonxi pasadoku in hotel, fe folo te le musi na resta in xaher dur dua din.}}",
+          "answer": "After Tim returned from a long trip, he discovered that he had lost his passport in the hotel, so he had to stay in the city for two days.",
+          "accept": [
+            "After Tim came back from a long trip, he found that he had lost his passport in the hotel, so he had to remain in the city for two days."
+          ],
+          "explanation": "{{Ruata}} is 'come back', {{sonxi}} here means 'lose' rather than 'forget', and {{musi na resta}} renders the obligation to stay."
+        },
+        {
+          "id": "chal-vocabulary-9",
+          "type": "fill",
+          "prompt": "Ana le ___ sesu tiketo in total kamer, mas te le no ___ to lefe ki tren le awidi.",
+          "gloss": "Ana searched for her ticket in the whole room, but she did not find it before the train left.",
+          "blanks": [
+            {
+              "answer": "xerca",
+              "accept": []
+            },
+            {
+              "answer": "ewreka",
+              "accept": []
+            }
+          ],
+          "explanation": "{{Xerca}} is only 'look for'; the result verb is {{ewreka}}, and the negated tense {{le no ewreka}} shows the search failed."
+        },
+        {
+          "id": "chal-vocabulary-10",
+          "type": "fill",
+          "prompt": "Bela le ___ in trendom dur dua satu koski te le vole na ___ tiketo cel tren de axam.",
+          "gloss": "Bela stayed in the train station for two hours because she wanted to buy a ticket for the evening train.",
+          "blanks": [
+            {
+              "answer": "resta",
+              "accept": []
+            },
+            {
+              "answer": "kari",
+              "accept": []
+            }
+          ],
+          "explanation": "{{Resta}} 'stay, remain' is intransitive and takes no object here, whereas {{hifazi}} would need something kept; {{kari}} is the buying verb that takes {{tiketo}} as its direct object."
         }
       ]
     },
@@ -9415,6 +10580,171 @@ window.GLOBASA_CURRICULUM = {
           ],
           "explanation": "{{no haji}} means 'not anymore'.",
           "gloss": "She doesn't live here anymore."
+        }
+      ]
+    },
+    {
+      "id": "chal-nuances",
+      "area": "nuances",
+      "title": "Challenge",
+      "blurb": "Plu lil lexi fale day problema denwatu hu ren xerca na aham ku jumle mena keto.",
+      "refs": [
+        "Author notes: Translating -ing words",
+        "Author notes: Stative vs passive"
+      ],
+      "notes": [
+        "English -ing hides four different jobs, and Globasa gives each one its own shape: a gerund noun takes du- ({{Dudanse sen amusane}}), a verb phrase that keeps a direct object takes the infinitive ({{Na lala meli lala sen amusane}}), a describing adjective takes the suffix -ne ({{dansene femwangu}}), and an action attached to another verb takes {{fe na}} or, when it is already finished, {{fe na le}} ({{Te le sungay janu fe na danse}}; {{Fe na le yam total pitza, te le sencu yampul}}).",
+        "Number is never marked on the noun itself. {{plu prince}} means 'some princes', {{un prince}} means 'one, a certain prince', and the bare {{prince}} can be singular or plural once the discourse has established it ({{Prince no ogar in kastilo}}). {{ban}} stays number-neutral, and {{ban plu}} makes plurality explicit only when it matters.",
+        "State, event, and process are three different sentences: {{Dwer le sen klosido}} (state), {{Dwer le beklosi}} (event), {{mobil beyongune}} (process). The suffix -do names a caused result while -pul names an inherent quality ({{pilodo}} vs. {{pilopul}}), and -gi / -cu move a verb between causing and becoming ({{kasiru}} vs. {{kasirugi}}, {{termo}} vs. {{termocu}}). Clause links matter too: {{ki}} for content, {{hu}} plus resumptive {{da}} for relatives, {{hu denloka}} for a place that describes the noun before it, {{denloka hu}} for a place clause that can front. Possession follows the subject with {{sesu}} and points elsewhere with {{tesu}}, and after {{ji}} a repeated subject or tense keeps a noun phrase from swallowing the next verb ({{Mama lala meli lala ji te danse}})."
+      ],
+      "examples": [
+        [
+          "Janela le sen klosido denwatu hu imi le preata, mas vento le beklosi to xafe un minuto.",
+          "The window was closed when we arrived, but the wind closed it a minute later."
+        ],
+        [
+          "Fe na le fini reporti, Sam le sen daydenmo pilodo ki te le no abil na ore tesu sodar hu da le lala in ner kamer.",
+          "Having finished the report, Sam was so tired that he could not listen to his sister, who was singing in the next room."
+        ]
+      ],
+      "exercises": [
+        {
+          "id": "chal-nuances-1",
+          "type": "mcq",
+          "passage": "Ana le preata cel darsukamer fe soba. Janela le sen klosido, ji kamer le sen godomo termopul. Te le buka janela, mas vento le beklosi to xafe un minuto, fe folo kamer le no bardicu.",
+          "prompt": "Ke fale le okur tas janela xafe ki Ana le buka to?",
+          "options": [
+            "{{Janela le sen klosido denwatu hu Ana le preata, ji vento le beklosi to xafe ki te le buka to.}}",
+            "{{Ana le beklosi janela lefe ki te le preata cel darsukamer fe soba.}}",
+            "{{Janela le sen bukado dur total soba, fe hataya ki kamer le sen termopul.}}",
+            "{{Vento le buka janela, fe folo kamer le termocu maxmo velosi xafe un minuto.}}",
+            "{{Ana le ewreka janela bukado, mas te le klosi to koski vento le sen bardi.}}"
+          ],
+          "correct": 0,
+          "explanation": "The passage separates three shapes. {{Janela le sen klosido}} is a state: on arrival the window was in a closed state. {{Vento le beklosi to}} is a passive event, and its agent is the wind, so the wind did the closing. Ana's own act is {{te le buka}}, in that order. Option two gives Ana the passive {{beklosi}}, option four lets the wind {{buka}}, and {{sen bukado}} would mean the window was standing open, which contradicts {{kamer le sen godomo termopul}}. Note also {{bardicu}} and {{termocu}}: the -cu forms name a change (become cold, become hot), not a state."
+        },
+        {
+          "id": "chal-nuances-2",
+          "type": "mcq",
+          "passage": "Beni preferi dudanse solo, mas jaledin in parti te le danse ton plu doste dur dua satu. Te pimpan danse fe na lala. Fe na le danse dur dua satu, te le hare day haja na rahatu, fe folo te le awidi ex parti.",
+          "prompt": "Ke jumle hare sama mena kom hin texto tem Beni?",
+          "options": [
+            "{{Beni le no danse in parti jaledin, koski te preferi na lala solo in kamer.}}",
+            "{{Beni le lala in parti lefe ki te le danse, ji te le awidi ex parti koski te le no suki na danse.}}",
+            "{{Dudanse solo sen amusane tas Beni, mas jaledin te le danse ton plu doste dur dua satu, denwatu hu te le lala.}}",
+            "{{Beni le awidi ex parti lefe ki te le danse dur dua satu, koski te le no abil na lala.}}",
+            "{{Beni le danse solo dur dua satu in parti, ji xafe to te le lala ton plu doste.}}"
+          ],
+          "correct": 2,
+          "explanation": "{{Dudanse}} is the gerund noun used as the object of {{preferi}}, so it names the activity, not a single dance. {{Fe na lala}} is the simultaneous -ing clause ('while singing'), and {{pimpan}} makes it a habit. {{Fe na le danse}} marks the finished action that explains why he needed rest ({{le hare day haja na rahatu}}). Option one denies the dancing, option two reverses the order of singing and dancing, and option five moves the dancing into solitude."
+        },
+        {
+          "id": "chal-nuances-3",
+          "type": "mcq",
+          "passage": "Nini le irsal mesaje tas Tim: «Mi le ewreka kitabu hu yu le wanji da jaledin.» Tim le jawabu ki te le no wanji he ban kitabu jaledin, mas ki tesu sodar le wanji kitabu. Nini le loga ki te le no jixi kete le wanji to, mas te le jixi ki to le no sen sesu.",
+          "prompt": "Kete le wanji kitabu hu Nini le ewreka da?",
+          "options": [
+            "{{Tim le wanji kitabu denwatu hu Nini le ewreka to jaledin.}}",
+            "{{Sodar de Tim le wanji kitabu hu Nini le ewreka da, no Tim.}}",
+            "{{Nini le wanji kitabu hu Tim le ewreka da, ji te le irsal to tas tesu sodar.}}",
+            "{{Nini le jixi kete le wanji kitabu, fe folo te le irsal to tas Tim.}}",
+            "{{Nini le wanji kitabu tas sodar de Tim jaledin, fe folo Tim le ewreka to.}}"
+          ],
+          "correct": 1,
+          "explanation": "In {{kitabu hu yu le wanji da}} the resumptive {{da}} fills the object slot, so Tim is only the buyer Nini assumed. Tim's {{ki}}-clause cancels that assumption and names {{tesu sodar}} as the buyer. {{Tesu}} points away from the speaker of that clause while {{sesu}} in the last sentence points back to Nini herself. Options that make Tim the buyer, make Nini the buyer, or credit Nini with knowing the buyer all misread the dialogue."
+        },
+        {
+          "id": "chal-nuances-4",
+          "type": "mcq",
+          "passage": "Johan le ergo dur total din cel na fini reporti hu da le sen muhim tas tesu grupo. Denwatu hu te le fini to, te le sencu daymo pilodo. Te le loga ki te xa somno lefe sesu pimpan satu.",
+          "prompt": "Ke xa okur xafe hin hikaye tem Johan?",
+          "options": [
+            "{{Fe folo, te xa xoru neo reporti fori koski te le no fini to.}}",
+            "{{Johan le no fini reporti, fe hataya ki te le ergo dur total din.}}",
+            "{{Johan le finigi reporti lefe ki te le somno, fe folo te le musi na xoru to din din.}}",
+            "{{Johan le sen pilopul dur total din, fe folo te le no haja na somno.}}",
+            "{{Fe folo, te xa resta in baytu hin axam ji te xa no haji ergo.}}"
+          ],
+          "correct": 4,
+          "explanation": "{{Te le sencu daymo pilodo}} reports a result state produced by the long day, so resting early is the coherent next step. {{pilopul}} would describe a quality without a stated cause, which is why option four misfires. Option one contradicts {{le fini to}} by scheduling a fresh report, and option two denies the finished report outright. Option three misreads the causative {{finigi}} ('cause to come to an end') as 'finish writing', and option four turns a caused result into an inherent quality. The object relative {{reporti hu da le sen muhim}} keeps {{da}} in the subject slot."
+        },
+        {
+          "id": "chal-nuances-5",
+          "type": "mcq",
+          "passage": "Denloka hu Bela ogar, hay multi dukan hu denloka ren kari kafe. Hin din fe soba te le preata cel dukan hu denloka te pimpan kari kafe, mas te le ewreka ki to le sen klosido. Fe folo te le idi cel alo dukan ner fe parke ji te le kari kafe denloka.",
+          "prompt": "Keto le okur denwatu hu Bela le xerca kafe hin din fe soba?",
+          "options": [
+            "{{Te le intizar fe dwer finfe ki dukan le buka, ji xafe to te le kari kafe.}}",
+            "{{Te le no kari kafe hin din, koski moy dukan in xaher le sen klosido.}}",
+            "{{Te le ewreka dukan hu te pimpan yongu da klosido, fe folo te le kari kafe in alo dukan ner fe parke.}}",
+            "{{Te le kari kafe in dukan hu denloka te pimpan kari kafe, fe hataya ki to le sen klosido.}}",
+            "{{Te le no abil na kari kafe, koski dukan ner fe parke le sen klosido.}}"
+          ],
+          "correct": 2,
+          "explanation": "{{Denloka hu Bela ogar}} is a fronted place clause ('where Bela lives'), while {{dukan hu denloka ren kari kafe}} is a relative clause modifying {{dukan}}. The shop she habitually uses {{le sen klosido}}, so she went to {{alo dukan}} near the park. Options one, two, four, and five invent waiting, a closure of every shop, a purchase in the closed shop, and a closure of the shop near the park."
+        },
+        {
+          "id": "chal-nuances-6",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: Having finished the report, Sam was so tired that he could not listen to his sister, who was singing in the next room.",
+          "answer": "Fe na le fini reporti, Sam le sen daydenmo pilodo ki te le no abil na ore sesu sodar hu da le lala in ner kamer.",
+          "accept": [],
+          "explanation": "{{Fe na le}} opens a perfect participial clause, so the finishing happens before the tiredness. {{daydenmo ... ki}} carries the degree-result link, and the subject relative needs the resumptive {{da}}: {{sodar hu da le lala}}. Negation follows the tense: {{le no abil}}."
+        },
+        {
+          "id": "chal-nuances-7",
+          "type": "translate",
+          "direction": "gl-en",
+          "prompt": "Translate into English: {{Dwer le sen klosido denwatu hu imi le preata, mas vento le beklosi to xafe un minuto}}.",
+          "answer": "The door was closed when we arrived, but the wind closed it a minute later.",
+          "accept": [
+            "The door had been closed when we arrived, but the wind blew it shut a minute later."
+          ],
+          "explanation": "{{le sen klosido}} is a stative predicate describing the door at the moment of arrival, whereas {{le beklosi}} is a passive event with {{vento}} as its subject and agent. English uses the same 'was closed' for both, so the second clause has to be read as an action."
+        },
+        {
+          "id": "chal-nuances-8",
+          "type": "translate",
+          "direction": "en-gl",
+          "prompt": "Translate into Globasa: The three students said that they had read the book the teacher gave them, but nobody could explain what it meant.",
+          "answer": "Tiga estudiyen le loga ki ete le doxo kitabu hu alimyen le gibe da tas ete, mas nilte le abil na loga ku to mena keto.",
+          "accept": [],
+          "explanation": "{{ki}} introduces the content clause, {{hu ... da}} keeps the resumptive pronoun in the object slot after {{gibe}}, and the content question stays inside a {{ku}} clause: {{ku to mena keto}}. {{Tiga estudiyen}} needs no plural marker, and {{nilte}} supplies 'nobody'."
+        },
+        {
+          "id": "chal-nuances-9",
+          "type": "fill",
+          "prompt": "Janela le ___ klosido denwatu hu imi le preata, mas vento le ___ to xafe un minuto.",
+          "gloss": "The window was closed when we arrived, but the wind closed it a minute later.",
+          "blanks": [
+            {
+              "answer": "sen",
+              "accept": []
+            },
+            {
+              "answer": "beklosi",
+              "accept": []
+            }
+          ],
+          "explanation": "The first blank needs the copula {{sen}} because {{sen klosido}} reports a state. The second blank needs the passive {{beklosi}} because the wind is the agent that produces the event."
+        },
+        {
+          "id": "chal-nuances-10",
+          "type": "fill",
+          "prompt": "Mi suki ___ ton misu doste, mas mi preferi na ___ meli lala solo in kamer.",
+          "gloss": "I like dancing with my friend, but I prefer to sing beautiful songs alone in my room.",
+          "blanks": [
+            {
+              "answer": "dudanse",
+              "accept": []
+            },
+            {
+              "answer": "lala",
+              "accept": []
+            }
+          ],
+          "explanation": "The first blank is a gerund noun with no direct object, so the prefix du- applies: {{dudanse}}. The second blank keeps the direct object {{meli lala}}, and an -ing form with an object can only be the infinitive: {{na lala meli lala}}."
         }
       ]
     },
