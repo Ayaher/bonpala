@@ -147,6 +147,8 @@ data/tenses.js              Authored verb-tense reference cards and practice lin
 tools/build_words.py        Regenerates data/words.js from word-list.csv
 tools/validate_curriculum.mjs  Schema/count/content checks and normalization contract
 tools/check_lexicon.mjs     Token-level Globasa lexicon/derivation check for Challenge content
+tools/review_challenges.mjs Review worksheet and mechanical flag triage for authored exercises
+tools/lexicon-lib.mjs       Shared lexicon helpers for the Node tools
 tools/lookup_words.mjs      Word-class/gloss lookup against resources/word-list.csv
 tools/test_normalize.mjs    Focused normalization tests
 tools/test_review.mjs       Spaced-review scheduler tests

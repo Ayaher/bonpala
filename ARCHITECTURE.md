@@ -154,6 +154,8 @@ Avoid adding more globals unless necessary. A new module can attach one namespac
 | [tools/build_words.py](./tools/build_words.py) | CSV → `data/words.js` | Yes |
 | [tools/validate_curriculum.mjs](./tools/validate_curriculum.mjs) | Content/schema validator | Yes |
 | [tools/check_lexicon.mjs](./tools/check_lexicon.mjs) | Token-level Globasa lexicon/derivation check for Challenge content | Yes |
+| [tools/review_challenges.mjs](./tools/review_challenges.mjs) | Exercise review worksheet and mechanical flag triage | Yes |
+| [tools/lexicon-lib.mjs](./tools/lexicon-lib.mjs) | Shared lexicon loader for the Node tools | Yes |
 | [tools/lookup_words.mjs](./tools/lookup_words.mjs) | Word-class/gloss lookup against `resources/word-list.csv` | Yes |
 | [tools/test_normalize.mjs](./tools/test_normalize.mjs) | Normalization tests | Yes |
 | [tools/test_review.mjs](./tools/test_review.mjs) | Scheduler tests | Yes |
