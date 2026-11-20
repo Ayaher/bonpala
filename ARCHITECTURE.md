@@ -601,6 +601,7 @@ Learners can look words up without leaving an exercise. The widget is plain mark
 - Results: `Views.dictionaryWidget(query)` in [js/views.js](./js/views.js) filters `GLOBASA_WORDS.entries` by word, class, or gloss (same fields as the full dictionary page), ranks exact word → word prefix → gloss exact → gloss word → word substring → gloss substring, and renders up to `WIDGET_LIMIT` (30) rows.
 - Row layout: Globasa word (large serif) with the word class pill, then the English gloss in smaller muted text. No table, no category column — this is a sideline lookup, not the full dictionary.
 - Styling: `.dict-widget*` and `.dw-*` in `css/styles.css`. The panel is fixed bottom-right on desktop, full-width above the toggle under 700px, and hidden in print.
+- Keyboard: `Enter` in the search field clears the query and returns the results to the empty state, keeping focus in the field so the next word can be typed immediately. The widget is not a form, so this never submits an answer.
 - No localStorage: the query resets on reload, and opening the widget has no effect on progress.
 
 ### 6.3.2 Keyboard answering

@@ -632,6 +632,15 @@
       State.widget.query = widgetSearch.value;
       renderWidgetResults();
     });
+    /* Enter resets the lookup so the next word can be typed straight away. */
+    widgetSearch.addEventListener("keydown", function (event) {
+      if (event.key !== "Enter" || event.isComposing) return;
+      event.preventDefault();
+      event.stopPropagation();
+      widgetSearch.value = "";
+      State.widget.query = "";
+      renderWidgetResults();
+    });
   }
   document.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) return;
