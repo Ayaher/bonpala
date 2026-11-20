@@ -1191,7 +1191,7 @@ window.GLOBASA_GRAMMAR = {
       "links": [
         {
           "label": "Open the Verb tense lab",
-          "href": "#/tenses"
+          "href": "#/grammar/tenses"
         }
       ]
     },

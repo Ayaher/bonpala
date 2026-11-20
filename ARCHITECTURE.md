@@ -36,7 +36,7 @@ A static, offline-first learning app for the constructed language Globasa. It co
 
 - **86 grammar, vocabulary, challenge, and reading concepts**, each with **exactly 10 exercises** (860 total).
 - Three exercise mechanics: multiple choice, translation, and fill-in-the-blank.
-- A dashboard, lesson overview, exercise runner, results screen, searchable dictionary, standalone grammar summary, verb-tense study page, vocabulary lessons, and quick reference tables.
+- A dashboard with a compact area index (one row per area, one slot per concept), per-area pages with the full lesson cards, lesson overview, exercise runner, results screen, searchable dictionary, grammar chapter pages including the verb-tense lab, vocabulary lessons, quick reference tables, and a settings page.
 - Progress cached locally in the browser with `localStorage`, with optional Firebase-authenticated cloud sync.
 
 The important constraint is **no build step at runtime**. The app is a set of classic HTML/CSS/JavaScript files opened directly from `index.html`. There is no bundler, transpiler, framework, package manager, or server requirement.
@@ -247,12 +247,12 @@ Edit only the `areas` and `concepts` arrays above the bootstrap block. Keep vali
 
 - `id` is used by `concept.area` and by the CSS class `area-<id>`.
 - Areas render in the order they appear in the `areas` array.
-- A new area appears automatically on the dashboard; its concept count and exercise count are computed.
-- Optional styling: add `.area-yourid { --area-accent: ...; }` in `css/styles.css`. Without it, the default accent colour is used. That one token drives the card tint, the card border, the progress feel and the `.area-dot`.
+- A new area appears automatically in the dashboard area index and on its own `#/area/<id>` page; its concept count and exercise count are computed.
+- Optional styling: add `.area-yourid { --area-accent: ...; }` in `css/styles.css`. Without it, the default accent colour is used. That one token drives the compact row tint, the area hero, the card tint, the card border, the progress feel and the `.area-dot`.
 
 ### 5.4 Concept (lesson) object
 
-A concept is one lesson card, one lesson page, and one 10-exercise run.
+A concept is one slot in the dashboard area row, one card on its area page, one lesson page, and one 10-exercise run.
 
 ```json
 {
@@ -409,7 +409,7 @@ To add a story lesson: add the story to the source file, add a `read-sNN-…` co
 
 ### 5.8 Grammar summary: `data/grammar.js`
 
-The standalone study page at `#/grammar` is rendered from a separate authored data file, [data/grammar.js](./data/grammar.js). It is intentionally not part of `curriculum.js`: the grammar page is reference prose, while concepts and exercises are scored content.
+The grammar section is rendered from a separate authored data file, [data/grammar.js](./data/grammar.js). It is intentionally not part of `curriculum.js`: the grammar pages are reference prose, while concepts and exercises are scored content. `#/grammar` is a chapter index; each chapter has its own page at `#/grammar/:chapterId` (`core`, each `sections[].id`, `tenses`, and `study`). The tense reference from [data/tenses.js](./data/tenses.js) is the `tenses` chapter (see §5.9), so `#/tenses` is only a compatibility alias now.
 
 Shape:
 
@@ -434,7 +434,7 @@ window.GLOBASA_GRAMMAR = {
         { title: "...", head: ["A", "B"], rows: [["x", "y"]], note: "Optional note." }
       ],
       notes: ["Optional bullet."],
-      links: [{ label: "Open another study page", href: "#/tenses" }]
+      links: [{ label: "Open another study page", href: "#/grammar" }]
     }
   ],
   studyPlan: {
@@ -447,13 +447,14 @@ window.GLOBASA_GRAMMAR = {
 };
 ```
 
-Renderer: `Views.grammar()` in [js/views.js](./js/views.js). It generates:
+Renderer: `Views.grammar(chapterId)` in [js/views.js](./js/views.js). With no id it generates the index: the hero plus one `.grammar-chapter-card` per chapter (core rules, every authored section, the tense lab, and the study path). With a chapter id it generates a dedicated page:
 
-- the hero,
-- a sticky table of contents using `data-scroll` links (not `#id` links, because those would collide with hash routing),
-- the core-rule cards,
-- each section's rules, tables, notes, and optional study-page links,
-- the study plan with links to the referenced concept ids.
+- a chapter header and “All chapters” link,
+- a sticky chapter sidebar, with the active chapter marked `aria-current="page"`,
+- that chapter's core cards, rules, tables, notes, optional study-page links, or study plan,
+- previous/next chapter links at the bottom.
+
+The tense chapter also gets an “On this page” sidebar group using `data-scroll` links (not `#id` links, because those would collide with hash routing).
 
 Editing rules:
 
@@ -464,9 +465,9 @@ Editing rules:
 - The page is not scored and has no localStorage state.
 - The page exposes no print/PDF action. Print styles remain for users who invoke the browser print command directly; keep navigation and the TOC hidden if you edit them.
 
-### 5.9 Verb-tense study page: `data/tenses.js`
+### 5.9 Verb-tense content: `data/tenses.js`
 
-The study page at `#/tenses` is a second authored reference layer. It is separate from `curriculum.js` for the same reason as the grammar summary: the page teaches the tense system, while the linked `tenses` concepts provide scored drills.
+The tense reference is a second authored layer rendered as the `tenses` chapter at `#/grammar/tenses`. It is separate from `curriculum.js` for the same reason as the grammar summary: the page teaches the tense system, while the linked `tenses` concepts provide scored drills. `#/tenses` is kept as a compatibility alias that opens the same chapter.
 
 Shape:
 
@@ -505,10 +506,10 @@ window.GLOBASA_TENSES = {
 };
 ```
 
-Renderer: `Views.tenses()` in [js/views.js](./js/views.js). It produces:
+Renderer: `tenseStudy()` inside `Views.grammar("tenses")` in [js/views.js](./js/views.js). It renders the tenses chapter page:
 
-- a hero,
-- a data-driven TOC using `data-scroll` links,
+- a tense intro section,
+- a data-driven TOC group using `data-scroll` links,
 - the three principle cards,
 - one card per tense under the `groups`,
 - word-order and tense-choice tables,
@@ -544,7 +545,7 @@ Editing rules:
    ```
 
 3. Applies the saved theme (`auto`, `light`, `dark`) to `<html data-theme="...">`.
-4. Subscribes to Firebase auth state, renders the login screen while signed out, and runs `Storage.initCloudSync(user.uid)` after sign-in.
+4. Subscribes to Firebase auth state, renders the login screen while signed out, and runs `Storage.initCloudSync(user.uid)` after sign-in. A fresh sign-in sends the user to `#/` (dashboard); restoring an existing session keeps the current hash, so deep links still work on reload.
 5. Registers `hashchange`, form submit, click, input, and change listeners on the `#view` container.
 6. Shows a toast if `localStorage` is unavailable.
 
@@ -554,17 +555,20 @@ Hash routing is used so the app works from `file://` without a server rewrite.
 
 | Hash | Screen | Renderer |
 |---|---|---|
-| `#/` | Dashboard | `Views.dashboard()` |
+| `#/` | Dashboard (compact area index) | `Views.dashboard()` |
+| `#/area/:areaId` | Area page with the full concept cards | `Views.areaPage(id)` |
 | `#/lesson/:conceptId` | Lesson overview | `Views.lesson(id)` |
 | `#/exercise/:conceptId/:index` | Exercise runner (0-based) | `Views.exercise(id, index, session)` |
 | `#/results/:conceptId` | Results | `Views.results(id, session)` |
-| `#/grammar` | Standalone grammar summary | `Views.grammar()` |
-| `#/tenses` | Verb-tense study page | `Views.tenses()` |
+| `#/grammar` | Grammar chapter index | `Views.grammar()` |
+| `#/grammar/:chapterId` | One grammar chapter (`core`, section id, `tenses`, or `study`) | `Views.grammar(chapterId)` |
+| `#/tenses` | Compatibility alias for `#/grammar/tenses` | `Views.grammar("tenses")` |
 | `#/dictionary` | Dictionary browser | `Views.dictionary(state)` |
 | `#/reference` | Quick reference tables | `Views.reference()` |
+| `#/settings` | Settings: dynamic questions, reset progress, sign out | `Views.settings()` |
 | anything else | Not found | `Views.notFound()` |
 
-`parseRoute()` in `app.js` is the single place to add a new route. `renderRoute()` chooses the view function and sets `document.title`.
+`parseRoute()` in `app.js` is the single place to add a new route. `renderRoute()` chooses the view function and sets `document.title`. The Settings page is the only place that mutates app-wide preferences or the signed-in session; the topbar keeps navigation, the sync indicator, and the theme toggle.
 
 ### 6.3 Rendering model
 
@@ -625,10 +629,11 @@ The results screen has its own shortcuts, handled by the same listener before th
 | Key | Effect |
 |---|---|
 | `R` | Retry the lesson (`startLesson`), i.e. the primary button. |
+| `N` | Open the next concept's lesson overview, once the current concept is mastered and a next concept exists. |
 | `Esc` | Open the lesson notes (`#/lesson/:id`). |
 | `D` | Return to the dashboard (`#/`). |
 
-All three also appear as visible `.keycap` badges inside the buttons and are declared with `aria-keyshortcuts`, so the shortcuts are discoverable without documentation. The branch ignores modified key presses (`Ctrl`/`⌘`/`Alt`), repeated keydowns, and any keystroke typed into a text field.
+Each also appears as a visible `.keycap` badge inside its button when the action is available, and is declared with the matching `aria-keyshortcuts` value, so the shortcuts are discoverable without documentation. The branch ignores modified key presses (`Ctrl`/`⌘`/`Alt`), repeated keydowns, and any keystroke typed into a text field. `N` acts only on a mastered concept (`bestScore === 10`) that has a following concept in `C.concepts`.
 
 `Views.shortcutLabel()` decides how that shortcut is written in the UI, so the widget never shows two keyboards at once:
 
@@ -649,7 +654,7 @@ Implementation notes:
 
 ### 6.3.3 Dynamic questions
 
-Off by default. `Storage.setDynamic(true)` is the switch (dashboard → Progress panel), and it is captured **when a session is created**, so a toggle mid-run only applies to the next attempt.
+Off by default. `Storage.setDynamic(true)` is the switch (Settings → Dynamic questions), and it is captured **when a session is created**, so a toggle mid-run only applies to the next attempt.
 
 Two authoring shapes live on the exercise as `dyn`:
 
@@ -1293,13 +1298,17 @@ All styling is in [css/styles.css](./css/styles.css). There are no external font
 - Dark mode is implemented with `[data-theme="dark"]` overrides. The theme is set on `<html>` by `applyTheme()` / `toggleTheme()` in `app.js`; `Storage` persists `auto`, `light`, or `dark`.
 - Layout is CSS Grid with breakpoints at `980px` and `700px`.
 - `prefers-reduced-motion` is respected.
-- Main components: `.topbar`, `.hero`, `.stats-grid`, `.stat`, `.stat--lessons`, `.stat--exercises`, `.stat--perfect`, `.stat-art`, `.stat-value`, `.stat-total`, `.stat-suffix`, `.stat-label`, `.stat-meter`, `.stat-meter-fill`, `.continue-card`, `.concept-grid`, `.concept-card`, `.progress-score`, `.lesson-header`, `.lesson-grid`, `.panel`, `.exercise-card`, `.options`, `.option`, `.option-key`, `.feedback`, `.results-card`, `.score-ring`, `.dict-table`, `.corr-table`.
+- On the signed-out login screen the topbar hides the navigation and sync indicator, leaving only the brand and the theme toggle. The `hidden` attributes are backed by explicit `display: none` rules because `.brand`, `.main-nav`, and `.sync-indicator` set their own `display`.
+- Main components: `.topbar`, `.hero`, `.stats-grid`, `.stat`, `.stat--lessons`, `.stat--exercises`, `.stat--perfect`, `.stat-art`, `.stat-value`, `.stat-total`, `.stat-suffix`, `.stat-label`, `.stat-meter`, `.stat-meter-fill`, `.continue-card`, `.area-index`, `.area-track`, `.slot-strip`, `.slot`, `.slot-legend`, `.area-hero`, `.concept-grid`, `.concept-card`, `.progress-score`, `.lesson-header`, `.lesson-grid`, `.panel`, `.settings-grid`, `.settings-actions`, `.grammar-index`, `.grammar-chapter-card`, `.grammar-chapter-head`, `.grammar-chapter-nav`, `.exercise-card`, `.options`, `.option`, `.option-key`, `.feedback`, `.results-card`, `.score-ring`, `.dict-table`, `.corr-table`.
 - Dashboard stats: `statCard({ label, value, total, suffix, tone, icon })` in [js/views.js](./js/views.js) renders `value/total` plus a decorative `role="progressbar"` meter (with `aria-valuemin/max/now`); `.stat-label` already names the card, so the bar needs no extra text and shows no percentage. Each tone sets `--stat-accent` / `--stat-soft`, which tint the card background, border, total, label and meter fill:
   - `lessons` → `--accent` (teal), icon `book`
   - `exercises` → `--gold`, icon `check`
   - `perfect` → `--indigo`, icon `star`
   The `.stat-art` watermark is one of the inline SVGs in `STAT_ICONS` (no external icon pack), positioned bottom-right at `opacity: .16` — add a new icon by adding a path set there and passing its key. There is deliberately no average-score card; record-level detail lives on each concept card.
-- Concept cards show `N of 10 answered` plus `scoreLabel(record)`, which prints `best 8/10`, `no score yet`, or `all answers correct` for a mastered lesson (the numbers are dropped because 10/10 is implied). Keep that helper as the single source of score wording.
+- The dashboard renders one compact `.area-track` per area: its name, mastered count, and a `.slot-strip` with one `.slot` per concept. Slots are decorative (`aria-hidden`) and read `is-new`, `is-started`, or `is-mastered`; challenge concepts (`chal-*`) also get `is-challenge` (gold border only). The strip uses a responsive grid and fills at least 60% of the row width (100% on narrow screens). The link's `aria-label` carries the area summary. Clicking a row opens `#/area/<id>`, rendered by `Views.areaPage()`, which reuses the full `.concept-card` grid.
+- Concept cards (area pages) show `N of 10 answered` plus `scoreLabel(record)`, which prints `best 8/10`, `no score yet`, or `all answers correct` for a mastered lesson (the numbers are dropped because 10/10 is implied). Keep that helper as the single source of score wording.
+- Challenge styling is driven by `isChallenge()` in [js/views.js](./js/views.js), which checks the `chal-` id prefix rather than the title (some reading stories mention “challenge”). The `is-challenge` class is applied to the dashboard slot, concept card, lesson header, exercise wrap/card, and results card. Challenge chips were intentionally removed: the gold treatment and the “Challenge” title carry the meaning. CSS uses `--gold`/`--gold-soft`, so dark mode follows automatically.
+- The Settings page (`Views.settings()`) owns app-wide controls: the `#dynamic-toggle` switch, the reset-progress button, and the sign-out button. Sign-out uses the delegated `data-action="sign-out"` handler in `app.js`; the topbar keeps only navigation, the sync indicator, and the theme toggle.
 - Grammar and tense components: `.grammar-hero`, `.grammar-layout`, `.grammar-toc`, `.grammar-section`, `.grammar-core-card`, `.grammar-rule`, `.grammar-table`, `.study-steps`, `.tense-grid`, `.tense-card`, `.tense-marker`, `.tense-practice-card`. The print block hides navigation and the TOC.
 - Each area defines one `--area-accent` token (`.area-word-classes`, `.area-syntax`, …). It tints the concept-card background gradient, the card border (stronger on hover), and the `.area-dot`. Dark-theme overrides exist for the four areas whose accent is a dark hex (`tenses`, `foundations`, `vocabulary`, `nuances`). Without a custom rule the `--accent` fallback applies.
 - Concept-card titles are centred (`.concept-card h3 { flex: 1; text-align: center }`) so single-line and wrapped titles share one alignment; the area dot sits at the far left and the status pill at the far right.
@@ -1394,7 +1403,7 @@ node tools/test_render.mjs
 
 `test_normalize.mjs` protects the exact string-matching contract. If you intentionally change normalization, update this test and the corresponding section of the validator.
 
-`test_render.mjs` renders every page, every lesson, and every exercise twice — unanswered and answered wrong — then fails if `{{…}}` or a backtick survives into the markup. It is the guard for the marker convention in §16.1: a view that escapes authored text with `esc()` instead of `prose()`/`inlineFormat()` shows up here, including inside attributes.
+`test_render.mjs` renders every page, every grammar chapter, every area, every lesson, and every exercise twice — unanswered and answered wrong — then fails if `{{…}}` or a backtick survives into the markup. It is the guard for the marker convention in §16.1: a view that escapes authored text with `esc()` instead of `prose()`/`inlineFormat()` shows up here, including inside attributes. It also asserts the dashboard's area links and challenge slot, `isChallenge()`/`nextConcept()` behaviour, and the mastered-results **Next concept** button.
 
 `test_diff.mjs` locks the diff contract: character marks inside replaced words, whole-word marks for unrelated words, punctuation never highlighted, HTML escaping, and closest-answer selection.
 
@@ -1402,19 +1411,19 @@ node tools/test_render.mjs
 
 ### Browser smoke checklist
 
-1. Open `file:///.../index.html` and confirm the dashboard renders all areas/cards.
-2. Complete a full lesson using correct answers; confirm 10/10 and results.
+1. Open `file:///.../index.html` and confirm the dashboard renders one compact row per area with a slot for each concept.
+2. Complete a full lesson using correct answers; confirm 10/10 and results. Confirm the results screen offers **Next concept** (`N`) and that it opens the next lesson overview.
 3. Submit a wrong MCQ, wrong translation, and wrong fill; confirm red feedback, correct answer, and explanation.
 4. Submit a multi-blank fill; confirm partial mismatch is marked incorrect and both expected answers are shown.
 5. Reload after completing a lesson; confirm best score, attempt count, and exercise map persist.
 6. Use Reset all progress; confirm all counts return to zero and the continue card disappears.
-7. Master a lesson (10/10), confirm the results chip reads "review in 1 day" and the dashboard card counts it. Start a review, answer everything correctly, and confirm the results screen advances that lesson one rung.
+7. Master a lesson (10/10), confirm the results chip reads "review in 1 day" and the area page card counts it. Open a challenge concept and confirm the gold treatment follows the dashboard slot, lesson, exercise, and results screens. Start a review, answer everything correctly, and confirm the results screen advances that lesson one rung.
 8. Open a lesson with mixed notes and confirm Globasa words stand in the citation face while English stays in the body face; open a pure-Globasa prompt and confirm nothing switches.
 9. Search the rendered page for `{{` / `}}`; confirm no marker leaks into any screen, and that a marker never appears inside a fill-in blank or an answer.
 10. Search the dictionary by English and Globasa; filter by word class and category; load more.
 11. Check the correlative Quick reference table for horizontal scroll on mobile.
-12. Open **Grammar**; verify the TOC scrolls without changing the hash and the study-plan lesson links work.
-13. Open **Tenses**; verify all tense cards render, the TOC jumps without changing the hash, and the practice cards show real progress.
+12. Open **Grammar**; verify the chapter index links to dedicated pages, the chapter sidebar marks the active page, and previous/next navigation works. Open a chapter and confirm its rules/tables render.
+13. Open the tenses chapter; verify the tense cards render, the local TOC jumps without changing the hash, and the practice cards show real progress. Open **Settings** and confirm the dynamic toggle, reset, and sign-out controls are present.
 14. Toggle theme and reload; confirm the choice persists.
 15. Repeat a few routes from `file://` and from `python3 -m http.server`.
 

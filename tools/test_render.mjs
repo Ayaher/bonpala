@@ -61,11 +61,84 @@ function check(label, html) {
 }
 
 const dictState = { dict: { query: "", classFilter: "all", categoryFilter: "all", limit: 40 } };
-check("dashboard", views.dashboard({}));
-check("grammar", views.grammar());
-check("tenses", views.tenses());
+const dashboardHtml = views.dashboard({});
+check("dashboard", dashboardHtml);
+const grammarHtml = views.grammar();
+const settingsHtml = views.settings();
+check("grammar", grammarHtml);
+check("settings", settingsHtml);
 check("reference", views.reference());
 check("dictionary", views.dictionary(dictState));
+
+const grammarData = sandbox.window.GLOBASA_GRAMMAR;
+const grammarChapterIds = ["core"].concat(grammarData.sections.map((section) => section.id)).concat(["tenses", "study"]);
+for (const chapterId of grammarChapterIds) {
+  check(`grammar/${chapterId}`, views.grammar(chapterId));
+}
+if (!grammarHtml.includes('href="#/grammar/core"') || !grammarHtml.includes('href="#/grammar/tenses"')) {
+  failures.push("grammar: chapter index links are missing");
+}
+if (grammarHtml.includes('id="g-sounds"')) {
+  failures.push("grammar: chapter content should not be inlined on the index");
+}
+const tenseHtml = views.grammar("tenses");
+if (!tenseHtml.includes('id="g-tenses"') || !tenseHtml.includes('id="tense-group-simple"')) {
+  failures.push("grammar/tenses: tense chapter content is missing");
+}
+if (views.grammarChapterTitle("tenses") !== "Verb tenses, without conjugation") {
+  failures.push("grammarChapterTitle: tense chapter title is missing");
+}
+if (!settingsHtml.includes('id="dynamic-toggle"') ||
+  !settingsHtml.includes('data-action="reset-progress"') ||
+  !settingsHtml.includes('data-action="sign-out"')) {
+  failures.push("settings: practice, progress, or sign-out control is missing");
+}
+
+for (const area of curriculum.areas) {
+  check(`area/${area.id}`, views.areaPage(area.id));
+}
+
+if (!dashboardHtml.includes('href="#/area/foundations"')) {
+  failures.push("dashboard: compact area links are missing");
+}
+if (!/class="slot is-[a-z]+ is-challenge"/.test(dashboardHtml)) {
+  failures.push("dashboard: challenge slot is missing");
+}
+if (dashboardHtml.includes("challenge-tag") || dashboardHtml.includes("slot-star")) {
+  failures.push("dashboard: challenge chip or slot star should not be rendered");
+}
+
+const challengeConcept = curriculum.byId["chal-foundations"];
+const foundationArea = views.areaPage("foundations");
+if (!views.isChallenge(challengeConcept)) failures.push("isChallenge: chal-foundations was not detected");
+if (views.isChallenge(curriculum.byId["read-s14-tyojan-de-bwaw"])) {
+  failures.push("isChallenge: a story that mentions challenge was detected");
+}
+if (!/class="concept-card [^"]*is-challenge/.test(foundationArea)) {
+  failures.push("area/foundations: challenge card styling is missing");
+}
+if (foundationArea.includes("challenge-tag")) {
+  failures.push("area/foundations: challenge chip should not be rendered");
+}
+
+const firstConcept = curriculum.concepts[0];
+const secondConcept = curriculum.concepts[1];
+const lastConcept = curriculum.concepts[curriculum.concepts.length - 1];
+if (!views.nextConcept(firstConcept.id) || views.nextConcept(firstConcept.id).id !== secondConcept.id) {
+  failures.push("nextConcept: did not follow the curriculum order");
+}
+if (views.nextConcept(lastConcept.id) !== null) {
+  failures.push("nextConcept: returned a concept after the last lesson");
+}
+
+sandbox.window.GlobasaStorage.finishLesson(firstConcept.id, 10, 10);
+const masteredResults = views.results(firstConcept.id, null);
+if (!masteredResults.includes(`href="#/lesson/${secondConcept.id}"`)) {
+  failures.push("results: mastered lesson has no next-concept link");
+}
+if (!masteredResults.includes('aria-keyshortcuts="n"')) {
+  failures.push("results: next-concept shortcut is missing");
+}
 
 let screens = 0;
 for (const concept of curriculum.concepts) {
@@ -94,4 +167,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Render tests passed (${screens * 2 + 5} screens, ${curriculum.concepts.length} lessons).`);
+console.log(`Render tests passed (${screens * 2 + 5 + curriculum.areas.length + grammarChapterIds.length} screens, ${curriculum.concepts.length} lessons, ${curriculum.areas.length} areas, ${grammarChapterIds.length} grammar chapters).`);

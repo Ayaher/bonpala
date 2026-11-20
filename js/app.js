@@ -30,9 +30,7 @@
   var widgetSearch = document.getElementById("dict-widget-search");
   var widgetResults = document.getElementById("dict-widget-results");
   var mainNav = document.getElementById("main-nav");
-  var authControls = document.getElementById("auth-controls");
   var syncBadge = document.getElementById("cloud-sync-status");
-  var logoutButton = document.getElementById("logout-btn");
 
   function toast(message) {
     if (!toastEl) return;
@@ -186,9 +184,16 @@
   function updateChrome() {
     var signedIn = Boolean(State.user);
     if (mainNav) mainNav.hidden = !signedIn;
-    if (authControls) authControls.hidden = !signedIn;
-    if (logoutButton) logoutButton.hidden = !signedIn;
     if (syncBadge) syncBadge.hidden = !signedIn;
+  }
+
+  function signOut() {
+    if (!Firebase || !Firebase.signOutUser) return;
+    Storage.flushCloudSave().then(function () {
+      return Firebase.signOutUser();
+    }).catch(function (error) {
+      toast(error && error.message ? error.message : "Sync failed. Sign out blocked.");
+    });
   }
 
   function renderLogin() {
@@ -260,7 +265,10 @@
     State.login.errorMsg = "";
     State.login.errorCode = "";
     renderLogin();
-    Firebase.signIn(email, password).catch(function (error) {
+    Firebase.signIn(email, password).then(function () {
+      /* A fresh sign-in starts at the dashboard, whatever hash the login screen was on. */
+      if (window.location.hash !== "#/") window.location.hash = "#/";
+    }).catch(function (error) {
       State.login.loading = false;
       State.login.errorCode = error && error.code ? error.code : "";
       State.login.errorMsg = error && error.message ? error.message : "Sign-in failed.";
@@ -283,16 +291,21 @@
     var raw = (window.location.hash || "#/").replace(/^#/, "");
     var parts = raw.split("/").filter(function (part) { return part.length > 0; });
     if (!parts.length) return { view: "dashboard" };
+    if (parts[0] === "area" && parts[1]) return { view: "area", id: decodeURIComponent(parts[1]) };
     if (parts[0] === "lesson" && parts[1]) return { view: "lesson", id: decodeURIComponent(parts[1]) };
     if (parts[0] === "exercise" && parts[1]) {
       var index = parseInt(parts[2], 10);
       return { view: "exercise", id: decodeURIComponent(parts[1]), index: isNaN(index) ? 0 : index };
     }
     if (parts[0] === "results" && parts[1]) return { view: "results", id: decodeURIComponent(parts[1]) };
-    if (parts[0] === "grammar") return { view: "grammar" };
-    if (parts[0] === "tenses") return { view: "tenses" };
+    if (parts[0] === "grammar") {
+      return { view: "grammar", chapter: parts[1] ? decodeURIComponent(parts[1]) : null };
+    }
+    /* The tense lab is a chapter of the grammar section. */
+    if (parts[0] === "tenses") return { view: "grammar", chapter: "tenses" };
     if (parts[0] === "dictionary") return { view: "dictionary" };
     if (parts[0] === "reference") return { view: "reference" };
+    if (parts[0] === "settings") return { view: "settings" };
     return { view: "not-found" };
   }
 
@@ -312,6 +325,10 @@
 
     if (route.view === "dashboard") {
       html = Views.dashboard();
+    } else if (route.view === "area") {
+      var areaMeta = C.areas.filter(function (item) { return item.id === route.id; })[0];
+      if (areaMeta) title = areaMeta.title + " · Bonpala";
+      html = Views.areaPage(route.id);
     } else if (route.view === "lesson") {
       var concept = C.byId[route.id];
       if (concept) title = concept.title + " · Bonpala";
@@ -357,17 +374,18 @@
         html = Views.results(route.id, State.session);
       }
     } else if (route.view === "grammar") {
-      html = Views.grammar();
-      title = "Grammar in Brief · Bonpala";
-    } else if (route.view === "tenses") {
-      html = Views.tenses();
-      title = "Verb Tenses · Bonpala";
+      html = Views.grammar(route.chapter);
+      var chapterTitle = route.chapter ? Views.grammarChapterTitle(route.chapter) : null;
+      title = chapterTitle ? chapterTitle + " · Grammar · Bonpala" : (route.chapter ? "Not found · Bonpala" : "Grammar in Brief · Bonpala");
     } else if (route.view === "dictionary") {
       html = Views.dictionary(State);
       title = "Dictionary · Bonpala";
     } else if (route.view === "reference") {
       html = Views.reference();
       title = "Quick reference · Bonpala";
+    } else if (route.view === "settings") {
+      html = Views.settings();
+      title = "Settings · Bonpala";
     } else {
       html = Views.notFound("Check the address or return to the dashboard.");
     }
@@ -564,6 +582,8 @@
         renderRoute();
         toast("Progress reset.");
       }
+    } else if (action === "sign-out") {
+      signOut();
     }
   });
 
@@ -613,16 +633,6 @@
       renderWidgetResults();
     });
   }
-  if (logoutButton) {
-    logoutButton.addEventListener("click", function () {
-      if (!Firebase || !Firebase.signOutUser) return;
-      Storage.flushCloudSave().then(function () {
-        return Firebase.signOutUser();
-      }).catch(function (error) {
-        toast(error && error.message ? error.message : "Sync failed. Sign out blocked.");
-      });
-    });
-  }
   document.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) return;
 
@@ -658,6 +668,12 @@
       } else if (resultsKey === "d" && !event.repeat) {
         event.preventDefault();
         window.location.hash = "#/";
+      } else if (resultsKey === "n" && !event.repeat) {
+        var nextConcept = Views.nextConcept(route.id);
+        if (nextConcept && Views.recordFor(route.id).bestScore === 10) {
+          event.preventDefault();
+          window.location.hash = "#/lesson/" + encodeURIComponent(nextConcept.id);
+        }
       } else if (event.key === "Escape") {
         event.preventDefault();
         window.location.hash = reviewRun ? "#/" : "#/lesson/" + encodeURIComponent(route.id);

@@ -39,6 +39,23 @@
     return Object.keys(record.answers || {}).length;
   }
 
+  /* Challenge lessons carry a chal- id; titles alone are unreliable because some
+     reading stories mention the word "challenge". */
+  function isChallenge(item) {
+    return Boolean(item && item.id.indexOf("chal-") === 0);
+  }
+
+  function conceptStatus(record) {
+    if (record.bestScore === 10) return "mastered";
+    if (answeredCount(record) > 0 || (record.runs || 0) > 0 || record.bestScore != null) return "started";
+    return "new";
+  }
+
+  function nextConcept(conceptId) {
+    var index = C.concepts.findIndex(function (item) { return item.id === conceptId; });
+    return index >= 0 && index < C.concepts.length - 1 ? C.concepts[index + 1] : null;
+  }
+
   function typeLabel(type) {
     return type === "mcq" ? "Multiple choice" : type === "translate" ? "Translation" : "Fill in the blank";
   }
@@ -172,6 +189,94 @@
     );
   }
 
+  function conceptCard(item) {
+    var record = recordFor(item.id);
+    var count = answeredCount(record);
+    var complete = count >= item.exercises.length;
+    var masteredCard = record.bestScore === 10;
+    var pct = Math.round((count / item.exercises.length) * 100);
+    var cardReview = window.GlobasaReview.dueLabel(record);
+    var challenge = isChallenge(item);
+    var status = masteredCard ? '<span class="status-pill best">Mastered</span>' :
+      complete ? '<span class="status-pill done">Complete</span>' :
+      count ? '<span class="status-pill">In progress</span>' : '<span class="status-pill">New</span>';
+    return (
+      '<article class="concept-card area-' + esc(item.area) + (challenge ? " is-challenge" : "") + (complete ? " is-complete" : "") + (masteredCard ? " is-mastered" : "") + '">' +
+        '<div class="concept-top">' +
+          '<span class="area-dot" aria-hidden="true"></span>' +
+          '<h3><a href="#/lesson/' + esc(item.id) + '">' + esc(item.title) + '</a></h3>' +
+          status +
+        '</div>' +
+        '<p class="blurb">' + prose(item.blurb) + '</p>' +
+        '<div class="chips">' +
+          '<span class="chip">10 exercises</span>' +
+          '<span class="chip">' + esc(item.refs[0] || "Grammar") + '</span>' +
+          (cardReview ? '<span class="chip accent">' + esc(cardReview) + '</span>' : "") +
+        '</div>' +
+        '<div class="progress">' +
+          '<div class="progress-meta"><span>' + count + ' of 10 answered</span><span class="progress-score' + (masteredCard ? " is-perfect" : "") + '">' + esc(scoreLabel(record)) + '</span></div>' +
+          '<div class="progress-track"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
+        '</div>' +
+        (challenge ? '<span class="challenge-watermark" aria-hidden="true">★</span>' : "") +
+      '</article>'
+    );
+  }
+
+  function slotStrip(items) {
+    return '<span class="slot-strip" aria-hidden="true">' + items.map(function (item) {
+      var status = conceptStatus(recordFor(item.id));
+      return '<span class="slot is-' + status + (isChallenge(item) ? " is-challenge" : "") + '" title="' + esc(item.title + " · " + status) + '"></span>';
+    }).join("") + '</span>';
+  }
+
+  function areaTrack(areaItem, items) {
+    var mastered = items.filter(function (item) { return recordFor(item.id).bestScore === 10; }).length;
+    var exercises = items.reduce(function (sum, item) { return sum + item.exercises.length; }, 0);
+    return (
+      '<a class="area-track area-' + esc(areaItem.id) + '" href="#/area/' + esc(areaItem.id) + '"' +
+        ' aria-label="' + esc(areaItem.title + ": " + mastered + " of " + items.length + " concepts mastered. Open area.") + '">' +
+        '<span class="area-track-head">' +
+          '<span class="area-dot" aria-hidden="true"></span>' +
+          '<span class="area-track-title">' + esc(areaItem.title) + '</span>' +
+          '<span class="area-track-count">' + mastered + '/' + items.length + ' mastered</span>' +
+        '</span>' +
+        slotStrip(items) +
+        '<span class="area-track-foot">' +
+          '<span>' + items.length + ' concepts · ' + exercises + ' exercises</span>' +
+          '<span class="area-track-cta">Open area →</span>' +
+        '</span>' +
+      '</a>'
+    );
+  }
+
+  function areaPage(areaId) {
+    navFor("dashboard");
+    var areaItem = C.areas.filter(function (item) { return item.id === areaId; })[0];
+    if (!areaItem) return notFound("That area does not exist.");
+    var items = C.concepts.filter(function (item) { return item.area === areaItem.id; });
+    var mastered = items.filter(function (item) { return recordFor(item.id).bestScore === 10; }).length;
+    var cards = items.map(conceptCard).join("");
+    return (
+      '<div class="crumbs"><a href="#/">Dashboard</a><span class="sep">/</span><span>' + esc(areaItem.title) + '</span></div>' +
+      '<header class="area-hero area-' + esc(areaItem.id) + '">' +
+        '<span class="eyebrow">Area overview</span>' +
+        '<h1>' + esc(areaItem.title) + '</h1>' +
+        '<p class="lead">' + prose(areaItem.blurb) + '</p>' +
+        '<div class="chips" style="margin-top:14px">' +
+          '<span class="chip">' + items.length + ' concepts</span>' +
+          '<span class="chip">' + (items.length * 10) + ' exercises</span>' +
+          '<span class="chip' + (mastered ? " accent" : "") + '">' + mastered + ' mastered</span>' +
+        '</div>' +
+        '<div class="button-row">' +
+          '<a class="ghost" href="#/">Back to dashboard</a>' +
+        '</div>' +
+      '</header>' +
+      '<section class="area-section" aria-label="' + esc(areaItem.title) + ' concepts">' +
+        '<div class="concept-grid">' + cards + '</div>' +
+      '</section>'
+    );
+  }
+
   function dashboard() {
     navFor("dashboard");
     var concepts = C.concepts;
@@ -183,7 +288,6 @@
       return answeredCount(allRecords[index]) >= item.exercises.length;
     }).length;
     var mastered = allRecords.filter(function (record) { return record.bestScore === 10; }).length;
-    var dynamicOn = window.GlobasaStorage.getDynamic();
     var lastId = window.GlobasaStorage.getState().lastConcept;
     var lastConcept = lastId && concept(lastId);
     var startConcept = concepts.filter(function (item) {
@@ -249,48 +353,24 @@
         '</section>';
     }
 
-    var sections = C.areas.map(function (areaItem) {
-      var items = concepts.filter(function (item) { return item.area === areaItem.id; });
-      var cards = items.map(function (item) {
-        var record = recordFor(item.id);
-        var count = answeredCount(record);
-        var complete = count >= item.exercises.length;
-        var masteredCard = record.bestScore === 10;
-        var pct = Math.round((count / item.exercises.length) * 100);
-        var cardReview = window.GlobasaReview.dueLabel(record);
-        var status = masteredCard ? '<span class="status-pill best">Mastered</span>' :
-          complete ? '<span class="status-pill done">Complete</span>' :
-          count ? '<span class="status-pill">In progress</span>' : '<span class="status-pill">New</span>';
-        return (
-          '<article class="concept-card area-' + esc(item.area) + (complete ? " is-complete" : "") + (masteredCard ? " is-mastered" : "") + '">' +
-            '<div class="concept-top">' +
-              '<span class="area-dot" aria-hidden="true"></span>' +
-              '<h3><a href="#/lesson/' + esc(item.id) + '">' + esc(item.title) + '</a></h3>' +
-              status +
-            '</div>' +
-            '<p class="blurb">' + prose(item.blurb) + '</p>' +
-            '<div class="chips">' +
-              '<span class="chip">10 exercises</span>' +
-              '<span class="chip">' + esc(item.refs[0] || "Grammar") + '</span>' +
-              (cardReview ? '<span class="chip accent">' + esc(cardReview) + '</span>' : "") +
-            '</div>' +
-            '<div class="progress">' +
-              '<div class="progress-meta"><span>' + count + ' of 10 answered</span><span class="progress-score' + (masteredCard ? " is-perfect" : "") + '">' + esc(scoreLabel(record)) + '</span></div>' +
-              '<div class="progress-track"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
-            '</div>' +
-          '</article>'
-        );
-      }).join("");
-      return (
-        '<section class="area-section" id="area-' + esc(areaItem.id) + '">' +
-          '<div class="section-head">' +
-            '<div><h2>' + esc(areaItem.title) + '</h2><p>' + prose(areaItem.blurb) + '</p></div>' +
-            '<span class="area-count">' + items.length + ' concepts · ' + (items.length * 10) + ' exercises</span>' +
+    var sections =
+      '<section class="area-index-block" aria-labelledby="area-index-heading">' +
+        '<div class="section-head">' +
+          '<div><h2 id="area-index-heading">Lessons by area</h2><p>Each square is one concept. Open an area to see its full cards, notes, and exercise maps.</p></div>' +
+          '<div class="slot-legend" aria-hidden="true">' +
+            '<span class="slot-legend-item"><span class="slot is-new"></span>New</span>' +
+            '<span class="slot-legend-item"><span class="slot is-started"></span>Started</span>' +
+            '<span class="slot-legend-item"><span class="slot is-mastered"></span>Mastered</span>' +
+            '<span class="slot-legend-item"><span class="slot is-challenge"></span>Challenge</span>' +
           '</div>' +
-          '<div class="concept-grid">' + cards + '</div>' +
-        '</section>'
-      );
-    }).join("");
+        '</div>' +
+        '<div class="area-index">' +
+          C.areas.map(function (areaItem) {
+            var items = concepts.filter(function (item) { return item.area === areaItem.id; });
+            return areaTrack(areaItem, items);
+          }).join("") +
+        '</div>' +
+      '</section>';
 
     return (
       '<section class="hero">' +
@@ -321,21 +401,7 @@
       '</section>' +
       reviewHtml +
       continueHtml +
-      sections +
-      '<section class="panel" style="margin-top:36px">' +
-        '<h2>Progress</h2>' +
-        '<p>Your answers and best scores are stored in this browser with <code>localStorage</code>. Nothing is sent anywhere. Dictionary data: ' + W.count.toLocaleString() + ' entries from the official <a href="https://github.com/Globasa-Team/cdn-files/blob/main/api2/word-list.csv" target="_blank" rel="noopener noreferrer">word-list.csv</a>.</p>' +
-        '<div class="setting-row">' +
-          '<label class="switch" for="dynamic-toggle">' +
-            '<input type="checkbox" id="dynamic-toggle"' + (dynamicOn ? " checked" : "") + '>' +
-            '<span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>' +
-            '<span class="switch-text"><strong>Dynamic questions</strong><span>Swap numbers, subjects and forms on every attempt. Takes effect from your next run; questions stay inside the same rule.</span></span>' +
-          '</label>' +
-        '</div>' +
-        '<div class="button-row" style="margin-top:14px">' +
-          '<button class="secondary" type="button" data-action="reset-progress">Reset all progress</button>' +
-        '</div>' +
-      '</section>'
+      sections
     );
   }
 
@@ -347,7 +413,12 @@
     var count = answeredCount(record);
     var order = lessonOrder(item);
     var areaItem = area(item.area);
-    var actionLabel = count === 0 ? "Start lesson" : count >= 10 ? "Retry lesson" : "Continue lesson";
+    var challenge = isChallenge(item);
+    var actionLabel = count === 0
+      ? (challenge ? "Start challenge" : "Start lesson")
+      : count >= 10
+      ? (challenge ? "Retry challenge" : "Retry lesson")
+      : (challenge ? "Continue challenge" : "Continue lesson");
 
     var notesHeading = item.area === "reading" ? "Reading notes" : "Grammar notes";
     var notes = item.notes.map(function (note) { return "<li>" + prose(note) + "</li>"; }).join("");
@@ -372,12 +443,12 @@
       ? 'This concept is drawn from the author\'s follow-up notes on Globasa, which expand on the <a href="https://xwexi.globasa.net/eng/gramati" target="_blank" rel="noopener noreferrer">Complete Globasa Grammar</a>. Read the rules in the <a href="#/grammar">Grammar summary</a>, or use the <a href="#/reference">Quick reference</a> for the table view.'
       : item.area === "reading"
       ? 'This lesson quotes short excerpts from <em>Thirty Short Stories in Globasa</em>; the published English sentence pairs are the translation keys. Read the notes above, or use the <a href="#/reference">Quick reference</a> for grammar tables.'
-      : 'This concept is drawn from the <a href="https://xwexi.globasa.net/eng/gramati" target="_blank" rel="noopener noreferrer">Complete Globasa Grammar</a> and the beginner lessons. Read the rules in the <a href="#/grammar">Grammar summary</a>' + (item.area === "tenses" ? ', open the <a href="#/tenses">verb-tense lab</a>' : '') + ', or use the <a href="#/reference">Quick reference</a> for the table view.';
+      : 'This concept is drawn from the <a href="https://xwexi.globasa.net/eng/gramati" target="_blank" rel="noopener noreferrer">Complete Globasa Grammar</a> and the beginner lessons. Read the rules in the <a href="#/grammar">Grammar summary</a>' + (item.area === "tenses" ? ', open the <a href="#/grammar/tenses">verb-tense lab</a>' : '') + ', or use the <a href="#/reference">Quick reference</a> for the table view.';
 
     return (
-      '<div class="crumbs"><a href="#/">Dashboard</a><span class="sep">/</span><span>' + esc(areaItem.title) + '</span><span class="sep">/</span><span>' + esc(item.title) + '</span></div>' +
-      '<header class="lesson-header">' +
-        '<span class="eyebrow">' + esc(areaItem.title) + '</span>' +
+      '<div class="crumbs"><a href="#/">Dashboard</a><span class="sep">/</span><a href="#/area/' + esc(areaItem.id) + '">' + esc(areaItem.title) + '</a><span class="sep">/</span><span>' + esc(item.title) + '</span></div>' +
+      '<header class="lesson-header' + (challenge ? " is-challenge" : "") + '">' +
+        '<span class="eyebrow">' + esc(areaItem.title) + (challenge ? " · Area challenge" : "") + '</span>' +
         '<h1>' + esc(item.title) + '</h1>' +
         '<p class="lead">' + prose(item.blurb) + '</p>' +
         '<div class="chips" style="margin-top:14px">' +
@@ -458,6 +529,7 @@
     var pct = Math.round(((position + 1) / item.exercises.length) * 100);
     var response = session.response;
     var submitted = Boolean(session.submitted);
+    var challenge = isChallenge(item);
 
     var body = "";
     if (current.type === "mcq") {
@@ -532,17 +604,18 @@
       ? '<a href="#/">Dashboard</a><span class="sep">/</span><span>Spaced review</span>'
       : '<a href="#/">Dashboard</a><span class="sep">/</span><a href="#/lesson/' + esc(item.id) + '">' + esc(item.title) + '</a>';
     var meta = 'Exercise ' + (position + 1) + ' of ' + item.exercises.length + ' · ' + typeLabel(current.type) +
+      (challenge ? ' · Challenge' : "") +
       (current.reviewSourceTitle ? ' · from ' + esc(current.reviewSourceTitle) : "");
 
     return (
-      '<div class="exercise-wrap">' +
+      '<div class="exercise-wrap' + (challenge ? " is-challenge" : "") + '">' +
         '<div class="exercise-top">' +
           '<div class="crumbs" style="margin:0">' + crumbs + '</div>' +
           '<span class="meta">' + meta + '</span>' +
         '</div>' +
         '<div class="progress" style="margin-bottom:16px"><div class="progress-track"><div class="progress-bar" style="width:' + pct + '%"></div></div></div>' +
-        '<form class="exercise-card" id="answer-form" novalidate>' +
-          '<span class="eyebrow">' + esc(typeLabel(current.type)) + '</span>' +
+        '<form class="exercise-card' + (challenge ? " is-challenge" : "") + '" id="answer-form" novalidate>' +
+          '<span class="eyebrow">' + (challenge ? "Challenge · " : "") + esc(typeLabel(current.type)) + '</span>' +
           '<h1>' + prose(current.prompt) + '</h1>' +
           passage +
           '<div class="prompt">' + (current.type === "mcq" ? "Choose the best answer." : current.type === "translate" ? "Write your translation." : "Complete the sentence.") + '</div>' +
@@ -647,8 +720,14 @@
     var hasScore = Boolean(hasSession || hasSaved);
     var score = hasSession ? window.GlobasaEngine.score(session, item) : (hasSaved ? record.lastScore : 0);
     var percent = hasScore ? Math.round((score / item.exercises.length) * 100) : 0;
+    var challenge = isChallenge(item);
+    var mastered = record.bestScore === 10;
+    var next = mastered ? nextConcept(item.id) : null;
+    var eyebrow = hasScore
+      ? (challenge ? (mastered ? "Challenge mastered" : "Challenge complete") : "Lesson complete")
+      : (challenge ? "Challenge not attempted" : "No run yet");
     var message = !hasScore ? "This lesson has not been completed yet. Start it when you are ready." :
-      percent === 100 ? "Perfect lesson. This pattern is solid." :
+      percent === 100 ? (challenge ? "Perfect challenge. You cleared the whole area." : "Perfect lesson. This pattern is solid.") :
       percent >= 80 ? "Strong work. Review the misses and lock it in." :
       percent >= 60 ? "Good progress. Another run will sharpen the pattern." :
       "This one needs another pass. Read the notes, then retry.";
@@ -668,8 +747,8 @@
     return (
       '<div class="results-wrap">' +
         '<div class="crumbs"><a href="#/">Dashboard</a><span class="sep">/</span><a href="#/lesson/' + esc(item.id) + '">' + esc(item.title) + '</a><span class="sep">/</span><span>Results</span></div>' +
-        '<section class="results-card">' +
-          '<span class="eyebrow">' + (hasScore ? "Lesson complete" : "No run yet") + '</span>' +
+        '<section class="results-card' + (challenge ? " is-challenge" : "") + '">' +
+          '<span class="eyebrow">' + esc(eyebrow) + '</span>' +
           '<div class="score-ring" style="--score:' + percent + '"><strong>' + (hasScore ? score + "/10" : "—") + '</strong></div>' +
           '<h1>' + esc(item.title) + '</h1>' +
           '<p class="lead">' + esc(message) + '</p>' +
@@ -681,7 +760,8 @@
           '</div>' +
           breakdown +
           '<div class="button-row" style="justify-content:center;margin-top:22px">' +
-            '<button class="primary" type="button" data-action="retry-lesson" data-concept="' + esc(item.id) + '" aria-keyshortcuts="r">' + (hasScore ? "Retry lesson" : "Start lesson") + '<kbd class="keycap" aria-hidden="true">R</kbd></button>' +
+            (next ? '<a class="primary" href="#/lesson/' + esc(next.id) + '" aria-keyshortcuts="n" title="Next: ' + esc(next.title) + '">Next concept<kbd class="keycap" aria-hidden="true">N</kbd></a>' : "") +
+            '<button class="' + (next ? "secondary" : "primary") + '" type="button" data-action="retry-lesson" data-concept="' + esc(item.id) + '" aria-keyshortcuts="r">' + (hasScore ? "Retry lesson" : "Start lesson") + '<kbd class="keycap" aria-hidden="true">R</kbd></button>' +
             '<a class="secondary" href="#/lesson/' + esc(item.id) + '" aria-keyshortcuts="Escape">Review notes<kbd class="keycap" aria-hidden="true">Esc</kbd></a>' +
             '<a class="ghost" href="#/" aria-keyshortcuts="d">Dashboard<kbd class="keycap" aria-hidden="true">D</kbd></a>' +
           '</div>' +
@@ -717,13 +797,7 @@
     );
   }
 
-  function grammar() {
-    navFor("grammar");
-    var G = window.GLOBASA_GRAMMAR;
-    if (!G) return notFound("The grammar summary data is missing.");
-    var toc = G.sections.map(function (section) {
-      return '<a href="#/grammar" data-scroll="g-' + esc(section.id) + '">' + inlineFormat(section.title) + '</a>';
-    }).join("");
+  function grammarCoreBlock(G) {
     var core = G.coreRules.map(function (rule, index) {
       return (
         '<article class="grammar-core-card">' +
@@ -734,52 +808,116 @@
         '</article>'
       );
     }).join("");
-    var sections = G.sections.map(function (section) {
-      var rules = (section.rules || []).map(function (rule) {
-        return (
-          '<article class="grammar-rule">' +
-            '<h3>' + inlineFormat(rule.title) + '</h3>' +
-            '<p>' + inlineFormat(rule.text) + '</p>' +
-            grammarExamples(rule.examples) +
-          '</article>'
-        );
-      }).join("");
-      var tables = (section.tables || []).map(grammarTable).join("");
-      var notes = section.notes && section.notes.length ?
-        '<ul class="grammar-notes">' + section.notes.map(function (note) { return '<li>' + inlineFormat(note) + '</li>'; }).join("") + '</ul>' : "";
-      var links = section.links && section.links.length ?
-        '<div class="grammar-section-links">' + section.links.map(function (link) {
-          return '<a class="secondary" href="' + esc(link.href) + '">' + esc(link.label) + '</a>';
-        }).join("") + '</div>' : "";
+    return (
+      '<section class="grammar-section" id="g-core-rules">' +
+        '<div class="grammar-core-grid">' + core + '</div>' +
+      '</section>'
+    );
+  }
+
+  function grammarSectionBlock(section) {
+    var rules = (section.rules || []).map(function (rule) {
       return (
-        '<section class="grammar-section" id="g-' + esc(section.id) + '">' +
-          '<div class="grammar-section-head">' +
-            '<div><span class="grammar-source">' + esc(section.source) + '</span><h2>' + inlineFormat(section.title) + '</h2></div>' +
-            '<a class="grammar-mini-link" href="#/grammar" data-scroll="g-grammar-top">Top ↑</a>' +
-          '</div>' +
-          '<p class="grammar-lead">' + inlineFormat(section.lead) + '</p>' +
-          rules + tables + notes + links +
-        '</section>'
+        '<article class="grammar-rule">' +
+          '<h3>' + inlineFormat(rule.title) + '</h3>' +
+          '<p>' + inlineFormat(rule.text) + '</p>' +
+          grammarExamples(rule.examples) +
+        '</article>'
       );
     }).join("");
-    var study = "";
-    if (G.studyPlan) {
-      var steps = G.studyPlan.steps.map(function (step) {
-        var links = (step.concepts || []).map(function (id) {
-          var item = concept(id);
-          return item ? '<a href="#/lesson/' + esc(id) + '">' + esc(item.title) + '</a>' : "";
-        }).join("");
-        return '<li><h3>' + inlineFormat(step.title) + '</h3><p>' + inlineFormat(step.text) + '</p><div class="study-links">' + links + '</div></li>';
+    var tables = (section.tables || []).map(grammarTable).join("");
+    var notes = section.notes && section.notes.length ?
+      '<ul class="grammar-notes">' + section.notes.map(function (note) { return '<li>' + inlineFormat(note) + '</li>'; }).join("") + '</ul>' : "";
+    var links = section.links && section.links.length ?
+      '<div class="grammar-section-links">' + section.links.map(function (link) {
+        return '<a class="secondary" href="' + esc(link.href) + '"' + (link.scroll ? ' data-scroll="' + esc(link.scroll) + '"' : "") + '>' + esc(link.label) + '</a>';
+      }).join("") + '</div>' : "";
+    return (
+      '<section class="grammar-section" id="g-' + esc(section.id) + '">' +
+        rules + tables + notes + links +
+      '</section>'
+    );
+  }
+
+  function grammarStudyBlock(G) {
+    if (!G.studyPlan) return "";
+    var steps = G.studyPlan.steps.map(function (step) {
+      var links = (step.concepts || []).map(function (id) {
+        var item = concept(id);
+        return item ? '<a href="#/lesson/' + esc(id) + '">' + esc(item.title) + '</a>' : "";
       }).join("");
-      study = (
-        '<section class="grammar-section" id="g-study-plan">' +
-          '<div class="grammar-section-head"><div><span class="grammar-source">How to use this page</span><h2>' + inlineFormat(G.studyPlan.title) + '</h2></div></div>' +
-          '<p class="grammar-lead">' + inlineFormat(G.studyPlan.intro) + '</p>' +
-          '<ol class="study-steps">' + steps + '</ol>' +
-          '<div class="grammar-backtop"><a href="#/grammar" data-scroll="g-grammar-top">Back to top ↑</a></div>' +
-        '</section>'
-      );
+      return '<li><h3>' + inlineFormat(step.title) + '</h3><p>' + inlineFormat(step.text) + '</p><div class="study-links">' + links + '</div></li>';
+    }).join("");
+    return (
+      '<section class="grammar-section" id="g-study-plan">' +
+        '<ol class="study-steps">' + steps + '</ol>' +
+        '<div class="grammar-backtop"><a href="#/grammar/study" data-scroll="g-chapter-top">Back to top ↑</a></div>' +
+      '</section>'
+    );
+  }
+
+  function grammarChapters(G) {
+    var chapters = [{
+      id: "core",
+      kind: "core",
+      title: "Core rules at a glance",
+      source: "Ten rules that carry most sentences",
+      lead: "If you remember nothing else, remember these. Each one is expanded and practised in the other chapters.",
+      href: "#/grammar/core"
+    }];
+    G.sections.forEach(function (section) {
+      chapters.push({
+        id: section.id,
+        kind: "section",
+        title: section.title,
+        source: section.source,
+        lead: section.lead,
+        href: "#/grammar/" + section.id,
+        section: section
+      });
+    });
+    var T = window.GLOBASA_TENSES;
+    if (T) {
+      chapters.push({
+        id: "tenses",
+        kind: "tenses",
+        title: "Verb tenses, without conjugation",
+        source: "Standalone study · Grammar pp. 55–58",
+        lead: T.subtitle,
+        href: "#/grammar/tenses"
+      });
     }
+    if (G.studyPlan) {
+      chapters.push({
+        id: "study",
+        kind: "study",
+        title: G.studyPlan.title,
+        source: "How to use this material",
+        lead: G.studyPlan.intro,
+        href: "#/grammar/study"
+      });
+    }
+    return chapters;
+  }
+
+  function grammarChapterTitle(chapterId) {
+    var G = window.GLOBASA_GRAMMAR;
+    if (!G || !chapterId) return null;
+    var chapter = grammarChapters(G).filter(function (item) { return item.id === chapterId; })[0];
+    return chapter ? chapter.title : null;
+  }
+
+  function grammarIndex(G, chapters) {
+    var cards = chapters.map(function (chapter) {
+      return (
+        '<a class="grammar-chapter-card" href="' + esc(chapter.href) + '">' +
+          '<span class="grammar-source">' + esc(chapter.source) + '</span>' +
+          '<h2>' + inlineFormat(chapter.title) + '</h2>' +
+          '<p>' + inlineFormat(chapter.lead) + '</p>' +
+          '<span class="grammar-chapter-cta">Open chapter →</span>' +
+        '</a>'
+      );
+    }).join("");
     return (
       '<div class="grammar-hero" id="g-grammar-top">' +
         '<span class="eyebrow">Standalone study · Complete Globasa Grammar</span>' +
@@ -788,22 +926,60 @@
         '<p class="grammar-intro">' + inlineFormat(G.intro) + '</p>' +
         '<p class="grammar-credit">Full grammar and language resources: <a href="https://xwexi.globasa.net/eng/gramati" target="_blank" rel="noopener noreferrer">Complete Globasa Grammar</a> · <a href="https://globasa.net" target="_blank" rel="noopener noreferrer">globasa.net</a></p>' +
       '</div>' +
+      '<section class="grammar-chapter-index" aria-labelledby="grammar-chapters-heading">' +
+        '<div class="section-head"><div><h2 id="grammar-chapters-heading">Chapters</h2><p>' + chapters.length + ' short chapters. Open any of them on its own page; the sidebar keeps the rest one click away.</p></div></div>' +
+        '<div class="grammar-index">' + cards + '</div>' +
+      '</section>'
+    );
+  }
+
+  function grammarChapterView(G, chapters, chapter) {
+    var tense = chapter.kind === "tenses" ? tenseStudy() : null;
+    var content = "";
+    if (chapter.kind === "core") content = grammarCoreBlock(G);
+    else if (chapter.kind === "section") content = grammarSectionBlock(chapter.section);
+    else if (chapter.kind === "tenses" && tense) content = tense.content;
+    else if (chapter.kind === "study") content = grammarStudyBlock(G);
+
+    var nav = chapters.map(function (item) {
+      var current = item.id === chapter.id;
+      return '<a href="' + esc(item.href) + '"' + (current ? ' class="is-active" aria-current="page"' : "") + '>' + inlineFormat(item.title) + '</a>';
+    }).join("");
+    var localToc = tense ?
+      '<h2 class="grammar-toc-sub">On this page</h2><nav>' + tense.toc + '</nav>' : "";
+    var index = chapters.indexOf(chapter);
+    var previous = chapters[index - 1];
+    var next = chapters[index + 1];
+    var chapterNav =
+      '<nav class="grammar-chapter-nav" aria-label="Chapter navigation">' +
+        (previous ? '<a class="secondary" href="' + esc(previous.href) + '">← ' + inlineFormat(previous.title) + '</a>' : '<span></span>') +
+        (next ? '<a class="secondary" href="' + esc(next.href) + '">' + inlineFormat(next.title) + ' →</a>' : '<span></span>') +
+      '</nav>';
+
+    return (
+      '<div class="crumbs"><a href="#/">Dashboard</a><span class="sep">/</span><a href="#/grammar">Grammar</a><span class="sep">/</span><span>' + inlineFormat(chapter.title) + '</span></div>' +
+      '<header class="grammar-chapter-head">' +
+        '<span class="grammar-source">' + esc(chapter.source) + '</span>' +
+        '<h1>' + inlineFormat(chapter.title) + '</h1>' +
+        '<p class="lead">' + inlineFormat(chapter.lead) + '</p>' +
+        '<div class="button-row"><a class="ghost" href="#/grammar">All chapters</a></div>' +
+      '</header>' +
       '<div class="grammar-layout">' +
-        '<aside class="grammar-toc"><h2>On this page</h2><nav>' +
-          '<a href="#/grammar" data-scroll="g-core-rules">Core rules at a glance</a>' +
-          toc +
-          '<a href="#/grammar" data-scroll="g-study-plan">Seven-step study path</a>' +
-        '</nav></aside>' +
-        '<div class="grammar-content">' +
-          '<section class="grammar-section" id="g-core-rules">' +
-            '<div class="grammar-section-head"><div><span class="grammar-source">Ten rules that carry most sentences</span><h2>Core rules at a glance</h2></div></div>' +
-            '<p class="grammar-lead">If you remember nothing else, remember these. Each one is expanded and practised below.</p>' +
-            '<div class="grammar-core-grid">' + core + '</div>' +
-          '</section>' +
-          sections + study +
-        '</div>' +
+        '<aside class="grammar-toc"><h2>Chapters</h2><nav>' + nav + '</nav>' + localToc + '</aside>' +
+        '<div class="grammar-content" id="g-chapter-top">' + content + chapterNav + '</div>' +
       '</div>'
     );
+  }
+
+  function grammar(chapterId) {
+    navFor("grammar");
+    var G = window.GLOBASA_GRAMMAR;
+    if (!G) return notFound("The grammar summary data is missing.");
+    var chapters = grammarChapters(G);
+    if (!chapterId) return grammarIndex(G, chapters);
+    var chapter = chapters.filter(function (item) { return item.id === chapterId; })[0];
+    if (!chapter) return notFound("That grammar chapter does not exist.");
+    return grammarChapterView(G, chapters, chapter);
   }
 
   function tenseCard(card) {
@@ -824,14 +1000,22 @@
     );
   }
 
-  function tenses() {
-    navFor("tenses");
+  /* Tense reference content lives inside the grammar page; #/tenses redirects here. */
+  function tenseStudy() {
     var T = window.GLOBASA_TENSES;
-    if (!T) return notFound("The tense reference data is missing.");
+    if (!T) return null;
 
-    var toc = T.groups.map(function (group) {
-      return '<a href="#/tenses" data-scroll="tense-group-' + esc(group.id) + '">' + inlineFormat(group.title) + '</a>';
-    }).join("");
+    var toc =
+      '<a href="#/grammar/tenses" data-scroll="g-tenses">Overview</a>' +
+      '<a href="#/grammar/tenses" data-scroll="tense-overview">How tense works</a>' +
+      T.groups.map(function (group) {
+        return '<a href="#/grammar/tenses" data-scroll="tense-group-' + esc(group.id) + '">' + inlineFormat(group.title) + '</a>';
+      }).join("") +
+      '<a href="#/grammar/tenses" data-scroll="tense-order">Tense word order</a>' +
+      '<a href="#/grammar/tenses" data-scroll="tense-choosing">Choosing a tense</a>' +
+      '<a href="#/grammar/tenses" data-scroll="tense-traps">Tense traps</a>' +
+      '<a href="#/grammar/tenses" data-scroll="tense-practice">Tense practice</a>';
+
     var principles = T.principles.map(function (principle, index) {
       return (
         '<article class="grammar-core-card">' +
@@ -846,7 +1030,7 @@
         '<section class="grammar-section" id="tense-group-' + esc(group.id) + '">' +
           '<div class="grammar-section-head">' +
             '<div><span class="grammar-source">Tense group</span><h2>' + inlineFormat(group.title) + '</h2></div>' +
-            '<a class="grammar-mini-link" href="#/tenses" data-scroll="tense-top">Top ↑</a>' +
+            '<a class="grammar-mini-link" href="#/grammar/tenses" data-scroll="g-tenses">Top ↑</a>' +
           '</div>' +
           '<p class="grammar-lead">' + inlineFormat(group.lead) + '</p>' +
           '<div class="tense-grid">' + group.cards.map(tenseCard).join("") + '</div>' +
@@ -874,52 +1058,37 @@
       );
     }).join("");
 
-    return (
-      '<div class="grammar-hero" id="tense-top">' +
-        '<span class="eyebrow">Standalone study · Grammar pp. 55–58</span>' +
-        '<h1>Verb <em>tenses</em>, without conjugation.</h1>' +
-        '<p class="lead">' + esc(T.subtitle) + '</p>' +
+    var content =
+      '<section class="grammar-section" id="g-tenses">' +
         '<p class="grammar-intro">' + inlineFormat(T.intro) + '</p>' +
-        '<p class="grammar-credit">Full grammar and language resources: <a href="https://xwexi.globasa.net/eng/gramati" target="_blank" rel="noopener noreferrer">Complete Globasa Grammar</a> · <a href="https://globasa.net" target="_blank" rel="noopener noreferrer">globasa.net</a></p>' +
-      '</div>' +
-      '<div class="grammar-layout">' +
-        '<aside class="grammar-toc"><h2>On this page</h2><nav>' +
-          '<a href="#/tenses" data-scroll="tense-overview">How tense works</a>' +
-          toc +
-          '<a href="#/tenses" data-scroll="tense-order">Word order</a>' +
-          '<a href="#/tenses" data-scroll="tense-choosing">Choosing a tense</a>' +
-          '<a href="#/tenses" data-scroll="tense-traps">Common traps</a>' +
-          '<a href="#/tenses" data-scroll="tense-practice">Practice</a>' +
-        '</nav></aside>' +
-        '<div class="grammar-content">' +
-          '<section class="grammar-section" id="tense-overview">' +
-            '<div class="grammar-section-head"><div><span class="grammar-source">The short version</span><h2>How tense works</h2></div></div>' +
-            '<p class="grammar-lead">Globasa marks tense with particles and prefixes around an unchanging verb. Learn these three principles before memorising the cards below.</p>' +
-            '<div class="grammar-core-grid">' + principles + '</div>' +
-          '</section>' +
-          groups +
-          '<section class="grammar-section" id="tense-order">' +
-            '<div class="grammar-section-head"><div><span class="grammar-source">Grammar p. 65</span><h2>' + inlineFormat(T.order.title) + '</h2></div><a class="grammar-mini-link" href="#/tenses" data-scroll="tense-top">Top ↑</a></div>' +
-            '<p class="grammar-lead">' + inlineFormat(T.order.lead) + '</p>' +
-            grammarTable({ head: T.order.head, rows: T.order.rows, note: T.order.note }) +
-          '</section>' +
-          '<section class="grammar-section" id="tense-choosing">' +
-            '<div class="grammar-section-head"><div><span class="grammar-source">Decision guide</span><h2>' + inlineFormat(T.choosing.title) + '</h2></div><a class="grammar-mini-link" href="#/tenses" data-scroll="tense-top">Top ↑</a></div>' +
-            '<p class="grammar-lead">' + inlineFormat(T.choosing.lead) + '</p>' +
-            grammarTable({ head: T.choosing.head, rows: T.choosing.rows }) +
-          '</section>' +
-          '<section class="grammar-section" id="tense-traps">' +
-            '<div class="grammar-section-head"><div><span class="grammar-source">Avoid these</span><h2>Common traps</h2></div><a class="grammar-mini-link" href="#/tenses" data-scroll="tense-top">Top ↑</a></div>' +
-            '<ul class="grammar-notes">' + T.traps.map(function (trap) { return '<li>' + inlineFormat(trap) + '</li>'; }).join("") + '</ul>' +
-          '</section>' +
-          '<section class="grammar-section" id="tense-practice">' +
-            '<div class="grammar-section-head"><div><span class="grammar-source">Apply the patterns</span><h2>' + inlineFormat(T.practice.title) + '</h2></div><a class="grammar-mini-link" href="#/tenses" data-scroll="tense-top">Top ↑</a></div>' +
-            '<p class="grammar-lead">' + inlineFormat(T.practice.lead) + '</p>' +
-            '<div class="tense-practice-grid">' + practiceCards + '</div>' +
-          '</section>' +
-        '</div>' +
-      '</div>'
-    );
+      '</section>' +
+      '<section class="grammar-section" id="tense-overview">' +
+        '<div class="grammar-section-head"><div><span class="grammar-source">The short version</span><h2>How tense works</h2></div></div>' +
+        '<p class="grammar-lead">Globasa marks tense with particles and prefixes around an unchanging verb. Learn these three principles before memorising the cards below.</p>' +
+        '<div class="grammar-core-grid">' + principles + '</div>' +
+      '</section>' +
+      groups +
+      '<section class="grammar-section" id="tense-order">' +
+        '<div class="grammar-section-head"><div><span class="grammar-source">Grammar p. 65</span><h2>' + inlineFormat(T.order.title) + '</h2></div><a class="grammar-mini-link" href="#/grammar/tenses" data-scroll="g-tenses">Top ↑</a></div>' +
+        '<p class="grammar-lead">' + inlineFormat(T.order.lead) + '</p>' +
+        grammarTable({ head: T.order.head, rows: T.order.rows, note: T.order.note }) +
+      '</section>' +
+      '<section class="grammar-section" id="tense-choosing">' +
+        '<div class="grammar-section-head"><div><span class="grammar-source">Decision guide</span><h2>' + inlineFormat(T.choosing.title) + '</h2></div><a class="grammar-mini-link" href="#/grammar/tenses" data-scroll="g-tenses">Top ↑</a></div>' +
+        '<p class="grammar-lead">' + inlineFormat(T.choosing.lead) + '</p>' +
+        grammarTable({ head: T.choosing.head, rows: T.choosing.rows }) +
+      '</section>' +
+      '<section class="grammar-section" id="tense-traps">' +
+        '<div class="grammar-section-head"><div><span class="grammar-source">Avoid these</span><h2>Tense traps</h2></div><a class="grammar-mini-link" href="#/grammar/tenses" data-scroll="g-tenses">Top ↑</a></div>' +
+        '<ul class="grammar-notes">' + T.traps.map(function (trap) { return '<li>' + inlineFormat(trap) + '</li>'; }).join("") + '</ul>' +
+      '</section>' +
+      '<section class="grammar-section" id="tense-practice">' +
+        '<div class="grammar-section-head"><div><span class="grammar-source">Apply the patterns</span><h2>' + inlineFormat(T.practice.title) + '</h2></div><a class="grammar-mini-link" href="#/grammar/tenses" data-scroll="g-tenses">Top ↑</a></div>' +
+        '<p class="grammar-lead">' + inlineFormat(T.practice.lead) + '</p>' +
+        '<div class="tense-practice-grid">' + practiceCards + '</div>' +
+      '</section>';
+
+    return { toc: toc, content: content };
   }
 
   function dictionary(state) {
@@ -1120,8 +1289,47 @@
           '<li>Determiners (ke, hin, den, ban, moy, nil, alo, sama) always need a following noun.</li>' +
           '<li>Relative clauses keep normal order and use resumptive da, dasu, or a correlative adverb.</li>' +
         '</ul></section>' +
-      '</div>' +
-      '<section class="panel" style="margin-top:16px"><h2>Progress</h2><p>Progress is stored locally in this browser. Resetting clears every lesson score, completed exercise, and the last-opened lesson.</p><div class="button-row" style="margin-top:12px"><button class="secondary" type="button" data-action="reset-progress">Reset all progress</button></div></section>'
+      '</div>'
+    );
+  }
+
+  function settings() {
+    navFor("settings");
+    var dynamicOn = window.GlobasaStorage.getDynamic();
+    return (
+      '<div class="crumbs"><a href="#/">Dashboard</a><span class="sep">/</span><span>Settings</span></div>' +
+      '<header class="lesson-header">' +
+        '<span class="eyebrow">Account & practice</span>' +
+        '<h1>Settings</h1>' +
+        '<p class="lead">Adjust how practise works and manage the progress saved for this account.</p>' +
+      '</header>' +
+      '<div class="settings-grid">' +
+        '<section class="panel">' +
+          '<h2>Practice</h2>' +
+          '<p>Change how exercises adapt on each attempt.</p>' +
+          '<div class="setting-row">' +
+            '<label class="switch" for="dynamic-toggle">' +
+              '<input type="checkbox" id="dynamic-toggle"' + (dynamicOn ? " checked" : "") + '>' +
+              '<span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>' +
+              '<span class="switch-text"><strong>Dynamic questions</strong><span>Swap numbers, subjects and forms on every attempt. Takes effect from your next run.</span></span>' +
+            '</label>' +
+          '</div>' +
+        '</section>' +
+        '<section class="panel">' +
+          '<h2>Progress</h2>' +
+          '<p>Your answers and best scores are stored in this browser with <code>localStorage</code> and synced to your account. Resetting clears every lesson score, completed exercise, and the last-opened lesson.</p>' +
+          '<div class="settings-actions">' +
+            '<button class="secondary" type="button" data-action="reset-progress">Reset all progress</button>' +
+          '</div>' +
+        '</section>' +
+        '<section class="panel">' +
+          '<h2>Account</h2>' +
+          '<p>Signed in with cloud sync enabled. Signing out stops syncing on this device; your progress stays saved locally.</p>' +
+          '<div class="settings-actions">' +
+            '<button class="secondary" type="button" data-action="sign-out">Sign out</button>' +
+          '</div>' +
+        '</section>' +
+      '</div>'
     );
   }
 
@@ -1175,14 +1383,18 @@
   window.GlobasaViews = {
     esc: esc,
     dashboard: dashboard,
+    areaPage: areaPage,
+    nextConcept: nextConcept,
+    isChallenge: isChallenge,
     lesson: lesson,
     exercise: exercise,
     results: results,
     grammar: grammar,
-    tenses: tenses,
+    grammarChapterTitle: grammarChapterTitle,
     dictionary: dictionary,
     dictionaryResults: dictionaryResults,
     reference: reference,
+    settings: settings,
     reviewExpired: reviewExpired,
     notFound: notFound,
     recordFor: recordFor,

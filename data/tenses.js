@@ -1,4 +1,4 @@
-/* Authored tense reference for the standalone Verb tenses page. */
+/* Authored tense reference rendered inside the grammar page. */
 window.GLOBASA_TENSES = {
   "title": "Verb tenses",
   "subtitle": "One verb form, a handful of particles, and a clear timeline.",
